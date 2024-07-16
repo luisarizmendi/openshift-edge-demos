@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: demo-bootstrap
+  name: openshift-edge-demos-bootstrap
   namespace: openshift-gitops
 spec:
   goTemplate: true
