@@ -4,6 +4,8 @@ kind: AppProject
 metadata:
   name: ai-edge
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   clusterResourceWhitelist:
   - group: '*'
