@@ -29,6 +29,7 @@ spec:
               - environments/cloud/aws1.yml
       destination:
         server: https://kubernetes.default.svc
+        namespace: '{{.path.basename}}'
       syncPolicy:
         automated:
           prune: true
