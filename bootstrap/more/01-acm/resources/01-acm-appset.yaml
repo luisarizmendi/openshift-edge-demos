@@ -3,7 +3,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: advance-cluster-management
-  namespace: openshift-gitops
+  namespace: openshift-gitops-operator
 spec:
   generators:
   - list:
