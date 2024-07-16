@@ -16,7 +16,7 @@ data:
             <h1>Hello World!</h1>
             <br/>
             <h2>
-            I'm running on the '{{ .Values.global.hubClusterDomain }}' <br>
+            This is {{ .Values.applicationName }} running on the {{ .Values.serverURL }} cluster that is in '{{ .Values.global.environment }}' <br>
             </h2>
           </body>
       </html>
