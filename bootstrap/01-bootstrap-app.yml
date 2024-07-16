@@ -19,7 +19,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
-        targetRevision: HEAD
+        targetRevision: main
         path: '{{.path.path}}'
       destination:
         server: https://kubernetes.default.svc
