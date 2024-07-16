@@ -12,3 +12,5 @@ spec:
     path: demos/ai-edge/bootstrap
   destination:
     server: https://kubernetes.default.svc
+  dependencies:
+    - advanced-cluster-management
