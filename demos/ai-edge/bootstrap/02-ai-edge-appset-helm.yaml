@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: openshift-edge-demos-bootstrap
+  name: ai-edge-appset-helm
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -24,6 +24,9 @@ spec:
         repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
         targetRevision: main
         path: '{{.path.path}}'
+        helm:
+          valueFiles:
+              - environments/cloud/aws1.yml
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:
