@@ -14,7 +14,7 @@ spec:
         repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
         revision: main
         directories:
-          - path: demos/ai-edge/resources/*
+          - path: demos/ai-edge-git/resources/*
   template:
     metadata:
       name: '{{.path.basename}}'
