@@ -1,0 +1,39 @@
+{{- range .Values.clusters }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ $.Values.app.name }}
+  namespace: {{ $.Values.app.namespace }}
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: {{ $.Values.app.repoURL }}
+        revision: {{ $.Values.app.revision }}
+        directories:
+        {{- range .Values.clusters }}
+        - {{ . }}
+        {{- end }}
+  template:
+    metadata:
+      name: '{{`{{.path.basename}}`}}'
+    spec:
+      project: {{ $.Values.app.project }}
+      source:
+        repoURL: {{ $.Values.app.repoURL }}
+        targetRevision: {{ $.Values.app.revision }}
+        path: '{{`{{.path.path}}`}}'
+        helm:
+          valueFiles:
+              - values.yaml
+              - environments/'{{ .environment }}'/values.yaml
+      destination:
+        server: '{{ .server }}'
+        namespace: '{{`{{.path.basename}}`}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+---
+{{- end }}

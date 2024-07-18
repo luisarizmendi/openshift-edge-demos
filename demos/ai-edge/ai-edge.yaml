@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: ai-edge-appset-helm
+  name: demo-ai-edge
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -10,11 +10,11 @@ spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
-  - git:
-      repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
-      revision: main
-      directories:
-        - path: demos/ai-edge/resources/*
+    - git:
+        repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
+        revision: main
+        directories:
+          - path: demos/ai-edge/resources/*
   template:
     metadata:
       name: '{{.path.basename}}'
@@ -24,11 +24,8 @@ spec:
         repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
         targetRevision: main
         path: '{{.path.path}}'
-        helm:
-          valueFiles:
-              - environments/cloud/aws1.yml
       destination:
-        server: https://kubernetes.default.svc
+        server: "https://kubernetes.default.svc"
         namespace: '{{.path.basename}}'
       syncPolicy:
         automated:
