@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: demo-ai-edge
+  name: ai-edge-bootstrap
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "2"
@@ -14,10 +14,10 @@ spec:
         repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
         revision: main
         directories:
-          - path: demos/ai-edge-git/resources/*
+          - path: demos/ai-edge/resources/*
   template:
     metadata:
-      name: 'ai-edge-bootstrap'
+      name: '{{.path.basename}}'
     spec:
       project: ai-edge
       source:

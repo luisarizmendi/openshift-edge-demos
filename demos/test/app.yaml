@@ -21,7 +21,7 @@ spec:
         repoURL: {{ $.Values.app.repoURL }}
         targetRevision: {{ $.Values.app.revision }}
         path: {{ $.Values.app.path }}
-        {{- range .Values.app.helm }}
+        {{- range .Values.app.extra }}
         - {{ . }}
         {{- end }}
       destination:
