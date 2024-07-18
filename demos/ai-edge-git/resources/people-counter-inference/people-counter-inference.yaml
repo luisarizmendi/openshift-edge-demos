@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: global-people-counter-inference
+  name: people-counter-inference-bootstrap
   namespace: openshift-gitops
 spec:
   project: ai-edge
