@@ -1,0 +1,11 @@
+apps:
+  - name: people-counter-inference
+    namespace: openshift-gitops
+    repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+    revision: main
+    project: ai-edge
+    extra: |
+        helm:
+          valueFiles:
+              - values.yaml
+              - environments/'{{ .environment }}'/values.yaml     

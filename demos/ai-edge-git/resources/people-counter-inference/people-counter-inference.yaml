@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: global-people-counter-inference
+  namespace: openshift-gitops
+spec:
+  project: ai-edge
+
+  source:
+    repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+    targetRevision: main
+    path: demos/ai-edge-git/resources/people-counter-inference/argocd-apps
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

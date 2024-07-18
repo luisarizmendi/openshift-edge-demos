@@ -1,0 +1,131 @@
+{{- range .Values.apps }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $.Values.app.name }}
+  namespace: {{ $.Values.app.namespace }}
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: {{ $.Values.app.placement }}
+        requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: {{ $.Values.app.name }}-'{{`{{name}}`}}'
+    spec:
+      project: {{ $.Values.app.argoproject }}
+      source:
+        repoURL: {{ $.Values.app.repoURL }}
+        targetRevision: {{ $.Values.app.revision }}
+        path: {{ $.Values.app.path }}
+        {{- range .Values.app.helm }}
+        - {{ . }}
+        {{- end }}
+      destination:
+        server: '{{`{{server}}`}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+{{- end }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ $.Values.app.name }}
+  namespace: {{ $.Values.app.namespace }}
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: {{ $.Values.app.repoURL }}
+        revision: {{ $.Values.app.revision }}
+        directories:
+        {{- range .Values.clusters }}
+        - {{ . }}
+        {{- end }}
+  template:
+    metadata:
+      name: '{{`{{.path.basename}}`}}'
+    spec:
+      project: {{ $.Values.app.project }}
+      source:
+        repoURL: {{ $.Values.app.repoURL }}
+        targetRevision: {{ $.Values.app.revision }}
+        path: '{{`{{.path.path}}`}}'
+        helm:
+          valueFiles:
+              - values.yaml
+              - environments/'{{ .environment }}'/values.yaml
+      destination:
+        server: '{{ .server }}'
+        namespace: '{{`{{.path.basename}}`}}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+
+
+
+
+
+
+
+
+
+
+
+
+
+  source:
+    repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+    targetRevision: main
+    path: demos/ai-edge/resources/people-counter-inference/argocd-apps
+
+  destination:
+    server: 'https://kubernetes.default.svc'
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: clusters
+spec:
+  destination:
+    name: ''
+    namespace: ''
+    server: < 'https://api.demo.aelfassy:6443' >
+  source:
+    path: < app_of_apps >
+    repoURL: < 'https://github.com/almogelfassy/gitops-demo.git' >
+    targetRevision: HEAD
+    helm:
+      valueFiles:
+      - ../clusters_day2/values.yaml
+  sources: []
+  project: default

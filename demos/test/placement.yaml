@@ -1,0 +1,26 @@
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: people-counter-inference
+  namespace: openshift-gitops
+spec:
+  numberOfClusters: 1
+  clusterSets:
+    - gitops-clusters
+  predicates:
+    - requiredClusterSelector:
+        labelSelector:
+          matchLabels:
+            demo: ai-edge 
+  tolerations:
+    - key: ai-edge
+      value: "inference"
+      operator: Equal
+  prioritizerPolicy:
+    configurations:
+      - scoreCoordinate:
+          builtIn: ResourceAllocatableCPU
+        weight: 2
+      - scoreCoordinate:
+          builtIn: ResourceAllocatableMemory
+        weight: 2

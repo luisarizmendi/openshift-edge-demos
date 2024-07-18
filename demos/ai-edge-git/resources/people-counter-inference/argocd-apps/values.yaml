@@ -1,0 +1,18 @@
+app:
+  name: people-counter-inference
+  namespace: openshift-gitops
+  repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+  revision: main
+  directories: 
+    - path: demos/ai-edge-git/resources/people-counter-inference/resources/*
+  project: ai-edge
+
+clusters:
+  - name: local-cluster
+    server: 'https://kubernetes.default.svc'
+    environment: cloud
+
+#  - name: site1
+#    server: 'https://cluster2-server-url'
+#    environment: near-edge
+
