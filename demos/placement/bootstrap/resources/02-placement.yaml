@@ -14,18 +14,15 @@ spec:
   predicates:
     - requiredClusterSelector:
         labelSelector:
-          matchLabels:
-            demo: demo-placement 
+          matchExpressions:
+          - key: allowed-services
+            operator: "In"
+            values:
+            - welcome
   tolerations:
-    - key: demo-placement-service
-      value: "endpoint"
+    - key: custom-status
       operator: Equal
-    - key: demo-placement-service
-      value: "inference"
-      operator: Equal
-    - key: demo-placement-service
-      value: "backend"
-      operator: Equal
+      value: ok
   prioritizerPolicy:
     configurations:
       - scoreCoordinate:

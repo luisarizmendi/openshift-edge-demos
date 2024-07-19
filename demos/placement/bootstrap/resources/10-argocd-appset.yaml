@@ -1,0 +1,56 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: demo-placement-apps
+  namespace: openshift-gitops
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: demo-placement
+        requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: demo-placement-{{name}}
+    spec:
+      project: demo-placement
+      source: 
+        
+          repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
+          targetRevision: main
+          path: demos/placement/apps/hello
+          helm:
+            valueFiles:
+                - values.yaml
+            values: |
+              global:
+                clusterName: '{{.cluster.name}}'
+                server: '{{.server}}'
+                {{- if hasKey .labels "environment" }}
+                  {{- if eq (index .labels "environment") "cloud" }}
+                  environment: cloud
+                  {{- end }}
+                  {{- if eq (index .labels "environment") "near-edge" }}
+                  # Variables específicas para environment=near-edge
+                  #image:
+                  #  tag: "centos/minimal:latest"
+                  environment: near-edge
+                  {{- end }}
+                {{- end }}
+        
+      
+      destination:
+        server: "{{server}}"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true
+          - PruneLast=true
+          - Replace=true
+          - ApplyOutOfSyncOnly=true
+          - Validate=false
+        automated:
+          prune: true
+          allowEmpty: true
+          selfHeal: true
