@@ -15,6 +15,13 @@ spec:
     server: 'https://kubernetes.default.svc'
 
   syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
+      - Replace=true
+      - ApplyOutOfSyncOnly=true
+      - Validate=false
     automated:
       prune: true
+      allowEmpty: true
       selfHeal: true
