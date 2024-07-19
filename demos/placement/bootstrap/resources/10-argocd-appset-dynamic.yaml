@@ -29,7 +29,7 @@ spec:
       source:
         repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
         targetRevision: main
-        path: '{{path.path}}'
+        path: 'demos/placement/apps/dynamic/{{path.basename}}'
         helm:
           valueFiles:
             - values.yaml
