@@ -6,17 +6,17 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "10"
 spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
   generators:
-    - matrix:
-        generators:
-          - git:
-              repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
-              revision: main
-              directories:
-                - path: demos/placement/apps/static/*         
+  - git:
+      repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
+      revision: main
+      directories:
+        - path: demos/placement/apps/static/*         
   template:
     metadata:
-      name: 'demo-placement-{{path.basename}}'
+      name: 'demo-placement-{{.path.basename}}'
     spec:
       project: demo-placement
       source:
@@ -28,7 +28,7 @@ spec:
             - values.yaml
       destination:
         server: https://kubernetes.default.svc
-        namespace: '{{path.basename}}'
+        namespace: '{{.path.basename}}'
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
