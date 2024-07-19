@@ -20,10 +20,6 @@ spec:
               values:
                 - good
                 - average
-  tolerations:
-    - key: custom-status
-      operator: Equal
-      value: ok
   prioritizerPolicy:
     configurations:
       - scoreCoordinate:
