@@ -44,6 +44,69 @@ spec:
 
 
 
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: people-counter-inference-hello
+  namespace: openshift-gitops
+spec:
+  generators:
+    - clusterDecisionResource:
+        configMapRef: acm-placement
+        labelSelector:
+          matchLabels:
+            cluster.open-cluster-management.io/placement: people-counter-inference
+        requeueAfterSeconds: 180
+  template:
+    metadata:
+      name: people-counter-inference-hello-{{name}}
+    spec:
+      project: ai-edge
+      source:
+        repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+        targetRevision: main
+        path: demos/ai-edge/people-counter-inference/resources/hello
+        helm:
+          valueFiles:
+              - values.yaml
+              - environments/cloud/values.yaml    
+      destination:
+        server: "{{server}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

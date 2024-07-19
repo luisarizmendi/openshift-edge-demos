@@ -2,6 +2,8 @@ apps:
   - name: people-counter-inference
     namespace: openshift-gitops
     repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+    path: demos/ai-edge/people-counter-inference/resources/hello
+    placement: people-counter-inference
     revision: main
     project: ai-edge
     extra: |

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: openshift-edge-demos-bootstrap
+  name: bootstrap-demo-placement
   namespace: openshift-gitops
 spec:
   goTemplate: true
@@ -11,7 +11,7 @@ spec:
       repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
       revision: main
       directories:
-        - path: bootstrap/resources/*
+        - path: demos/placement/bootstrap/resources/*
   template:
     metadata:
       name: '{{.path.basename}}'
