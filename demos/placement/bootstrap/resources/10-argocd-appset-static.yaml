@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: demo-placement-dynamic
+  name: demo-placement-static
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "10"
@@ -13,29 +13,21 @@ spec:
               repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
               revision: main
               directories:
-                - path: demos/placement/apps/dynamic/*         
-
-          - clusterDecisionResource:
-              configMapRef: acm-placement
-              labelSelector:
-                matchLabels:
-                  cluster.open-cluster-management.io/placement: demo-placement
-              requeueAfterSeconds: 180
+                - path: demos/placement/apps/static/*         
   template:
     metadata:
-      name: 'demo-placement-{{path.basename}}-{{name}}'
+      name: 'demo-placement-{{path.basename}}'
     spec:
       project: demo-placement
       source:
         repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
         targetRevision: main
-        path: 'demos/placement/apps/dynamic/{{path.basename}}'
+        path: '{{.path.path}}'
         helm:
           valueFiles:
             - values.yaml
-            - environment/values-{{name}}.yaml
       destination:
-        server: "{{server}}"
+        server: https://kubernetes.default.svc
         namespace: '{{path.basename}}'
       syncPolicy:
         syncOptions:
