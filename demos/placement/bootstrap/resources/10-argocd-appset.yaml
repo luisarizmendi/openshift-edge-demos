@@ -3,6 +3,8 @@ kind: ApplicationSet
 metadata:
   name: demo-placement-apps
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "10"
 spec:
   generators:
     - clusterDecisionResource:
@@ -16,33 +18,17 @@ spec:
       name: demo-placement-{{name}}
     spec:
       project: demo-placement
-      source: 
-        
-          repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
-          targetRevision: main
-          path: demos/placement/apps/hello
-          helm:
-            valueFiles:
-                - values.yaml
-            values: |
-              global:
-                clusterName: '{{.cluster.name}}'
-                server: '{{.server}}'
-                {{- if hasKey .labels "environment" }}
-                  {{- if eq (index .labels "environment") "cloud" }}
-                  environment: cloud
-                  {{- end }}
-                  {{- if eq (index .labels "environment") "near-edge" }}
-                  # Variables específicas para environment=near-edge
-                  #image:
-                  #  tag: "centos/minimal:latest"
-                  environment: near-edge
-                  {{- end }}
-                {{- end }}
-        
-      
+      source:
+        repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
+        targetRevision: main
+        path: demos/placement/apps/hello
+        helm:
+          valueFiles:
+            - values.yaml
+            - environment/values-{{name}}.yaml
       destination:
         server: "{{server}}"
+        namespace: hello-world
       syncPolicy:
         syncOptions:
           - CreateNamespace=true
