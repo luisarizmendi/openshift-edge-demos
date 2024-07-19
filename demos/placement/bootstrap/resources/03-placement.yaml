@@ -2,7 +2,7 @@ apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-wave: "3"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: demo-placement
   namespace: openshift-gitops
@@ -13,12 +13,13 @@ spec:
   numberOfClusters: 1
   predicates:
     - requiredClusterSelector:
-        labelSelector:
+        claimSelector:
           matchExpressions:
-          - key: allowed-services
-            operator: "In"
-            values:
-            - welcome
+            - key: demo.status
+              operator: In
+              values:
+                - good
+                - average
   tolerations:
     - key: custom-status
       operator: Equal
