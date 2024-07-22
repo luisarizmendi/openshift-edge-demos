@@ -50,7 +50,7 @@ Now you can deploy the components needed by your demo and apply the required con
 
 5. **Wait until you can see all applications in "Sync"status in the Argocd console** 
 
-![](images/bootstrap-demo-deploy.gif)
+![](images/bootstrap-demo-wait.gif)
 
 
 Once the setup is complete, you can proceed with the demo steps.
