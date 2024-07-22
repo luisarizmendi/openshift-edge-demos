@@ -5,6 +5,22 @@
 
 ### The challenge
 
+Let's imagine this use case. You have an architecture that comprehends one or few OpenShift clusters deployed on the Public Cloud or Core Datan Centers and a medium to high number of clusters in an small Data Center environment closer to where the data is generated and consumed (near-edge) or even a high number of clusters running really close to the end user and data sources (far-edge). 
+
+Now you might need to deploy an application, Where should you locate it? You can think, this is an Edge Computing use case, so as close as the user and data source, and you are right, but sometimes it could be more convinient to deploy the application in the near-edge... or even in the Core depending on the environment conditions. 
+
+
+
+
+
+
+
+near-edge y movimiento
+
+
+
+
+In any edge computing architecture you will have a high number of devices involved, so when you need to deploy an application you will need to decide where to deploy it.Managing the scale of number of devices of any edge computing use case could be challenging, but it is more when you need to decide where is the best place to locate your applications.
 
 
 ### The solution
@@ -18,47 +34,11 @@
 * OpenShift GitOps
 * Advanced Cluster Management Placement API
 
-## Demo pre-requirements
 
-### Duration
-Less than 30 min
+## Preparation and requirements
 
-### Environment & Hardware 
-
-* **OpenShift "Hub" Cluster**: Typically configured with 3 worker nodes, each possessing 8 cores and 16GB of memory.
-* **OpenShift "Near-Edge" Clusters**: At least one additional OpenShift cluster (Minimum resources is ok). 
-
-## Environment Setup
-
-All demo deployments comprehends four simple steps:
-
-1. **Prepare your OpenShift Clusters**: Ensure you have freshly installed the required OpenShift clusters.
-
-2. **Apply the Base Configuration in the Hub Cluster**:
-   - Access your OpenShift console in the Hub cluster.
-   - Click the `+` button to add resources.
-   - Paste the content from the [bootstrap-environment.yaml](../../bootstrap-environment/bootstrap-environment.yaml) file.
-
-3. Wait until you can open the Advanced Cluster Manager console.
-
-4. **Apply the demo specific setup**
-   - Access your OpenShift console in the Hub cluster.
-   - Click the `+` button to add resources.
-   - Paste the content from the [bootstrap-demo.yaml](bootstrap-demo/bootstrap-demo.yaml) file.
-
-After applying the configuration, sit back and relax while the environment is set up automatically. You can open the Argocd console and with for all applicantions to be in "Sync" status.
-
-Once the setup is complete, you can proceed with the demo steps.
-
-  > **NOTE**
-  >
-  > *If you don't know what I mean with the `+` button in OpenShift, take a look at the following example:*
-  >
-  > ![](../../doc/images/bootstrap-environment.gif)
-
+You will find all the details in the [demo preparation and requirements doc](doc/00-preparation.md).
 
 ## Demo Steps
 
-
-
-## Going beyond
+The demo will take less than 30 minutes. You will find all the details in the [demo steps doc](doc/01-demo-steps.md).

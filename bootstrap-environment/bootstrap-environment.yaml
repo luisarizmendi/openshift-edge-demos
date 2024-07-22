@@ -75,7 +75,7 @@ spec:
         args:
         - |
           # Wait for the GitOps Server to be ready
-          until oc get pods -n openshift-gitops | grep 'openshift-gitops-server' | grep 'Running'; do
+          until oc get pods -n openshift-gitops | grep 'openshift-gitops-server' | grep 'Running' | grep '1/1'; do
             echo "Waiting for GitOps Server pod to be in Running state..."
             sleep 10
           done
@@ -94,7 +94,7 @@ spec:
                 repoURL: https://github.com/luisarizmendi/openshift-edge-demos.git
                 revision: main
                 directories:
-                  - path: bootstrap/resources/*
+                  - path: bootstrap-environment/resources/*
             template:
               metadata:
                 name: '{{.path.basename}}'
@@ -113,6 +113,6 @@ spec:
           EOF
 
           echo "Environment ready!"
-      restartPolicy: Never  # This is where you specify the restartPolicy for the Pod
+      restartPolicy: Never
   backoffLimit: 1
 
