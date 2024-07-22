@@ -54,7 +54,7 @@ Once the setup is complete, you can proceed with the demo steps.
   >
   > *If you don't know what I mean with the `+` button in OpenShift, take a look at the following example:*
   >
-  ![](../../doc/images/bootstrap-environment.gif)
+  > ![](../../doc/images/bootstrap-environment.gif)
 
 
 ## Demo Steps
