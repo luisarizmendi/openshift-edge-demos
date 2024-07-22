@@ -5,13 +5,25 @@
 
 ### The challenge
 
-Let's imagine this use case. You have an architecture that comprehends one or few OpenShift clusters deployed on the Public Cloud or Core Datan Centers and a medium to high number of clusters in an small Data Center environment closer to where the data is generated and consumed (near-edge) or even a high number of clusters running really close to the end user and data sources (far-edge). 
+Let's imagine that you have an architecture that comprehends one or few OpenShift clusters deployed on the Public Cloud or Core Datan Centers and a medium to high number of clusters in an small Data Center environment closer to where the data is generated and consumed (near-edge) or even a high number of clusters running really close to the end user and data sources (far-edge). 
 
 Now you might need to deploy an application, Where should you locate it? You can think, this is an Edge Computing use case, so as close as the user and data source, and you are right, but sometimes it could be more convinient to deploy the application in the near-edge... or even in the Core depending on the environment conditions. 
 
+Most of the time, the kind of device that you have in the far-edge does not have a great amount of resources, which means that you need to be cautious of what you deploy on them. For example, if you have two "versions" of your application, one standard and another one "little", you better be sure that you deploy the "little" version on the far-edge device. Also it's better that you only deploy on those devices the applications that are really needed, so if it does not highly affects your use case (and your pocket), it is better to use resources from your near-edge, or even the Core if it's possible, what will make more resources available in the far-edge for the applications that you really need to locate there.
 
 
 
+
+
+
+
+
+
+
+
+
+
+dinamico
 
 
 
@@ -25,7 +37,12 @@ In any edge computing architecture you will have a high number of devices involv
 
 ### The solution
 
-### The value
+
+
+
+
+Now think about the statement "if it does not highly affets your use case". This could mean that, for example, if your use case needs to have a low latency reponse, you will have in the network latency a key determing factor to know if you can deploy 
+
 
 
 

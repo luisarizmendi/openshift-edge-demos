@@ -28,6 +28,10 @@ You need to complete these steps before deploying your demo:
 
 ![](../../../doc/images/bootstrap-environment-deploy.gif)
 
+  > **NOTE**
+  >
+  > It's possible that if you try to access ACM as soon as the web plugin update message appears, you will get another warning message that says "Red Hat Advanced MAangement for Kubernetes is not ready".Just wait a little bit more time so the ACM is completely up.
+
 3. **Wait until you can open the Advanced Cluster Manager console**
 
 ![](../../../doc/images/bootstrap-environment-wait.gif)
