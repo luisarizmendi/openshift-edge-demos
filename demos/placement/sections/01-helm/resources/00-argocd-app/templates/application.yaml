@@ -5,7 +5,7 @@ metadata:
   name: {{ $.Values.app.name }}-{{ .name }}
   namespace: {{ $.Values.app.namespace }}
   labels:
-    app.kubernetes.io/managed-by: {{ $.Values.app.name }}-{{ .name }}
+    app.kubernetes.io/managed-by: {{ $.Values.app.name }}-global
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]

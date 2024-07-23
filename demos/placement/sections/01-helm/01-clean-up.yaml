@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cleanup-child-apps
+  namespace: openshift-gitops
+spec:
+  template:
+    spec:
+      containers:
+      - name: cleanup
+        image: openshift/cli:latest  # OpenShift CLI image
+        command:
+        - /bin/sh
+        - -c
+        - |
+          oc delete applications -n openshift-gitops -l app.kubernetes.io/managed-by=demo-placement-global
+      restartPolicy: Never
