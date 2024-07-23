@@ -10,8 +10,6 @@ app:
 clusters:
   - name: local-cluster
     server: 'https://kubernetes.default.svc'
-    environment: cloud
 
-#  - name: site1
-#    server: 'https://cluster2-server-url'
-#    environment: near-edge
+  - name: near-edge-1
+    server: 'https://cluster2-server-url'
