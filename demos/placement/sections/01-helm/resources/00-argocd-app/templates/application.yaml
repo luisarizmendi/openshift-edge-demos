@@ -5,7 +5,7 @@ metadata:
   name: {{ $.Values.app.name }}-{{ .name }}
   namespace: {{ $.Values.app.namespace }}
   labels:
-    app.kubernetes.io/managed-by: {{ $.Values.app.name }}-global
+    app.kubernetes.io/managed-by: demo-placement-global
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
@@ -20,6 +20,8 @@ spec:
   template:
     metadata:
       name: "{{`{{.path.basename}}`}}-{{ .name }}"
+      labels:
+        app.kubernetes.io/managed-by: demo-placement-global
     spec:
       project: {{ $.Values.app.project }}
       source:
