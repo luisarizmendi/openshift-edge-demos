@@ -27,7 +27,7 @@ spec:
         helm:
           valueFiles:
               - values.yaml
-              - environments/values-'{{ .name }}'.yaml
+              - environments/values-{{ .name }}.yaml
       destination:
         server: '{{ .server }}'
         namespace: '{{`{{.path.basename}}`}}'
