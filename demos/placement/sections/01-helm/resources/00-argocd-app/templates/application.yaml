@@ -13,7 +13,7 @@ spec:
         revision: {{ $.Values.app.revision }}
         directories:
         {{- range $.Values.app.directories }}
-        - {{ . }}
+        - path: {{ . }}
         {{- end }}
   template:
     metadata:
