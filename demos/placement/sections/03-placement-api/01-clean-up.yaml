@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: cleanup-demo-placement-global-
+  namespace: openshift-gitops
+spec:
+  template:
+    spec:
+      serviceAccountName: openshift-gitops-argocd-application-controller
+      containers:
+        - name: delete-apps
+          image: openshift/origin-cli:latest
+          command: ["oc"]
+          args: ["delete", "applications", "-n", "openshift-gitops", "-l", "app.kubernetes.io/managed-by=demo-placement-global"]
+        - name: delete-appsets
+          image: openshift/origin-cli:latest
+          command: ["oc"]
+          args: ["delete", "applicationsets", "-n", "openshift-gitops", "-l", "app.kubernetes.io/managed-by=demo-placement-global"]
+      restartPolicy: Never

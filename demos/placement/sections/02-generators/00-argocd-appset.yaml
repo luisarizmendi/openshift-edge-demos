@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  labels:
+    app.kubernetes.io/managed-by: demo-placement-global
+  name: demo-placement-global
+  namespace: openshift-gitops
+spec:
+  generators:
+    - matrix:
+        generators:
+          - git:
+              directories:
+                - path: demos/placement/apps/welcome/*
+              repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+              revision: main
+          - list:
+              elements:
+              - cluster: local-cluster
+                url: https://kubernetes.default.svc
+              - cluster: near-edge-1
+                url: https://blah
+  goTemplate: true
+  goTemplateOptions:
+    - missingkey=error
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/managed-by: demo-placement-global
+      name: '{{.path.basename}}-{{.cluster}}'
+    spec:
+      destination:
+        namespace: '{{.path.basename}}'
+        server: '{{.url}}'
+      project: demo-placement
+      source:
+        helm:
+          valueFiles:
+            - values.yaml
+            - environment/values-{{.cluster}}.yaml
+        path: '{{.path.path}}'
+        repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+        targetRevision: main
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
