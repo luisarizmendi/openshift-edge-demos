@@ -11,5 +11,5 @@ clusters:
   - name: local-cluster
     server: 'https://kubernetes.default.svc'
 
-  - name: near-edge-1
-    server: 'https://cluster2-server-url'
+#  - name: near-edge-1
+#    server: 'https://cluster2-server-url'

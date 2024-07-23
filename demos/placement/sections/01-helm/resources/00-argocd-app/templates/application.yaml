@@ -19,20 +19,20 @@ spec:
         {{- end }}
   template:
     metadata:
-      name: {{`{{.path.basename}}`}}-{{ .name }}
+      name: "{{`{{.path.basename}}`}}-{{ .name }}"
     spec:
       project: {{ $.Values.app.project }}
       source:
         repoURL: {{ $.Values.app.repoURL }}
         targetRevision: {{ $.Values.app.revision }}
-        path: '{{`{{.path.path}}`}}'
+        path: "{{`{{.path.path}}`}}"
         helm:
           valueFiles:
-              - values.yaml
-              - environment/values-{{ .name }}.yaml
+            - values.yaml
+            - environment/values-{{ .name }}.yaml
       destination:
         server: '{{ .server }}'
-        namespace: '{{`{{.path.basename}}`}}'
+        namespace: "{{`{{.path.basename}}`}}"
       syncPolicy:
         automated:
           prune: true
