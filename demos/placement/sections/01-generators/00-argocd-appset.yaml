@@ -18,8 +18,10 @@ spec:
               elements:
               - cluster: local-cluster
                 url: https://kubernetes.default.svc
-              - cluster: near-edge-1
-                url: https://blah
+#              - cluster: edge-1
+#                url: https://blah
+#              - cluster: edge-2
+#                url: https://blah
   goTemplate: true
   goTemplateOptions:
     - missingkey=error

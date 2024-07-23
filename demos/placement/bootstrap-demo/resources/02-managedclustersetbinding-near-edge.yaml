@@ -5,7 +5,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "2"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: near-edge
+  name: edge
   namespace: openshift-gitops
 spec:
-  clusterSet: near-edge
+  clusterSet: edge

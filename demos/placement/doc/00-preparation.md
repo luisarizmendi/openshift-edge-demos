@@ -3,7 +3,7 @@
 ## Environment & Hardware requirements 
 
 * **OpenShift "Hub" Cluster**: Typically configured with 3 worker nodes, each possessing 8 cores and 16GB of memory.
-* **OpenShift "Near-Edge" Clusters**: At least one additional OpenShift cluster (Minimum resources is ok). 
+* **OpenShift "Edge" Clusters**: At least one additional OpenShift cluster (Minimum resources is ok). 
 
 ## Environment Setup
 

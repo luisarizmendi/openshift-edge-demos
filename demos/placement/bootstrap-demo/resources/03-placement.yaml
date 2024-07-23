@@ -9,7 +9,7 @@ metadata:
 spec:
   clusterSets:
     - cloud
-    - near-edge
+    - edge
   numberOfClusters: 1
   predicates:
     - requiredClusterSelector:
