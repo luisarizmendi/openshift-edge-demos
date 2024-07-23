@@ -17,7 +17,7 @@ spec:
         {{- end }}
   template:
     metadata:
-      name: '{{`{{.path.basename}}`}}'
+      name: {{ $.Values.app.name }}-'{{`{{.path.basename}}`}}'-{{ .name }}
     spec:
       project: {{ $.Values.app.project }}
       source:
@@ -27,7 +27,7 @@ spec:
         helm:
           valueFiles:
               - values.yaml
-              - environments/values-{{ .name }}.yaml
+              - environment/values-{{ .name }}.yaml
       destination:
         server: '{{ .server }}'
         namespace: '{{`{{.path.basename}}`}}'
