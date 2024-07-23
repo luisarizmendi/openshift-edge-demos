@@ -7,15 +7,31 @@
 
 ## Environment Setup
 
-All demo deployments comprehends two main groups of steps:
+All demo deployments comprehends three main groups of steps:
 
-1. **OpenShift "Hub" Cluster base configuration**: Typically two primary components:
-   - Advanced Cluster Management (ACM)
-   - OpenShift GitOps Operator
+0. **Clone this repository and ajust values**
+
+1. **OpenShift "Hub" Cluster base configuration**
 
 2. **Demo specific setup**
 
-### Base configuration
+
+### 0. Clone this repository and adjust values
+You will need to change values in GitHub during the demo, so you will need to clone it.
+
+
+
+??????????????????????????????????????
+
+
+???????????????????????????'
+
+
+??????????????????????????????????????
+
+
+
+### 1. OpenShift "Hub" Cluster base configuration
 
 You need to complete these steps before deploying your demo:
 
@@ -37,7 +53,7 @@ You need to complete these steps before deploying your demo:
 ![](../../../doc/images/bootstrap-environment-wait.gif)
 
 
-### Demo specific configuration
+### 2. Demo specific setup
 
 Now you can deploy the components needed by your demo and apply the required configuration.
 
