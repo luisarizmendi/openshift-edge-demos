@@ -19,7 +19,7 @@ All demo deployments comprehends two main groups of steps:
 
 You need to complete these steps before deploying your demo:
 
-1. **Prepare your OpenShift Clusters**: Ensure you have freshly installed the required OpenShift clusters.
+1. **Prepare your OpenShift Clusters**: Ensure you have freshly installed the required OpenShift clusters. The demo has been tested with OpenShift 4.16.
 
 2. **Apply the Base Configuration in the Hub Cluster**:
    - Access your OpenShift console in the Hub cluster.

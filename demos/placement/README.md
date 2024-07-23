@@ -31,6 +31,13 @@ In this demo, you will explore the different methods for defining where your app
 * OpenShift GitOps
 * Advanced Cluster Management Placement API
 
+## Architecture
+
+TBD
+
+
+
+
 ## Preparation and Requirements
 
 You will find all the details in the [demo preparation and requirements doc](doc/00-preparation.md).
