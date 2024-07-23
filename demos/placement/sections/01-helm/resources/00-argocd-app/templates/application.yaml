@@ -4,6 +4,8 @@ kind: ApplicationSet
 metadata:
   name: {{ $.Values.app.name }}-{{ .name }}
   namespace: {{ $.Values.app.namespace }}
+  labels:
+    app.kubernetes.io/managed-by: {{ $.Values.app.name }}-{{ .name }}
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
