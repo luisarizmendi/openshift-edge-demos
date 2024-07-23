@@ -11,7 +11,10 @@ spec:
     - git:
         repoURL: {{ $.Values.app.repoURL }}
         revision: {{ $.Values.app.revision }}
-
+        directories:
+        {{- range $.Values.app.directories }}
+        - {{ . }}
+        {{- end }}
   template:
     metadata:
       name: '{{`{{.path.basename}}`}}'
