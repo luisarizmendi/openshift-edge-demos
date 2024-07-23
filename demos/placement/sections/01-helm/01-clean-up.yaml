@@ -12,4 +12,8 @@ spec:
           image: openshift/origin-cli:latest
           command: ["oc"]
           args: ["delete", "applications", "-n", "openshift-gitops", "-l", "app.kubernetes.io/managed-by=demo-placement-global"]
+        - name: delete-appsets
+          image: openshift/origin-cli:latest
+          command: ["oc"]
+          args: ["delete", "applicationsets", "-n", "openshift-gitops", "-l", "app.kubernetes.io/managed-by=demo-placement-global"]
       restartPolicy: Never
