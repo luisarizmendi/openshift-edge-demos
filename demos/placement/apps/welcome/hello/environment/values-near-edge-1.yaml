@@ -1,5 +1,6 @@
 ---
 global:
+  cluster: near-edge-1
   environment: Near Edge
 
 

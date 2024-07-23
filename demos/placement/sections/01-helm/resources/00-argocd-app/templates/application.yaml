@@ -17,7 +17,7 @@ spec:
         {{- end }}
   template:
     metadata:
-      name: {{ $.Values.app.name }}-{{`{{.path.basename}}`}}-{{ .name }}
+      name: {{`{{.path.basename}}`}}-{{ .name }}
     spec:
       project: {{ $.Values.app.project }}
       source:

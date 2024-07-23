@@ -1,5 +1,6 @@
 ---
 global:
+  cluster: local-cluster
   environment: Cloud
 
 

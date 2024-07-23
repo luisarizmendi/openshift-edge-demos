@@ -16,7 +16,7 @@ data:
             <h1>{{ .Values.global.message }}</h1>
             <br/>
             <h2>
-            This is {{ .Values.applicationName }} running on the {{ .Values.global.environment }} <br>
+            I'm running on the {{ .Values.global.environment }} in OpenShift cluster {{ .Values.global.cluster }}.<br>
             </h2>
           </body>
       </html>
