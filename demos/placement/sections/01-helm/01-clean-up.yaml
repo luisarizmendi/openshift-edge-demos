@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: cleanup-demo-placement-global
+  generateName: cleanup-demo-placement-global-
   namespace: openshift-gitops
 spec:
   template:
