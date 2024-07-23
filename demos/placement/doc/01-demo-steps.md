@@ -2,7 +2,27 @@
 
 ## Getting Started
 
+
+### TL/DR
+
+
+point to the summary
+
+
+
 ### Overview
+
+hablar de la parte de storage que no se toca en esta demo
+
+
+
+
+seimpre puedes crear una app objet per app and per cluster pero aqui vamos a simplificar
+
+
+
+tres acercamientos, uno cambiando objecto en openshift, otro cambiando fichero en git y otro con config acm (y otras cosas automaticas)
+
 
 say all tried to be gitops
 
@@ -45,21 +65,6 @@ en este ejemplo 1 cloud y dos edge
 
 
 ### 1 - Placement with Argo CD ApplicationSet Generators
-
-
-
-explain generators
-
-
-deploy in hub
-
-
-
-change and deploy in edge
-
-
-
-clear
 
 
 
