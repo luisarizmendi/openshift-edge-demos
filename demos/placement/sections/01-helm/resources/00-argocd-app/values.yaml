@@ -1,0 +1,17 @@
+app:
+  name: demo-placement
+  namespace: openshift-gitops
+  repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+  revision: main
+  directories: 
+    - path: demos/placement/apps/welcome/*
+  project: demo-placement
+
+clusters:
+  - name: local-cluster
+    server: 'https://kubernetes.default.svc'
+    environment: cloud
+
+#  - name: site1
+#    server: 'https://cluster2-server-url'
+#    environment: near-edge

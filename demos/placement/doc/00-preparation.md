@@ -1,4 +1,4 @@
-# Demo preparation
+# Workload Placement - Demo Preparation
 
 ## Environment & Hardware requirements 
 
