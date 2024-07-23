@@ -4,7 +4,7 @@ app:
   repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
   revision: main
   directories: 
-    - path: demos/placement/apps/welcome/*
+    - demos/placement/apps/welcome/*
   project: demo-placement
 
 clusters:
