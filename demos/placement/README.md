@@ -76,5 +76,21 @@ While it is possible to manage cluster selection by creating individual Argo CD 
 
 ## Closing
 
+We have seen three different ways to manage the APP placement. The first one was using an implicit feature of the ApplicationSet objects, the generators, that permitted the creation of multiple Application objects based on the contents of subdirectories in a Git repository and a static list of OpenShift clusters used as targets.
+
+This approach removed the need to manually create a single Application manifest for each APP and Cluster pair.
+
+ApplicationSet generators offer a limited set of template/value options. To enhance flexibility, we introduced a more powerful templating tool, Helm. The second option we explored was creating the initial ApplicationSet using Helm, which provides many more options for customizing target cluster selection and APP value customization.
+
+Additionally, with this approach, we demonstrated how to place the values file used by Helm in a Git repository, enabling us to manage APP placement following GitOps practices.
+
+While Helm offers greater flexibility, it still lacks one "nice to have" feature: dynamic APP placement.
+
+Advanced Cluster Management adds the Placement API into the picture, providing a way to filter the clusters used as targets for our APP deployment. It also allows configuring the number of replicas per group of clusters and setting preferences among the available clusters. This enables the configuration of advanced placement topologies that can adapt over time to the ever-changing environment, ensuring the best response to end-users.
+
+
+
+
+
 
 XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
