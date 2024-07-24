@@ -84,7 +84,7 @@ You can `pull` the repository locally onto your laptop, but for convenience, we 
 
 1. Edit the values file in your GitHub repository (`demos/placement/demo-manifest/02-helm/resources/00-argocd-app/values.yaml`).
 2. Uncomment the examples of cluster descriptions, add your Edge clusters, and comment out the `local-cluster` entry. Commit the changes.
-3. If you don't want to wait, open the Argo CD UI and click `REFRESH APPS`.
+3. If you don't want to wait, open the Argo CD UI and click `REFRESH APPS` and select `demo-placement-global`.
 
 You will see how the "hello" app deployed in the `local-cluster` starts being deleted and, at the same time, is deployed in the specified clusters in the `values` file.
 
