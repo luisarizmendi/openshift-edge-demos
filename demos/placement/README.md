@@ -44,9 +44,7 @@ In this demo, you will explore the different methods for defining where your app
 
 ### TL/DR
 
-
-point to the summary
-
+If you already know the demo details and just want a list of demo steps, you can jump into the [steps summary](doc/steps-summary.md).
 
 
 ### Demo Overview

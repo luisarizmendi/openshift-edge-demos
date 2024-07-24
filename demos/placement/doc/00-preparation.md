@@ -85,37 +85,13 @@ Now you can deploy the components needed by your demo and apply the required con
 
 ## Post-deployment Walkthrough
 
-After the environment and demo bootstrap you will have:
-
-* The Advanced Cluster Management and the Arco CD Controller ready in your OpenShift Hub Cluster. 
-* A couple of `ClusterSets` have been pre-defined in ACM, "cloud" and "edge". Those will be used during the Placement API demo section.
-
-
-
-
-
+After the environment and demo bootstrap you will have the Advanced Cluster Management and the Arco CD Controller ready in your OpenShift Hub Cluster.
 
 If you open the ACM console ("All-Cluster" in the dropdown menu of the top left corner in the OpenShift console) and go to "Infrsatructure", you can see how you have the default `local-cluster` but checking the "ClusterSets" tab you will see that, for this demo, a couple of `ClusterSets` have been pre-defined in ACM, "cloud" and "edge". Those will be used during the Placement API demo section.
 
 In the Argo CD UI (you can open it by clicking on the squares on the top right on the OpenShift Console), you can check that you have two Argo CD applications already created. The `advanced-cluster-management` application deployed ACM in your Hub Cluster, and the `bootstrap-demo-placement` prepared the environment for the demo (ie. creating the already mentioned `ClusterSets` and more).
 
-
-
-
-default clusterset para argo
-
-
-
-
-
-
-
-
-
-
-In addition, now you should have one or more additional OpenShift clusters ready to be used during the demo steps.
-
-
+If you are interested on the objects generated during the demo bootstrap, you can open the `bootstrap-demo-placement` Application in the Argo CD UI. You will see how there are other useful objects, such as the `GitOpsCluster` manifest that automatically creates the clusters in Argo CD when the clusters are imported in ACM, so you can skip that step during the demo steps.
 
 
 ## Importing Edge OpenShift Clusters
@@ -136,28 +112,20 @@ Personally I find the server URL and API token the most straighforward since you
 3. Click on "Copy login command" and then "Display token"
 4. Copy the `token` and `server` parameters
 
+With that info you can proceed to import the cluster:
+
+1. Open the ACM UI by selecting "All Clusters" in the dropdown menu on the top left corner of the OpenShift Hub cluster
+2. Go to Infrastructure > Clusters and click on the "Import Cluster" button. 
+3. Fill the form. Be sure that you **you name the new cluster as "edge-1"**, since the APP environment variables are prepared for that cluster name, otherwhise you will need to modify the Helm variables during the demo steps.
+
+![](images/00-import-cluster.png)
+
+4. Click "Next" a couple of times and wait for the cluster to be in Ready state
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-With that info you can proceed to import the cluster. Be sure that you select the "edge" `ClusterSet` and **you name it as "edge-1"**, since the APP environment variables are prepared for that cluster name, otherwhise you will need to modify the Helm variables during the demo steps.
-
-![](../images/00-import-cluster.png)
-
-
-
+![](images/00-import-cluster-argocd.png)
 
 
