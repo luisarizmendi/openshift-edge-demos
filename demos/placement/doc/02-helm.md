@@ -52,7 +52,7 @@ To deploy the child applications, create the parent application object targeting
       project: demo-placement
 
       source:
-        repoURL: 'https://<YOUR REPO>.git'
+        repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
         targetRevision: main
         path: demos/placement/sections/01-helm/resources/00-argocd-app
 

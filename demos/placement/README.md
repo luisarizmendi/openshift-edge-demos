@@ -36,11 +36,57 @@ In this demo, you will explore the different methods for defining where your app
 ![](doc/images/architecture.png)
 
 
-
 ## Preparation and Requirements
 
-You will find all the details in the [demo preparation and requirements doc](doc/00-preparation.md).
+* [Preparation and requirements doc](doc/00-preparation.md).
 
-## Demo Steps
+## Demo
 
-The demo will take less than 30 minutes. You will find all the details in the [demo steps doc](doc/01-demo-steps.md).
+### TL/DR
+
+
+point to the summary
+
+
+
+### Demo Overview
+
+hablar de la parte de storage que no se toca en esta demo
+
+
+
+valores por entorno, eso es bueno para diferentes images en edge de cloud
+
+
+
+seimpre puedes crear una app objet per app and per cluster pero aqui vamos a simplificar
+
+
+
+tres acercamientos, uno cambiando objecto en openshift, otro cambiando fichero en git y otro con config acm (y otras cosas automaticas)
+
+
+say all tried to be gitops
+
+two different application images to make it more realistic
+
+
+decir que en sections tiene los ficheros
+
+
+
+### Demo sections
+
+ [0 - Import OpenShift Clusters](sections/00-import.md)
+
+ [1 - Placement with Argo CD ApplicationSet Generators](sections/01-generators.md)
+
+ [2 - Placement with Helm and Argo CD Application manifests](sections/02-helm.md)
+
+ [3 - Placement with ACM and Placement API](sections/03-placement.md)
+
+
+
+## Closing
+
+
