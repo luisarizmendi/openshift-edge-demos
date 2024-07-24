@@ -54,7 +54,7 @@ You need to complete these steps before deploying your demo:
 2. **Apply the Base Configuration in the Hub Cluster**:
    - Access your OpenShift console in the Hub cluster.
    - Click the `+` button to add resources.
-   - Paste the content from the [bootstrap-environment.yaml](../../bootstrap-environment/bootstrap-environment.yaml) file.
+   - Paste the content from the [bootstrap-environment.yaml](../../../bootstrap-environment/bootstrap-environment.yaml) file.
 
 ![](../../../doc/images/bootstrap-environment-deploy.gif)
 
@@ -74,7 +74,7 @@ Now you can deploy the components needed by your demo and apply the required con
 4. **Apply the demo specific setup**
    - Access your OpenShift console in the Hub cluster.
    - Click the `+` button to add resources.
-   - Paste the content from the [bootstrap-demo.yaml](bootstrap-demo/bootstrap-demo.yaml) file.
+   - Paste the content from the [bootstrap-demo.yaml](../bootstrap-demo/bootstrap-demo.yaml) file.
 
 ![](images/bootstrap-demo-deploy.gif)
 
@@ -83,4 +83,4 @@ Now you can deploy the components needed by your demo and apply the required con
 ![](images/bootstrap-demo-wait.gif)
 
 
-Once the setup is complete, you can proceed with the demo steps.
+Once the setup is complete, you can [proceed with the demo steps](01-demo-steps.md)

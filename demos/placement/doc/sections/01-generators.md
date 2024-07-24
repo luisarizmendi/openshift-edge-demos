@@ -70,8 +70,8 @@ To deploy the child applications, create the parent `ApplicationSet` object with
                   revision: main
               - list:
                   elements:
-                    - cluster: local-cluster
-                      url: https://kubernetes.default.svc
+                  - cluster: local-cluster
+                    url: https://kubernetes.default.svc
       goTemplate: true
       goTemplateOptions:
         - missingkey=error
@@ -90,9 +90,9 @@ To deploy the child applications, create the parent `ApplicationSet` object with
               valueFiles:
                 - values.yaml
                 - environment/values-{{.cluster}}.yaml
-              path: '{{.path.path}}'
-              repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
-              targetRevision: main
+            path: '{{.path.path}}'
+            repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+            targetRevision: main
           syncPolicy:
             automated:
               prune: true
@@ -101,13 +101,21 @@ To deploy the child applications, create the parent `ApplicationSet` object with
 
 In this parent `ApplicationSet` object, you can see both the "Git Generator" and the "List Generator." The "List Generator" includes information about the target clusters where the apps will be deployed, while the "Git Generator" points to the directory located in the Git repository where the different manifests of each app (separated into dedicated subdirectories) reside.
 
+After creating the object you will see how the "hello" APP has been deployed on the `local-cluster` OpenShift cluster (`hello-local-cluster` Application in Argo CD UI):
+
+![](../images/01-oncloud.png)
+
+You can also open the `Application` object to obtain the URL for your APP. Open the "hello-world" route and see in the "Live Manifest" the generated "host" route for your APP, it will be something like `hello-world-hello.apps.<cluster name>.<domain>`. 
+
+IF you open the APP, you will see how it has been deployed with some specific "values" for that cluster, including the cluster name and zone ("Cloud" in this case).
+
 ## Deploy on Edge
 
 Now we are going to switch the app from the Cloud to the Edge clusters. To do that, follow these steps:
 
 1. Access your OpenShift console in the Hub cluster.
-2. Edit the `demo-placement-global` object. You can find it by clicking on "Explore API" and looking for `ApplicationSet` `argoproj.io/v1alpha1` instances.
-3. Modify the "List generator" with the information of the Edge clusters:
+2. Edit the `demo-placement-global` object. You can find it by going to the `local-cluster` console, clicking on "Home > API Explorer" and looking for `ApplicationSet` `argoproj.io/v1alpha1` instances.
+3. Open the YAML and modify the "List generator" with the information of the Edge clusters, something like:
 
     ```yaml
     ...
@@ -123,9 +131,7 @@ Now we are going to switch the app from the Cloud to the Edge clusters. To do th
               - list:
                   elements:
                     - cluster: edge-1
-                      url: https://<cluster 1 mgmt url>:6443
-                    - cluster: edge-2
-                      url: https://<cluster 2 mgmt url>:6443
+                      url: https://api.near-edge.sandbox3262.opentlc.com:6443
     goTemplate: true
     goTemplateOptions:
         - missingkey=error
@@ -134,7 +140,19 @@ Now we are going to switch the app from the Cloud to the Edge clusters. To do th
     ...
     ```
 
-You will see how the "hello" app deployed in the `local-cluster` starts being deleted and, at the same time, is deployed in the specified clusters in the `values` file.
+As soon as you make the change, the "hello" APP will be deleted from the `local-cluster` and created in the `edge-1`. You will see something like the screenshoot shown below while transitioning from one cluster to the other, before the `edge-1` becomes synced:
+
+![](../images/01-onedge.png)
+
+
+After some seconds, you will see how the "hello" app deployed (Green status) in the `edge-1`.
+
+
+
+
+
+values
+
 
 ## Clean-Up
 
