@@ -54,7 +54,7 @@ To deploy the child applications, create the parent application object targeting
       source:
         repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
         targetRevision: main
-        path: demos/placement/sections/01-helm/resources/00-argocd-app
+        path: demos/placement/demo-manifest/02-helm/resources/00-argocd-app
 
       destination:
         server: 'https://kubernetes.default.svc'
