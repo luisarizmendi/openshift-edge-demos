@@ -115,7 +115,7 @@ Now we are going to switch the app from the Cloud to the Edge clusters. To do th
 
 1. Access your OpenShift console in the Hub cluster.
 2. Edit the `demo-placement-global` object. You can find it by going to the `local-cluster` console, clicking on "Home > API Explorer" and looking for `ApplicationSet` `argoproj.io/v1alpha1` instances.
-3. Open the YAML and modify the "List generator" with the information of the Edge clusters, something like:
+3. Open the YAML and modify the "List generator" with the information of the Edge clusters (you can check the cluster name and URL in Argo CD under Settings > Clusters). You should have something like:
 
     ```yaml
     ...
@@ -145,14 +145,7 @@ As soon as you make the change, the "hello" APP will be deleted from the `local-
 ![](../images/01-onedge.png)
 
 
-After some seconds, you will see how the "hello" app deployed (Green status) in the `edge-1`.
-
-
-
-
-
-values
-
+After some seconds, you will see how the "hello" app deployed (Green status) in the `edge-1` cluster, and if you open the `Application` object, look for the APP URL and open the APP, you will see how the APP values addapted to this new clusters, giving different information than when it was deployed on the Cloud.
 
 ## Clean-Up
 
