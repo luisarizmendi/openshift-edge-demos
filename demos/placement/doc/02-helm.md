@@ -32,6 +32,12 @@ Refer to the Helm [values](../../sections/01-helm/resources/00-argocd-app/values
 
 At the beginning of the demo, only the Cloud (Hub) Cluster will be uncommented in the [values](../../sections/01-helm/resources/00-argocd-app/values.yaml) file. During the steps, you will modify these values in the Git repository and see how changes are reflected on the apps deployed using Argo CD.
 
+When a change in the application placement is needed (ie. remove the APP from the Cloud clusters and deploy it in the Edge Clusters), the users or the external system will change values in a file on a Git repo, following the GitOps paradigm:
+
+
+![](images/02-workflow.png)
+
+
 ## Deploy on Cloud
 
 To deploy the child applications, create the parent application object targeting the location of the Helm Chart that creates the child application manifests:

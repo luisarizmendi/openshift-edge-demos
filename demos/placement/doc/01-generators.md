@@ -43,6 +43,12 @@ Parent ApplicationSet ---(List generator) ----> (Git generator) -->  Child Appli
 
 Thanks to the "Matrix Generator" and templating, we can create all the different `Application` objects from a single manifest instead of having to create an `Application` object per cluster and per app, which simplifies management.
 
+When we need to include a change using this approach (ie. remove the APP from the Cloud clusters and deploy it in the Edge Clusters), what it's needed is to change the already created `ApplicationSet`, so the new `Application` objects are generated. In this demo we are doing it manually directly on the OpenShift clusters, but this could also be done using ACM as a central point:
+
+![](images/01-workflow.png)
+
+
+
 ## Deploy on Cloud
 
 To deploy the child applications, create the parent `ApplicationSet` object with the Generators:

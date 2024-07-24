@@ -4,6 +4,12 @@ In this section, we will explore how to manage the placement of applications usi
 
 To streamline the use of the [Cluster Decision Resource Generator](https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Cluster-Decision-Resource/), ACM offers an API known as the [Placement API](https://open-cluster-management.io/concepts/placement/). This API allows you to design the desired placement behavior by configuring a `Placement` object.
 
+In this case, when we need to include a change (ie. remove the APP from the Cloud clusters and deploy it in the Edge Clusters), We will need to modify the Cluster metadata (with the `ClusterClaim` objects as we will see). In this demo we are doing it manually directly on the OpenShift clusters, but this could also be done using ACM as a central point, similar to what we found during the first section:
+
+
+![](images/01-workflow.png)
+
+
 ## Configure the Environment
 
 To utilize the Placement API and create the necessary `Placement` object, follow these steps:
@@ -246,7 +252,9 @@ Once you have finished moving the app around your clusters, you can delete the `
 
 You can experiment with dynamic assignment. For example, you can deploy a high CPU or memory demanding APP along with your "hello" APP and observe how ACM will reassign the "hello" APP to another cluster.
 
-If you want to delve deeper, you can explore the "[Extensible scheduling](https://open-cluster-management.io/scenarios/extend-multicluster-scheduling-capabilities/)" capability of the Placement API. You can fork the [example add-on for extensible scheduling](https://github.com/open-cluster-management-io/addon-contrib/tree/main/resource-usage-collect-addon) repository and modify the code to assign scores based on criteria more relevant to an edge use case than CPU and memory availability.
+You can also try to move this approach into a GitOps model where the `ClusterClaim` manifest that control which cluster are available for the APP placement is located in a Git repository, similar to what was proposed in the "Going beyond" of the first demo section.
+
+But ff you want to delve deeper, you can explore the "[Extensible scheduling](https://open-cluster-management.io/scenarios/extend-multicluster-scheduling-capabilities/)" capability of the Placement API. You can fork the [example add-on for extensible scheduling](https://github.com/open-cluster-management-io/addon-contrib/tree/main/resource-usage-collect-addon) repository and modify the code to assign scores based on criteria more relevant to an edge use case than CPU and memory availability.
 
 For instance, referring back to the example that illustrates the "Challenge" we are trying to address, you can develop code that checks an external service monitoring the latency between the clients and the OpenShift clusters. This way, the APP placement can be based on that information. For example, you could deploy the APP in edge clusters only if the latency between the clients and the Cloud cluster is "high," or decide in which edge cluster to deploy based on selecting the one with the least latency to the final clients.
 
