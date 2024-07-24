@@ -32,6 +32,9 @@ You will need to change values in GitHub during the demo, so you will need to fo
    cd scripts
    ./change_repo_url.sh https://github.com/<your github user>/<fork name>
    ```
+  > **NOTE**
+  >
+  > Do not include the tailing `.git` or any slash at the end.
 
 3. Push changes to your fork repo
 
