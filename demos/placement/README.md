@@ -89,8 +89,3 @@ While Helm offers greater flexibility, it still lacks one "nice to have" feature
 Advanced Cluster Management adds the Placement API into the picture, providing a way to filter the clusters used as targets for our APP deployment. It also allows configuring the number of replicas per group of clusters and setting preferences among the available clusters. This enables the configuration of advanced placement topologies that can adapt over time to the ever-changing environment, ensuring the best response to end-users.
 
 
-
-
-
-
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
