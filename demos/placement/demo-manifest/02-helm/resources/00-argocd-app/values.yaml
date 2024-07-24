@@ -8,11 +8,11 @@ app:
   project: demo-placement
 
 clusters:
-#  - name: local-cluster
-#    server: 'https://kubernetes.default.svc'
+  - name: local-cluster
+    server: 'https://kubernetes.default.svc'
 
-  - name: edge-1
-    server: 'https://api.near-edge.sandbox3262.opentlc.com:6443'
+#  - name: edge-1
+#    server: 'https://api.near-edge.sandbox3262.opentlc.com:6443'
 
 
 #  - name: edge-2
