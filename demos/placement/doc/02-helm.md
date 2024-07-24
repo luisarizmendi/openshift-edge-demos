@@ -67,17 +67,22 @@ To deploy the child applications, create the parent application object targeting
 
 After a few seconds, you will find in the Argo CD Web UI that, along with the `demo-placement-global` you just created, there is the `hello-local-cluster` Child Application (indicating that the "hello" app is being deployed in the "local-cluster" OpenShift cluster).
 
-> **Note**
+> **NOTE**
 > 
 > Please note that the `ApplicationSet` objects are not shown in the Argo CD UI.
 
 ## Deploy on Edge
 
-Next, modify the [values](../../sections/01-helm/resources/00-argocd-app/values.yaml) to remove the "hello" app from the "Cloud" cluster and run it on "Edge" clusters.
+Next, modify the [values](../demo-manifest/02-helm/resources/00-argocd-app/values.yaml) to remove the "hello" app from the "Cloud" cluster and run it on "Edge" clusters.
+
+> **NOTE**
+> 
+> In this demo we are using a single Git repo, but it's a good idea to place this value file in a different repo that can be edited by any person or system without affecting other aspects of the environment.
+
 
 You can `pull` the repository locally onto your laptop, but for convenience, we will change the values directly in GitHub for this demo:
 
-1. Edit the values file in your GitHub repository (`demos/placement/sections/01-helm/resources/00-argocd-app/values.yaml`).
+1. Edit the values file in your GitHub repository (`demos/placement/demo-manifest/02-helm/resources/00-argocd-app/values.yaml`).
 2. Uncomment the examples of cluster descriptions, add your Edge clusters, and comment out the `local-cluster` entry. Commit the changes.
 3. If you don't want to wait, open the Argo CD UI and click `REFRESH APPS`.
 
