@@ -77,13 +77,11 @@ decir que en sections tiene los ficheros
 
 ### Demo sections
 
- [0 - Import OpenShift Clusters](sections/00-import.md)
+ [1 - Placement with Argo CD ApplicationSet Generators](doc/01-generators.md)
 
- [1 - Placement with Argo CD ApplicationSet Generators](sections/01-generators.md)
+ [2 - Placement with Helm and Argo CD Application manifests](doc/02-helm.md)
 
- [2 - Placement with Helm and Argo CD Application manifests](sections/02-helm.md)
-
- [3 - Placement with ACM and Placement API](sections/03-placement.md)
+ [3 - Placement with ACM and Placement API](doc/03-placement.md)
 
 
 

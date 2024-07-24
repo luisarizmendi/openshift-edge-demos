@@ -118,7 +118,7 @@ In addition, now you should have one or more additional OpenShift clusters ready
 
 
 
-## Importing additional OpenShift Clusters
+## Importing Edge OpenShift Clusters
 
 During the demo we will be scheduling applications across multiple OpenShift clusters, so you will need to have more than a single OpenShift managed by ACM and Argo CD.
 
