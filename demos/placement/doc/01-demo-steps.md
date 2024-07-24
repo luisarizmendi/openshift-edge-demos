@@ -39,11 +39,9 @@ decir que en sections tiene los ficheros
 
 ### Environment Walkthrough
 
-After the environment and demo bootstrap you will have the Advanced Cluster Management and the Arco CD Controller ready in your OpenShift Hub Cluster. You can see how, for this demo, a couple of `ClusterSets` have been pre-defined in ACM, "cloud" and "edge", and that the Hub Cluster is already part of the "cloud" `ClusterSet`.
+After the environment and demo bootstrap you will have the Advanced Cluster Management and the Arco CD Controller ready in your OpenShift Hub Cluster. You can see how, for this demo, a couple of `ClusterSets` have been pre-defined in ACM, "cloud" and "edge", those will be used durint the Placement API section.
 
-Also manifest for Placement API usage were generated, but those will be explained during the demo steps below.
-
-You can check that you have two Argo CD applications already created. The `advanced-cluster-management` application deployed ACM in your Hub Cluster, and the `bootstrap-demo-placement` prepared the environment for the demo (ie. creating the already mentioned `ClusterSets`).
+In the Argo CD UI, you can check that you have two Argo CD applications already created. The `advanced-cluster-management` application deployed ACM in your Hub Cluster, and the `bootstrap-demo-placement` prepared the environment for the demo (ie. creating the already mentioned `ClusterSets`).
 
 In addition, now you should have one or more additional OpenShift clusters ready to be used during the demo steps.
 
@@ -67,6 +65,23 @@ Personally I find the server URL and API token the most straighforward since you
 2. Click on the top right corner where you see your user (`kube:admin` if using "kubeadmin" user)
 3. Click on "Copy login command" and then "Display token"
 4. Copy the `token` and `server` parameters
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 With that info you can proceed to import the cluster. Be sure that you select the "edge" `ClusterSet` and **you name it as "edge-1"**, since the APP environment variables are prepared for that cluster name, otherwhise you will need to modify the Helm variables during the demo steps.
 
