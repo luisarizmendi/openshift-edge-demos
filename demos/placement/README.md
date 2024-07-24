@@ -38,9 +38,11 @@ In this demo, you will explore the different methods for defining where your app
 
 ## Preparation and Requirements
 
-* [Preparation and requirements doc](doc/00-preparation.md).
+* [Preparation and requirements ](doc/00-preparation.md).
 
 ## Demo
+
+**Time required for demo**: <30 minutes
 
 ### TL/DR
 

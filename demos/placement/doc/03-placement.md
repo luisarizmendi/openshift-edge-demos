@@ -4,40 +4,47 @@ In this section we are going to see how we can manage the placement of APPs usin
 
 In order to simplify the usage of the [Cluster Decision Resource Generator](https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Cluster-Decision-Resource/), ACM provides an API called [Placement API](https://open-cluster-management.io/concepts/placement/) that permits to design the desired placement behaviour by configuring a new `Placement` Object.
 
-As part of the demo environment bootstrap, various object were generated to configure the integration between Advance Cluster Management and Argo CD. One of this objects was the following `Placement` manifest:
 
-```yaml
-apiVersion: cluster.open-cluster-management.io/v1beta1
-kind: Placement
-metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "3"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: demo-placement
-  namespace: openshift-gitops
-spec:
-  clusterSets:
-    - cloud
-    - edge
-  numberOfClusters: 1
-  predicates:
-    - requiredClusterSelector:
-        claimSelector:
-          matchExpressions:
-            - key: demo.status
-              operator: In
-              values:
-                - good
-                - average
-  prioritizerPolicy:
-    configurations:
-      - scoreCoordinate:
-          builtIn: ResourceAllocatableCPU
-        weight: 2
-      - scoreCoordinate:
-          builtIn: ResourceAllocatableMemory
-        weight: 2
-```
+## Configure the environment
+
+Since we are using a new API through an additional `Placement` manifest, we will need to create that object.
+
+1. Access your OpenShift console in the **Hub cluster**.
+2. Click the `+` button to add resources.
+3. Paste the following content:
+
+  ```yaml
+  apiVersion: cluster.open-cluster-management.io/v1beta1
+  kind: Placement
+  metadata:
+    annotations:
+      argocd.argoproj.io/sync-wave: "3"
+      argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    name: demo-placement
+    namespace: openshift-gitops
+  spec:
+    clusterSets:
+      - cloud
+      - edge
+    numberOfClusters: 1
+    predicates:
+      - requiredClusterSelector:
+          claimSelector:
+            matchExpressions:
+              - key: demo.status
+                operator: In
+                values:
+                  - good
+                  - average
+    prioritizerPolicy:
+      configurations:
+        - scoreCoordinate:
+            builtIn: ResourceAllocatableCPU
+          weight: 2
+        - scoreCoordinate:
+            builtIn: ResourceAllocatableMemory
+          weight: 2
+  ```
 
 There are three main points in this decriptor:
 
@@ -55,12 +62,17 @@ In this case, I simulated that an external system is including tags into the Ope
   >
   > This is an example. You have [more options](https://open-cluster-management.io/concepts/placement/) that can be configured, for example, you can select the cluster out from the `clustersets` simply by labeling the clusters that you want to use, or you can create subgroups of clusters and choose how many deployments of the APP you want per one of each group with the `decisionStrategy` section.
 
-In a previous step you already imported the clusters in to ACM, and you also assigend them to the corresponding `clusterSet`, so you can proceed with the next demo steps.
+Two actions must be taken then, the first one is to assign the imported clusters into the `clusterSet` that we are going to use, and then we will need to assign the desired metadata to each cluster using the `ClusterClaim` object.
 
+Let's start by assigning clusters to the `ClusterSets`:
 
-## Deploy on Cloud
+1. Access the ACM console by selecting "All Clusters" in the top left on the **Hub cluster**.
+2. Go to Infastructure > Clusters and click on the "Cluster Sets" tab
+3. Select the "cloud" `clusterSet` and assign the `local-cluster` to it, then assign the edge-1 cluster to the "edge" `clusterSet`
 
-First lets determine the simulated status of the cluster. Since we are talking about "deploying on the cloud", we will mark cloud cluster as "good" (or "ok") state and the the edge clusters as "bad":
+Now since we will start by deploying on the cloud cluster, we will assign the value "good" to the `local-cluster` and "bad" to the `edge-1` by creating the corresponding `ClusterClaim` object in each cluster.
+
+First in the `local-cluster`:
 
 1. Access your OpenShift console in the **Hub cluster**.
 2. Click the `+` button to add resources.
@@ -74,21 +86,36 @@ First lets determine the simulated status of the cluster. Since we are talking a
     spec:
       value: good
     ```
-4. Access your **Edge OpenShift** clusters:
-5. Click the `+` button to add resources.
-6. Paste the following content:
+
+Then in the `edge-1` cluster
+
+1. Access your OpenShift console in the **edge-1** cluster.
+2. Click the `+` button to add resources.
+3. Paste the following content:
+
     ```yaml
     apiVersion: cluster.open-cluster-management.io/v1alpha1
     kind: ClusterClaim
     metadata:
       name: demo.status
     spec:
-      value: good
+      value: bad
     ```
 
   > **NOTE**
   >
-  > We are creating these objects becase those were not generated during the lab bootstrap. From now on, you don't create them again, you will need to modify them.
+  > We are creating these objects at this moment. From now on, you don't create them again, you will need to modify the already existing manifest.
+
+Now everyting should be ready. With this configuration only the `local-cluster` will be selected for deployment. You can check that this is true by opening the corresponding `PlacementDecision` object linked to the `Placement` that we created:
+
+
+1. Access your OpenShift console in the **Hub cluster**.
+2. Go to "Home > API Explorer" and look for "PlacementDecision" objects
+3. Review all instances and open `demo-placement-decision-1`
+4. Open the YAML view and at the end, in the `status` section you will see the allowed clusters for this `Placement` object, in this case only `local-cluster`.
+
+
+## Deploy on Cloud
 
 Ok, now that we have prepared the initial state of our clusters, we can deploy the application:
 
@@ -155,36 +182,37 @@ You will see how the "hello" APP is deployed on the Cloud OpenShift (`local-clus
 
 ## Deploy on Edge
 
+Imagine that we, or any external system, decides that the deployment of the "Hello" APP must be done in the Edge clusters, not in the Cloud. 
 
+In order to modify the placement behaviour we can patch the corresponding `ClusterClaim` objects with the new values. In this demo we will do it manually by opening the objects in the OpenShift console.
 
+Let's start by the `edge-1` cluster
 
+1. Access your OpenShift console in the **edge-1**.
+2. Go to "Home > API Explorer" and look for "ClusterClaim" objects
+3. Review all instances and open `demo.status`
+4. Open the YAML view and change from "bad" to "good" the value.
 
+Now two different things may happen:
 
+### First case
 
+You go to the Argo CD console and see how, after some seconds, the "hello" APP is also deployed on the `edge-1` cluster and, if you wait a little bit more, the APP will be deleted from the Cloud cluster, Why if we still didn't configure the `ClusterClaim`? Remember that we configured in the `Placement` manifest a `prioritizerPolicy` that will select the cluster with less CPU and memory used, and that we setup the maximum number of APP deployemnts to one using the `numberOfClusters` key.
 
+  > **NOTE**
+  >
+  > Obviously, this will only happen if your edge cluster has more avialable resources than the hub cluster, what is something normal if you deployed two clusters with the same resources and you installed ACM and Argo CD in one of them
 
+### Second case
 
+If that didn't happen to you (so the `edge-1` cluster has less avialable CPU and memory than the Hub cluster) you can still remove the "hello" APP from the Hub cluster so it's installed in the `edge-1` cluster:
 
+1. Access your OpenShift console in the **Hub Cluster**.
+2. Go to "Home > API Explorer" and look for "ClusterClaim" objects
+3. Review all instances and open `demo.status`
+4. Open the YAML view and change from "good" to "bad" the value.
 
-
-
-cambiar numero de clusters a dos
-
-
-
-
-
-
-## Dynamic reasigment
-
-
-
-
-
-
-
-
-
+After some seconds, the "hello" APP will be deleted from the Cloud cluster and deployed on `edge-1`.
 
 
 ## Clean-Up
@@ -218,5 +246,11 @@ Once you have finished moving the app around your clusters, you can delete the `
     ```
 
 ## Going beyond
+
+
+play with dynamic assigment
+
+
+latency
 
 
