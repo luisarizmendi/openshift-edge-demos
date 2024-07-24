@@ -5,6 +5,11 @@
 * **OpenShift "Hub" Cluster**: Typically configured with 3 worker nodes, each possessing 8 cores and 16GB of memory.
 * **OpenShift "Edge" Clusters**: At least one additional OpenShift cluster (Minimum resources is ok). 
 
+  > **NOTE**
+  >
+  > The "Hub" Cluster is the OpenShift Cluster where ACM is deployed. In this case this will be our "Cloud" cluster.
+
+
 ## Environment Setup
 
 All demo deployments comprehends three main groups of steps:
@@ -16,20 +21,26 @@ All demo deployments comprehends three main groups of steps:
 2. **Demo specific setup**
 
 
-### 0. Clone this repository and adjust values
-You will need to change values in GitHub during the demo, so you will need to clone it.
+### 0. Fork this repository and adjust values
+You will need to change values in GitHub during the demo, so you will need to fork it.
 
+1. Fork `https://github.com/luisarizmendi/openshift-edge-demos` into your GitHub account
+2. Clone it locally in your desktop
+3. Run the `change_repo_url.sh` that will change all references in the repo to use your fork
 
+   ```bash
+   cd scripts
+   ./change_repo_url.sh https://github.com/<your github user>/<fork name>
+   ```
 
-??????????????????????????????????????
+3. Push changes to your fork repo
 
-
-???????????????????????????'
-
-
-??????????????????????????????????????
-
-
+   ```bash
+   cd ..
+   git add .
+   git commit -m "Change repo references"
+   git push
+   ```
 
 ### 1. OpenShift "Hub" Cluster base configuration
 

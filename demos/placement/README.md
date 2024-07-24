@@ -33,8 +33,7 @@ In this demo, you will explore the different methods for defining where your app
 
 ## Architecture
 
-TBD
-
+![](doc/images/architecture.png)
 
 
 

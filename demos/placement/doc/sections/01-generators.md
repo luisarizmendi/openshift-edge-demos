@@ -9,7 +9,7 @@ There are multiple different Generators, but for convenience and simplicity, in 
 
 For the first point, we will be using the [Git generator](https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-Git/), and for the second one, the [List generator](https://argo-cd.readthedocs.io/en/stable/operator-manual/applicationset/Generators-List/).
 
-> **Note:**
+> **NOTE**
 >
 > You can also use other generators to achieve the same outcome, but these were selected for convenience and ease of use in this demo.
 
@@ -41,8 +41,7 @@ Parent ApplicationSet ---(List generator) ----> (Git generator) -->  Child Appli
 ```
 
 
-Thanks to the "Matrix Generator" and the templating, we can create all the different `Application` object from a single manifest instead of having to create an `Application` object per cluster and per APP, which simplifies the management.
-
+Thanks to the "Matrix Generator" and templating, we can create all the different `Application` objects from a single manifest instead of having to create an `Application` object per cluster and per app, which simplifies management.
 
 ## Deploy on Cloud
 
@@ -56,60 +55,59 @@ To deploy the child applications, create the parent `ApplicationSet` object with
     apiVersion: argoproj.io/v1alpha1
     kind: ApplicationSet
     metadata:
-    labels:
+      labels:
         app.kubernetes.io/managed-by: demo-placement-global
-    name: demo-placement-global
-    namespace: openshift-gitops
+      name: demo-placement-global
+      namespace: openshift-gitops
     spec:
-    generators:
+      generators:
         - matrix:
             generators:
-            - git:
-                directories:
+              - git:
+                  directories:
                     - path: demos/placement/apps/welcome/*
-                repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
-                revision: main
-            - list:
-                elements:
-                - cluster: local-cluster
-                    url: https://kubernetes.default.svc
-    goTemplate: true
-    goTemplateOptions:
+                  repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+                  revision: main
+              - list:
+                  elements:
+                    - cluster: local-cluster
+                      url: https://kubernetes.default.svc
+      goTemplate: true
+      goTemplateOptions:
         - missingkey=error
-    template:
+      template:
         metadata:
-        labels:
+          labels:
             app.kubernetes.io/managed-by: demo-placement-global
-        name: '{{.path.basename}}-{{.cluster}}'
+          name: '{{.path.basename}}-{{.cluster}}'
         spec:
-        destination:
+          destination:
             namespace: '{{.path.basename}}'
             server: '{{.url}}'
-        project: demo-placement
-        source:
+          project: demo-placement
+          source:
             helm:
-            valueFiles:
+              valueFiles:
                 - values.yaml
                 - environment/values-{{.cluster}}.yaml
-            path: '{{.path.path}}'
-            repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
-            targetRevision: main
-        syncPolicy:
+              path: '{{.path.path}}'
+              repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+              targetRevision: main
+          syncPolicy:
             automated:
-            prune: true
-            selfHeal: true
+              prune: true
+              selfHeal: true
     ```
 
-In this parent `ApplicationSet` object you can see both the "Git Generator" and the "List Generator". The "List Generator" includes information about the target clusters where the APPs will be deployed, while the "Git Generator" points to the directory located in the Git repository where the different manifests of each APP (separeted in dedicated subdirectories) reside.
+In this parent `ApplicationSet` object, you can see both the "Git Generator" and the "List Generator." The "List Generator" includes information about the target clusters where the apps will be deployed, while the "Git Generator" points to the directory located in the Git repository where the different manifests of each app (separated into dedicated subdirectories) reside.
 
 ## Deploy on Edge
 
-Now we are going to switch the APP from the Cloud to the Edge clusters. In order to do that follow these steps:
+Now we are going to switch the app from the Cloud to the Edge clusters. To do that, follow these steps:
 
 1. Access your OpenShift console in the Hub cluster.
-2. Edit the `demo-placement-global` object. You can find it by clicking in "Explore API" and look for `ApplicationSet` `argoproj.io/v1alpha1` instances
+2. Edit the `demo-placement-global` object. You can find it by clicking on "Explore API" and looking for `ApplicationSet` `argoproj.io/v1alpha1` instances.
 3. Modify the "List generator" with the information of the Edge clusters:
-
 
     ```yaml
     ...
@@ -117,17 +115,17 @@ Now we are going to switch the APP from the Cloud to the Edge clusters. In order
     generators:
         - matrix:
             generators:
-            - git:
-                directories:
+              - git:
+                  directories:
                     - path: demos/placement/apps/welcome/*
-                repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
-                revision: main
-            - list:
-                elements:
-                - cluster: edge-1
-                    url: https://<cluster 1 mgmt url>:6443
-                - cluster: edge-2
-                    url: https://<cluster 2 mgmt url>:6443
+                  repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+                  revision: main
+              - list:
+                  elements:
+                    - cluster: edge-1
+                      url: https://<cluster 1 mgmt url>:6443
+                    - cluster: edge-2
+                      url: https://<cluster 2 mgmt url>:6443
     goTemplate: true
     goTemplateOptions:
         - missingkey=error
@@ -137,7 +135,6 @@ Now we are going to switch the APP from the Cloud to the Edge clusters. In order
     ```
 
 You will see how the "hello" app deployed in the `local-cluster` starts being deleted and, at the same time, is deployed in the specified clusters in the `values` file.
-
 
 ## Clean-Up
 
@@ -169,11 +166,8 @@ Once you have finished moving the app around your clusters, you can delete the `
           restartPolicy: Never
     ```
 
+## Going Beyond
 
+In this example, we are making changes directly on the object in OpenShift, but you can also align more with the GitOps paradigm by placing the `ApplicationSet` descriptor in Git and creating it from an additional `Application` object. This way, you can make changes in the Git file instead of directly in the object for better traceability.
 
-## Going beyond
-
-In this example we are making changes directly on the object in OpenShift, but you can also try to align more with the GitOps paradigm by putting the `ApplicationSet` descriptor in Git and create it from an additional `Application` object, so you can make changes in the Git file instead of in the object directly for better traceability (similar to what you will do in the next section).
-
-Also you could try to use different Generators for the same propuse of delivering APPs in different clusters with their associated specific values, for example.
-
+You could also use different generators to deliver apps in different clusters with their associated specific values.
