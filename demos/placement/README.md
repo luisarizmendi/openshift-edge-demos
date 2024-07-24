@@ -51,28 +51,17 @@ If you already know the demo details and just want a list of demo steps, you can
 
 ### Demo Overview
 
-hablar de la parte de storage que no se toca en esta demo
+In this demo, we will explore how to select the appropriate OpenShift cluster for deploying an application (APP) using Argo CD. Additionally, we will demonstrate how to modify the APP's configuration based on the target cluster. This capability is particularly valuable when deploying different environments, such as using a lightweight container image for Edge deployments and a more resource-intensive configuration for Cloud or Core Datacenters.
 
+> **NOTE**
+> 
+> In this demonstration, we will illustrate this capability by changing the values of a ConfigMap displayed by a web server hosted by the APP.
 
+While it is possible to manage cluster selection by creating individual Argo CD Application manifests, this approach can be complex and challenging to maintain at scale. Instead, we will showcase three different approaches that simplify the management of application placement, which is essential for edge computing scenarios.
 
-valores por entorno, eso es bueno para diferentes images en edge de cloud
-
-
-
-seimpre puedes crear una app objet per app and per cluster pero aqui vamos a simplificar
-
-
-
-tres acercamientos, uno cambiando objecto en openshift, otro cambiando fichero en git y otro con config acm (y otras cosas automaticas)
-
-
-say all tried to be gitops
-
-two different application images to make it more realistic
-
-
-decir que en sections tiene los ficheros
-
+> **NOTE**
+> 
+> It is important to note that this demo does not cover persistent storage considerations. We assume that the APPs being deployed do not require data persistence, such as those used for actuators, machine learning model inference, and similar use cases.
 
 
 ### Demo sections

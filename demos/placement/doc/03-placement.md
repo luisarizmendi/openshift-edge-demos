@@ -63,7 +63,7 @@ Based on the configuration above, we will select a single cluster (`numberOfClus
 
 In this scenario, we simulate that an external system tags the OpenShift clusters using a `ClusterClaim`, indicating whether the cluster is in a good state, has minor issues but is operational, or is in a bad state. During the demo, we will manually change these tags by modifying the `ClusterClaim` object to mimic the actions of this external system.
 
-> **Note**
+> **NOTE**
 > 
 > This is just an example. You can explore [more options](https://open-cluster-management.io/concepts/placement/) for configuration, such as selecting clusters from the `clustersets` by labeling them, or creating subgroups of clusters and specifying the number of APP deployments per group using the `decisionStrategy` section.
 
