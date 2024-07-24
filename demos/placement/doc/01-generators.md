@@ -189,3 +189,8 @@ Once you have finished moving the app around your clusters, you can delete the `
 In this example, we are making changes directly on the object in OpenShift, but you can also align more with the GitOps paradigm by placing the `ApplicationSet` descriptor in Git and creating it from an additional `Application` object. This way, you can make changes in the Git file instead of directly in the object for better traceability.
 
 You could also use different generators to deliver apps in different clusters with their associated specific values.
+
+
+## Next Section
+
+ [2 - Placement with Helm and Argo CD Application manifests](02-helm.md)

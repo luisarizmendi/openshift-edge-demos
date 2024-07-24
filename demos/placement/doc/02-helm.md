@@ -116,3 +116,7 @@ Once you have finished moving the app around your clusters, you can delete the `
 ## Going beyond
 
 You can try to create groups of clusters, so instead of selecting in the Helm values file cluster by cluster you would point to a "group of clusters". You could do it by using the Helm templates to create the associated `ApplicationSets` that, using a similar approach to the previous section, will generate the `Application` objects per cluster and per APP.
+
+## Next Section
+
+ [3 - Placement with ACM and Placement API](03-placement.md)
