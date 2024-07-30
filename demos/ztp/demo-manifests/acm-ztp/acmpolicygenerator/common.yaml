@@ -20,3 +20,43 @@ spec:
       policyName: "web-terminal-policy"
     - fileName: web-terminal/status.yaml
       policyName: "web-terminal-policy"
+
+
+
+  ---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: "common"
+  namespace: "ztp-common"
+placementBindingDefaults:
+    name: common-placement-binding
+policyDefaults:
+    namespace: ztp-common
+    placement:
+        labelSelector:
+            matchExpressions:
+                - key: common
+                  operator: In
+                  values:
+                    - "true"
+                - key: du-profile
+                  operator: In
+                  values:
+                    - latest
+    remediationAction: inform
+    severity: low
+    namespaceSelector:
+        exclude:
+            - kube-*
+        include:
+            - '*'
+    evaluationInterval:
+        compliant: 10m
+        noncompliant: 10s
+policies:
+    - name: common-config-policy
+      policyAnnotations:
+        ran.openshift.io/ztp-deploy-wave: "1"
+      manifests:
+        - path: source-crs/OperatorHub.yaml
