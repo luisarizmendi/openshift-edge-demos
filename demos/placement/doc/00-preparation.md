@@ -118,9 +118,9 @@ After completing the environment and demo bootstrap, the Advanced Cluster Manage
 
 In the ACM console ("All Clusters" dropdown menu at the top left corner in the OpenShift console), navigate to "Infrastructure > Clusters" to see your clusters. Under the "ClusterSets" tab, you'll notice that a couple of `ClusterSets` have been predefined: "cloud" and "edge." These will be used during the Placement API demo.
 
-In the Argo CD UI (accessible via the squares icon in the top right of the OpenShift console), you can see two Argo CD applications already created: `infra-acm` (deploying ACM in your Hub Cluster) and `demo-placement-bootstrap` (preparing the demo environment, including creating the `ClusterSets` and more).
+In the Argo CD UI (accessible via the squares icon in the top right of the OpenShift console), you can see two Argo CD applications already created: `advanced-cluster-management` (deploying ACM in your Hub Cluster) and `bootstrap-demo-placement` (preparing the demo environment, including creating the `ClusterSets` and more).
 
-To explore the objects generated during the demo bootstrap, open the `demo-placement-bootstrap` application in the Argo CD UI. Here, you can find other useful objects, such as the `GitOpsCluster` manifest, which automatically creates the clusters in Argo CD when imported into ACM, allowing you to skip this step during the demo.
+To explore the objects generated during the demo bootstrap, open the `bootstrap-demo-placement` application in the Argo CD UI. Here, you can find other useful objects, such as the `GitOpsCluster` manifest, which automatically creates the clusters in Argo CD when imported into ACM, allowing you to skip this step during the demo.
 
 ## Next
 
