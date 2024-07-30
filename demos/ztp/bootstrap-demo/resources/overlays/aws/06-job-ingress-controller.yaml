@@ -76,8 +76,5 @@ spec:
             }
           }'
 
-        env:
-        - name: KUBECONFIG
-          value: /var/run/secrets/kubernetes.io/serviceaccount/token
       restartPolicy: Never
   backoffLimit: 1
