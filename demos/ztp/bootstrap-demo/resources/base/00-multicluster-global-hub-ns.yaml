@@ -4,4 +4,4 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "0"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: open-cluster-management
+  name: multicluster-global-hub
