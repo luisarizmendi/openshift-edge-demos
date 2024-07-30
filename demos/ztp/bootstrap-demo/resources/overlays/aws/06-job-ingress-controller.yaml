@@ -65,7 +65,7 @@ spec:
           done
 
           # Edit the assisted-image-service route to use the new domain and NLB
-          oc patch route assisted-image-service -n <namespace> --type=merge -p '{
+          oc patch route assisted-image-service -n multicluster-engine --type=merge -p '{
             "metadata": {
               "labels": {
                 "router-type": "nlb"
