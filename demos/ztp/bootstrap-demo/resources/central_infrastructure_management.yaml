@@ -1,0 +1,269 @@
+
+
+
+
+
+
+
+
+apiVersion: metal3.io/v1alpha1
+kind: Provisioning
+metadata:
+  name: provisioning-configuration
+spec:
+  provisioningNetwork: "Disabled"
+  watchAllNamespaces: true
+
+
+
+
+
+
+
+
+
+
+
+
+apiVersion: agent-install.openshift.io/v1beta1
+kind: AgentServiceConfig
+metadata:
+ name: agent
+spec:
+  databaseStorage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  filesystemStorage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 20Gi
+  imageStorage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  osImages:
+    - cpuArchitecture: x86_64
+      openshiftVersion: "4.16"
+      version: "416.94.202407030122-0"
+      rootFSUrl: https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.16/latest/rhcos-live-rootfs.x86_64.img
+      url: https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.16/latest/rhcos-live.x86_64.iso
+
+
+
+------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+enroll
+
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: node-0
+  namespace: metal3
+spec:
+  bmc:
+    address: ipmi://192.168.111.1:6230
+    credentialsName: node-0-bmc-secret
+  bootMACAddress: 00:5a:91:3f:9a:bd
+  online: true
+
+
+
+
+deploy
+
+apiVersion: metal3.io/v1alpha1
+kind: BareMetalHost
+metadata:
+  name: node-0
+  namespace: metal3
+spec:
+  bmc:
+    address: ipmi://192.168.111.1:6230
+    credentialsName: node-0-bmc-secret
+  bootMACAddress: 00:5a:91:3f:9a:bd
+  image:
+    checksum: http://172.22.0.1/images/CENTOS_9_NODE_IMAGE_K8S_v1.29.0.qcow2.sha256sum
+    url: http://172.22.0.1/images/CENTOS_9_NODE_IMAGE_K8S_v1.29.0.qcow2
+  networkData:
+    name: test1-workers-tbwnz-networkdata
+    namespace: metal3
+  online: true
+  userData:
+    name: test1-workers-vd4gj
+    namespace: metal3
+status:
+  hardware:
+    cpu:
+      arch: x86_64
+      count: 2
+    hostname: node-0
+    nics:
+    - ip: 172.22.0.73
+      mac: 00:5a:91:3f:9a:bd
+      name: enp1s0
+    ramMebibytes: 4096
+    storage:
+    - hctl: "0:0:0:0"
+      name: /dev/sda
+      serialNumber: drive-scsi0-0-0-0
+      sizeBytes: 53687091200
+      type: HDD
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+apiVersion: metal3.io/v1alpha1
+kind: Provisioning
+metadata:
+  name: provisioning-configuration
+spec:
+  provisioningNetwork: "Disabled"
+  watchAllNamespaces: true
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+if AWS:
+
+oc get routes --all-namespaces | grep assisted-image-service
+
+
+apiVersion: operator.openshift.io/v1
+kind: IngressController
+metadata:
+  name: ingress-controller-with-nlb
+  namespace: openshift-ingress-operator
+spec:
+  domain: nlb-apps.<domain>.com
+  routeSelector:
+      matchLabels:
+        router-type: nlb
+  endpointPublishingStrategy:
+    type: LoadBalancerService
+    loadBalancer:
+      scope: External
+      providerParameters:
+        type: AWS
+        aws:
+          type: NLB
+
+
+
+Add the following lines to the assisted-image-service route:
+
+metadata:
+  labels:
+    router-type: nlb
+  name: assisted-image-service
+
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: <your_namespace> 
+
+
+
+
+
+ apiVersion: v1
+kind: Secret
+type: kubernetes.io/dockerconfigjson
+metadata:
+  name: pull-secret 1
+  namespace: <your_namespace>
+stringData:
+  .dockerconfigjson: <your_pull_secret>
+
+
+
+
+
+
+apiVersion: agent-install.openshift.io/v1beta1
+kind: InfraEnv
+metadata:
+  name: myinfraenv
+  namespace: <your_namespace>
+spec:
+  proxy:
+    httpProxy: <http://user:password@ipaddr:port>
+    httpsProxy: <http://user:password@ipaddr:port>
+    noProxy:
+  additionalNTPSources:
+  sshAuthorizedKey:
+  pullSecretRef:
+    name: <name>
+  agentLabels:
+    <key>: <value>
+  nmStateConfigLabelSelector:
+    matchLabels:
+      <key>: <value>
+  clusterRef:
+    name: <cluster_name>
+    namespace: <project_name>
+  ignitionConfigOverride: '{"ignition": {"version": "3.1.0"}, …}'
+  cpuArchitecture: x86_64
+  ipxeScriptType: DiscoveryImageAlways
+  kernelArguments:
+    - operation: append
+      value: audit=0
+  additionalTrustBundle: <bundle>
+  osImageVersion: <version>
+
+
+
+
+
+
+
+
+

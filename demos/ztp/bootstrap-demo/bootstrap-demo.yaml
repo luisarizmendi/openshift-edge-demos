@@ -1,0 +1,94 @@
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: bootstrap-demo-ztp
+  namespace: openshift-gitops
+spec:
+  template:
+    spec:
+      serviceAccountName: openshift-gitops-argocd-application-controller
+      containers:
+      - name: bootstrap-environment
+        image: quay.io/openshift/origin-cli:latest  
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          # Check if the cluster is running on AWS
+          CLUSTER_PLATFORM=$(oc get infrastructure cluster -o jsonpath='{.status.platform}')
+
+          # Define Argo CD application manifests
+          AWS_APP_MANIFEST=$(cat <<EOF
+          apiVersion: argoproj.io/v1alpha1
+          kind: Application
+          metadata:
+            name: bootstrap-demo-ztp-aws
+            namespace: openshift-gitops
+          spec:
+            project: default
+
+            source:
+              repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+              targetRevision: main
+              path: demos/ztp/bootstrap-demo/resources/overlays/aws
+
+            destination:
+              server: 'https://kubernetes.default.svc'
+
+            syncPolicy:
+              syncOptions:
+                - CreateNamespace=true
+                - PruneLast=true
+                - Replace=true
+                - ApplyOutOfSyncOnly=true
+                - Validate=false
+              automated:
+                prune: true
+                allowEmpty: true
+                selfHeal: true
+          EOF
+          )
+
+          OTHER_APP_MANIFEST=$(cat <<EOF
+          apiVersion: argoproj.io/v1alpha1
+          kind: Application
+          metadata:
+            name: bootstrap-demo-ztp
+            namespace: openshift-gitops
+          spec:
+            project: default
+
+            source:
+              repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+              targetRevision: main
+              path: demos/ztp/bootstrap-demo/resources/base
+
+            destination:
+              server: 'https://kubernetes.default.svc'
+
+            syncPolicy:
+              syncOptions:
+                - CreateNamespace=true
+                - PruneLast=true
+                - Replace=true
+                - ApplyOutOfSyncOnly=true
+                - Validate=false
+              automated:
+                prune: true
+                allowEmpty: true
+                selfHeal: true
+          EOF
+          )
+
+          # Determine which application manifest to use
+          if [ "$CLUSTER_PLATFORM" == "AWS" ]; then
+            echo "Cluster is running on AWS. Creating AWS Argo CD application..."
+            echo "$AWS_APP_MANIFEST" | oc apply -f -
+          else
+            echo "Cluster is not running on AWS. Creating non-AWS Argo CD application..."
+            echo "$OTHER_APP_MANIFEST" | oc apply -f -
+          fi
+
+      restartPolicy: Never
+  backoffLimit: 1
+

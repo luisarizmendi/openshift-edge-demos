@@ -1,0 +1,17 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    operators.coreos.com/multicluster-global-hub-operator-rh.multicluster-global-hub: ''
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: multicluster-global-hub-operator-rh
+  namespace: multicluster-global-hub
+spec:
+  channel: release-1.2
+  installPlanApproval: Automatic
+  name: multicluster-global-hub-operator-rh
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: multicluster-global-hub-operator-rh.v1.2.0

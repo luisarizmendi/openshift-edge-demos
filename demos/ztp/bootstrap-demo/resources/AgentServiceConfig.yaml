@@ -1,0 +1,38 @@
+
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true,RespectIgnoreDifferences=true
+
+
+
+
+
+
+
+- cpuArchitecture: x86_64
+    openshiftVersion: "4.16"
+    rootFSUrl: https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.16/latest/rhcos-live-rootfs.x86_64.img
+    url: https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.16/latest/rhcos-live.x86_64.iso
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    ----------------

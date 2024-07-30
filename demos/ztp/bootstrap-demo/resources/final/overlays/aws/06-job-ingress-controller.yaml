@@ -1,0 +1,83 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: create-ingresscontroller-nlb
+  namespace: openshift-ingress-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "6"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  template:
+    spec:
+      serviceAccountName: ingress-operator-sa
+      containers:
+      - name: configure-nlb-ingress
+        image: quay.io/openshift/origin-cli:latest
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          # Retrieve the unique domain configured for assisted-image-service
+          DOMAIN=$(oc get routes --all-namespaces | grep assisted-image-service | awk '{print $3}' | sed 's/assisted-image-service-multicluster-engine.apps.//')
+          
+          if [ -z "$DOMAIN" ]; then
+            echo "Error: Could not find the domain for assisted-image-service."
+            exit 1
+          fi
+
+          echo "Found domain: $DOMAIN"
+
+          # Define the IngressController manifest with NLB type
+          INGRESS_CONTROLLER_MANIFEST=$(cat <<EOF
+          apiVersion: operator.openshift.io/v1
+          kind: IngressController
+          metadata:
+            name: ingress-controller-with-nlb
+            namespace: openshift-ingress-operator
+          spec:
+            domain: nlb-apps.$DOMAIN
+            routeSelector:
+              matchLabels:
+                router-type: nlb
+            endpointPublishingStrategy:
+              type: LoadBalancerService
+              loadBalancer:
+                scope: External
+                providerParameters:
+                  type: AWS
+                  aws:
+                    type: NLB
+          EOF
+          )
+
+          # Apply the IngressController manifest
+          echo "$INGRESS_CONTROLLER_MANIFEST" | oc apply -f -
+
+          # Ensure no domain conflicts with existing IngressControllers
+          INGRESS_CONTROLLERS=$(oc get ingresscontroller -n openshift-ingress-operator -o jsonpath='{.items[*].metadata.name}')
+          for ic in $INGRESS_CONTROLLERS; do
+            if [ "$ic" != "ingress-controller-with-nlb" ]; then
+              DOMAIN=$(oc get ingresscontroller $ic -n openshift-ingress-operator -o jsonpath='{.spec.domain}')
+              if [ -z "$DOMAIN" ]; then
+                echo "Setting default domain for IngressController $ic to avoid conflict."
+                oc patch ingresscontroller $ic -n openshift-ingress-operator --type=merge -p '{"spec": {"domain": "default-domain.com"}}'
+              fi
+            fi
+          done
+
+          # Edit the assisted-image-service route to use the new domain and NLB
+          oc patch route assisted-image-service -n <namespace> --type=merge -p '{
+            "metadata": {
+              "labels": {
+                "router-type": "nlb"
+              }
+            },
+            "spec": {
+              "host": "assisted-image-service-multicluster-engine.nlb-apps.'$DOMAIN'"
+            }
+          }'
+
+        env:
+        - name: KUBECONFIG
+          value: /var/run/secrets/kubernetes.io/serviceaccount/token
+      restartPolicy: Never
+  backoffLimit: 1
