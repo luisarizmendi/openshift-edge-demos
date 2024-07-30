@@ -60,7 +60,7 @@ To deploy the child applications, create the parent application object targeting
       source:
         repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
         targetRevision: main
-        path: demos/placement/demo-manifest/02-helm/resources/00-argocd-app
+        path: demos/placement/demo-manifests/02-helm/resources/00-argocd-app
 
       destination:
         server: 'https://kubernetes.default.svc'
@@ -79,7 +79,7 @@ After a few seconds, you will find in the Argo CD Web UI that, along with the `d
 
 ## Deploy on Edge
 
-Next, modify the [values](../demo-manifest/02-helm/resources/00-argocd-app/values.yaml) to remove the "hello" app from the "Cloud" cluster and run it on "Edge" clusters.
+Next, modify the [values](../demo-manifests/02-helm/resources/00-argocd-app/values.yaml) to remove the "hello" app from the "Cloud" cluster and run it on "Edge" clusters.
 
 > **NOTE**
 > 
@@ -88,7 +88,7 @@ Next, modify the [values](../demo-manifest/02-helm/resources/00-argocd-app/value
 
 You can `pull` the repository locally onto your laptop, but for convenience, we will change the values directly in GitHub for this demo:
 
-1. Edit the values file in your GitHub repository (`demos/placement/demo-manifest/02-helm/resources/00-argocd-app/values.yaml`).
+1. Edit the values file in your GitHub repository (`demos/placement/demo-manifests/02-helm/resources/00-argocd-app/values.yaml`).
 2. Uncomment the examples of cluster descriptions, add your Edge clusters, and comment out the `local-cluster` entry. Commit the changes.
 3. If you don't want to wait, open the Argo CD UI and click `REFRESH APPS` and select `demo-placement-global`.
 

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bootstrap-demo-placement
+  name: demo-placement-bootstrap
   namespace: openshift-gitops
 spec:
   project: default
