@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: policies
+  name: demo-ztp-clusters
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "13"
@@ -9,14 +9,14 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: policies-sub
-  project: policy-app-project
+    namespace: clusters-sub
+  project: ztp-app-project
   source:
-    path: ztp/gitops-subscriptions/argocd/example/policygentemplates
+    path: ztp/gitops-subscriptions/argocd/example/siteconfig
     repoURL: https://github.com/openshift-kni/cnf-features-deploy
     targetRevision: master
     # uncomment the below plugin if you will be adding the plugin binaries in the same repo->dir where
-    # the policyGenTemplate.yaml exist AND use the ../../hack/patch-argocd-dev.sh script to re-patch the deployment-repo-server
+    # the sitconfig.yaml exist AND use the ../../hack/patch-argocd-dev.sh script to re-patch the deployment-repo-server
 #    plugin:
 #      name: kustomize-with-local-plugins
   syncPolicy:
@@ -25,4 +25,3 @@ spec:
       selfHeal: true
     syncOptions:
     - CreateNamespace=true
-
