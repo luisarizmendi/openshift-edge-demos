@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: apply-cluster-proxy-addon-patch
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "9"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  template:
+    spec:
+      serviceAccountName: openshift-gitops-argocd-application-controller
+      containers:
+      - name: apply-patch
+        image: quay.io/openshift/origin-cli:latest
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          echo "Applying patch to cluster-proxy-addon..."
+          oc patch multiclusterengines.multicluster.openshift.io multiclusterengine --type=merge --patch "$(cat /patch/cluster-proxy-addon-openshift-gitops-patch.json)"
+        volumeMounts:
+        - name: patch-volume
+          mountPath: /patch
+      restartPolicy: Never
+      volumes:
+      - name: patch-volume
+        configMap:
+          name: cluster-proxy-addon-openshift-gitops-patch
+  backoffLimit: 1
