@@ -12,7 +12,7 @@ spec:
     namespace: clusters-sub
   project: ztp-app-project
   source:
-    path: demos/ztp/demo-manifests/acm-ztp/siteconfig
+    path: demos/ztp/demo-manifests/_acm-ztp/siteconfig
     repoURL: https://github.com/luisarizmendi/openshift-edge-demos
     targetRevision: main
     # uncomment the below plugin if you will be adding the plugin binaries in the same repo->dir where
