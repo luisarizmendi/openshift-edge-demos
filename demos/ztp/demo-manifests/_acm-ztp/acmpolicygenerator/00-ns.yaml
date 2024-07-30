@@ -2,13 +2,19 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: ztp-common
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: ztp-group
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
 ---
 apiVersion: v1
 kind: Namespace
 metadata:
   name: ztp-site
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"

@@ -1,5 +1,6 @@
 generators:
-- common.yaml
+- 02-policygenerator.yaml
 
 resources:
-- ns.yaml
+- 00-ns.yaml
+- 01-managedclustersetbinding.yaml
