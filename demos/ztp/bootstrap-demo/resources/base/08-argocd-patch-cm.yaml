@@ -32,7 +32,8 @@ data:
           ],
           "initContainers": [
             {
-              "resources": {},
+              "resources": {
+              },
               "terminationMessagePath": "/dev/termination-log",
               "name": "kustomize-plugin",
               "command": [
@@ -49,7 +50,7 @@ data:
                 }
               ],
               "terminationMessagePolicy": "File",
-              "image": "registry.redhat.io/openshift4/ztp-site-generate-rhel8:v4.12.2"
+              "image": "registry.redhat.io/openshift4/ztp-site-generate-rhel8:v4.16.1"
             },
             {
               "args": [

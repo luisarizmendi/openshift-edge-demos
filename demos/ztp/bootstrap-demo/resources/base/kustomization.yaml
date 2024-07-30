@@ -10,3 +10,11 @@ resources:
 - 08-cluster-proxy-addon-cm.yaml
 - 09-argocd-patch-job.yaml
 - 09-cluster-proxy-addon-job.yaml
+- 10-gitops-cluster-rolebinding.yaml
+- 10-gitops-policy-rolebinding.yaml
+- 11-app-project.yaml
+- 11-policies-app-project.yaml
+- 12-clusters-app-ns.yaml
+- 12-policies-app-ns.yaml
+- 13-clusters-app.yaml
+- 13-policies-app.yaml
