@@ -7,4 +7,6 @@ resources:
 - 03-provisioning.yaml
 - 04-agentserviceconfig.yaml
 - 08-argocd-patch-cm.yaml
+- 08-cluster-proxy-addon-cm.yaml
 - 09-argocd-patch-job.yaml
+- 09-cluster-proxy-addon-job.yaml
