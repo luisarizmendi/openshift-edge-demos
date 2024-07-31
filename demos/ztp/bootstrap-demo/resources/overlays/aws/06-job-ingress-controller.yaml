@@ -18,7 +18,7 @@ spec:
         - |
           set -x
           # Retrieve the unique domain configured for assisted-image-service
-          DOMAIN=$(oc get routes --all-namespaces | grep assisted-image-service | awk '{print $3}' | sed 's/assisted-image-service-multicluster-engine.apps.//')
+          DOMAIN=$(oc get routes --all-namespaces | grep assisted-service | awk '{print $3}' | sed 's/assisted-service-multicluster-engine.apps.//')
           
           if [ -z "$DOMAIN" ]; then
             echo "Error: Could not find the domain for assisted-image-service."
