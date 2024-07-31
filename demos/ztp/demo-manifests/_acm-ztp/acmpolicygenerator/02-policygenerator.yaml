@@ -3,27 +3,12 @@ kind: PolicyGenerator
 metadata:
   name: "common"
   namespace: "ztp-common"
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 placementBindingDefaults:
     name: common-placement-binding
-policyDefaults:
-    namespace: ztp-common
-    placement:
-        labelSelector:
-            matchExpressions:
-                - key: common
-                  operator: In
-                  values:
-                    - "true"
-    remediationAction: inform
-    severity: low
-    namespaceSelector:
-        exclude:
-            - kube-*
-        include:
-            - '*'
-    evaluationInterval:
-        compliant: 10m
-        noncompliant: 10s
+
 policies:
     - name: common-hello-app
       policyAnnotations:
