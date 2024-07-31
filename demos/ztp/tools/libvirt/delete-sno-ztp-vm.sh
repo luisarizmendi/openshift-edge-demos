@@ -5,6 +5,7 @@
 # Define variables
 VM_NAME="sno-ztp"
 NETWORK_NAME="sno-ztp"
+BRIDGE_NAME="sno-ztp-br"
 DISK_PATH="/var/lib/libvirt/images/sno-ztp.qcow2"
 
 check_command() {
@@ -55,6 +56,21 @@ else
     echo "Network $NETWORK_NAME does not exist."
 fi
 
-sudo nmcli con delete sno-ztp-br
+sudo virsh net-info $BRIDGE_NAME &> /dev/null
+if [ $? -eq 0 ]; then
+    # Network exists, attempt to destroy and undefine it
+    sudo virsh net-destroy $BRIDGE_NAME
+    check_command "virsh net-destroy"
+
+    sudo virsh net-undefine $BRIDGE_NAME
+    check_command "virsh net-undefine"
+else
+    echo "Network $BRIDGE_NAME does not exist."
+fi
+
+
+sudo nmcli con delete $BRIDGE_NAME
+sudo nmcli con add type ethernet con-name enp58s0u1u2 ifname enp58s0u1u2 ipv4.method auto ipv6.method auto autoconnect yes
+
 
 echo "Cleanup completed successfully."

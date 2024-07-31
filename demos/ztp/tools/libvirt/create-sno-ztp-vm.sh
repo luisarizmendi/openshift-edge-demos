@@ -2,12 +2,14 @@
 
 POOL_NAME="default"
 POOL_PATH="/var/lib/libvirt/images"
-NETWORK_XML_PATH="net.xml" 
-VM_XML_PATH="vm.xml"       
+NETWORK_XML_PATH_BASE="net" 
+VM_XML_PATH_BASE="vm"       
 DISK_PATH="/var/lib/libvirt/images/sno-ztp.qcow2"
 DISK_SIZE="200G"
 VM_NAME="sno-ztp"
 NETWORK_NAME="sno-ztp"
+BRIDGE_NAME="sno-ztp-br"
+BRIDGE_IF="enp58s0u1u2"
 
 check_command() {
     if [ $? -ne 0 ]; then
@@ -52,7 +54,7 @@ if $(sudo virsh net-list --all | grep -q "$NETWORK_NAME"); then
     echo "Network $NETWORK_NAME already exists. Skipping network creation."
 else
     echo "Defining and starting the network..."
-    sudo virsh net-define $NETWORK_XML_PATH
+    sudo virsh net-define ${NETWORK_XML_PATH_BASE}-${NETWORK_NAME}.xml
     check_command "virsh net-define"
     
     sudo virsh net-start $NETWORK_NAME
@@ -60,15 +62,28 @@ else
     
     sudo virsh net-autostart $NETWORK_NAME
     check_command "virsh net-autostart"
+
+    sudo virsh net-define ${NETWORK_XML_PATH_BASE}-${BRIDGE_NAME}.xml
+    check_command "virsh net-define"
+    
+    sudo virsh net-start $BRIDGE_NAME
+    check_command "virsh net-start"
+    
+    sudo virsh net-autostart $BRIDGE_NAME
+    check_command "virsh net-autostart"
+
+
 fi
 
 # Install bridge-utils if not already installed
 #sudo dnf install bridge-utils
 
-# Create a bridge interface (replace wlp59s0 with your physical network interface)
-sudo nmcli con add type bridge ifname sno-ztp-br con-name sno-ztp-br
-sudo nmcli con add type bridge-slave ifname wlp59s0 master sno-ztp-br
-sudo nmcli con up sno-ztp-br
+# Create a bridge interface 
+sudo nmcli con delete $BRIDGE_IF 
+sudo nmcli con add type bridge ifname $BRIDGE_NAME con-name $BRIDGE_NAME
+sudo nmcli con add type bridge-slave ifname $BRIDGE_IF master $BRIDGE_NAME
+sudo nmcli connection modify $BRIDGE_NAME bridge.stp no
+sudo nmcli con up $BRIDGE_NAME
 
 
 # Step 3: Create the disk if it doesn't exist
@@ -82,7 +97,7 @@ fi
 
 # Step 4: Define the VM
 echo "Defining the VM..."
-sudo virsh define $VM_XML_PATH
+sudo virsh define ${VM_XML_PATH_BASE}-${VM_NAME}.xml
 check_command "virsh define"
 
 sudo virsh autostart $VM_NAME
