@@ -62,6 +62,15 @@ else
     check_command "virsh net-autostart"
 fi
 
+# Install bridge-utils if not already installed
+#sudo dnf install bridge-utils
+
+# Create a bridge interface (replace wlp59s0 with your physical network interface)
+sudo nmcli con add type bridge ifname sno-ztp-br con-name sno-ztp-br
+sudo nmcli con add type bridge-slave ifname wlp59s0 master sno-ztp-br
+sudo nmcli con up sno-ztp-br
+
+
 # Step 3: Create the disk if it doesn't exist
 if [ -f "$DISK_PATH" ]; then
     echo "Disk $DISK_PATH already exists. Skipping creation."

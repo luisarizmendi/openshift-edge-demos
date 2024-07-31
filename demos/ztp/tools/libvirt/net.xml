@@ -9,16 +9,16 @@
   <ip address='192.168.123.1' netmask='255.255.255.0'>
     <dhcp>
       <range start='192.168.123.2' end='192.168.123.254'/>
-      <host mac="02:04:00:00:00:66" name="bmc.demo" ip="192.168.123.5"/>
+      <host mac="02:04:00:00:00:66" name="83.52.27.104.nip.io" ip="192.168.123.5"/>
     </dhcp>
   </ip>
   <dns>
-    <host ip="192.168.123.5"><hostname>api.bmc.demo</hostname></host>
+    <host ip="192.168.123.5"><hostname>api.83.52.27.104.nip.io</hostname></host>
   </dns>
   <dnsmasq:options>
-    <dnsmasq:option value="auth-server=bmc.demo,"/>
-    <dnsmasq:option value="auth-zone=bmc.demo"/>
-    <dnsmasq:option value="host-record=lb.bmc.demo,192.168.123.5"/>
-    <dnsmasq:option value="cname=*.apps.bmc.demo,lb.bmc.demo"/>
+    <dnsmasq:option value="auth-server=83.52.27.104.nip.io,"/>
+    <dnsmasq:option value="auth-zone=83.52.27.104.nip.io"/>
+    <dnsmasq:option value="host-record=lb.83.52.27.104.nip.io,192.168.123.5"/>
+    <dnsmasq:option value="cname=*.apps.83.52.27.104.nip.io,lb.83.52.27.104.nip.io"/>
   </dnsmasq:options>
 </network>
