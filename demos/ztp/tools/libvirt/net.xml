@@ -1,11 +1,11 @@
 <network xmlns:dnsmasq="http://libvirt.org/schemas/network/dnsmasq/1.0">
-  <name>sno</name>
+  <name>sno-ztp</name>
   <forward mode='nat'>
     <nat>
       <port start='1024' end='65535'/>
     </nat>
   </forward>
-  <bridge name='virbr1' stp='on' delay='0'/>
+  <bridge name='virbr10' stp='on' delay='0'/>
   <ip address='192.168.123.1' netmask='255.255.255.0'>
     <dhcp>
       <range start='192.168.123.2' end='192.168.123.254'/>

@@ -1,0 +1,72 @@
+
+module my-rpcvirtqemud 1.0;
+
+require {
+	type bin_t;
+	type container_file_t;
+	type svirt_image_t;
+	type var_log_t;
+	type user_home_t;
+	type virt_var_lib_t;
+	type spc_t;
+	type fs_t;
+	type virt_var_run_t;
+	type qemu_var_run_t;
+	type device_t;
+	type urandom_device_t;
+	type svirt_t;
+	type virt_log_t;
+	type virtqemud_t;
+	class dir { relabelfrom relabelto search };
+	class sock_file { relabelfrom write };
+	class filesystem { getattr unmount };
+	class chr_file { ioctl open read setattr write };
+	class file { entrypoint open read relabelfrom relabelto setattr write };
+}
+
+#============= svirt_t ==============
+
+#!!!! This avc is allowed in the current policy
+allow svirt_t bin_t:file entrypoint;
+
+#============= virtqemud_t ==============
+allow virtqemud_t container_file_t:sock_file write;
+allow virtqemud_t device_t:chr_file { ioctl open read write };
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t device_t:filesystem unmount;
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t fs_t:filesystem getattr;
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t qemu_var_run_t:file { relabelfrom relabelto };
+allow virtqemud_t spc_t:dir search;
+allow virtqemud_t spc_t:file { open read };
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t svirt_image_t:chr_file setattr;
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t urandom_device_t:chr_file setattr;
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t user_home_t:file write;
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t var_log_t:file { relabelfrom relabelto setattr write };
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t virt_log_t:file { relabelfrom relabelto setattr write };
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t virt_var_lib_t:dir { relabelfrom relabelto };
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t virt_var_lib_t:file { relabelfrom relabelto };
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t virt_var_run_t:dir relabelfrom;
+
+#!!!! This avc is allowed in the current policy
+allow virtqemud_t virt_var_run_t:sock_file relabelfrom;
