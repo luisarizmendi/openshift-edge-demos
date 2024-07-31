@@ -29,7 +29,7 @@ policies:
         ran.openshift.io/ztp-deploy-wave: "1"
       disabled: false
       manifests:
-        - path: ../../../apps/welcome/hello
+        - path: apps/welcome/hello
           patches:
             - apiVersion: v1
               kind: ConfigMap
