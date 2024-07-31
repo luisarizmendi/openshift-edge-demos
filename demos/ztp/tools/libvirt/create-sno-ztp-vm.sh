@@ -80,8 +80,8 @@ fi
 
 # Create a bridge interface 
 sudo nmcli con delete $BRIDGE_IF 
-sudo nmcli con add type bridge ifname $BRIDGE_NAME con-name $BRIDGE_NAME
-sudo nmcli con add type bridge-slave ifname $BRIDGE_IF master $BRIDGE_NAME
+sudo nmcli con add type bridge ifname $BRIDGE_NAME con-name $BRIDGE_NAME autoconnect yes
+sudo nmcli con add type bridge-slave ifname $BRIDGE_IF master $BRIDGE_NAME autoconnect yes
 sudo nmcli connection modify $BRIDGE_NAME bridge.stp no
 sudo nmcli con up $BRIDGE_NAME
 
