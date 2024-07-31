@@ -3,5 +3,4 @@ kind: Kustomization
 
 generators:
 - example-sno.yaml
-- ztp-bmc-secret.yaml
-- ztp-pull-secret.yaml
+
