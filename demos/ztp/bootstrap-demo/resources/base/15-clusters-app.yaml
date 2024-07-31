@@ -4,7 +4,7 @@ metadata:
   name: demo-ztp-clusters
   namespace: openshift-gitops
   annotations:
-    argocd.argoproj.io/sync-wave: "13"
+    argocd.argoproj.io/sync-wave: "15"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   destination:

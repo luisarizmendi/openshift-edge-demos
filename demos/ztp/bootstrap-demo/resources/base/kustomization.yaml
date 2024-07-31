@@ -14,5 +14,5 @@ resources:
 - 10-gitops-policy-rolebinding.yaml
 - 11-app-project.yaml
 - 11-policies-app-project.yaml
-- 12-clusters-app-ns.yaml
-- 12-policies-app-ns.yaml
+- 15-clusters-app.yaml
+- 15-policies-app.yaml
