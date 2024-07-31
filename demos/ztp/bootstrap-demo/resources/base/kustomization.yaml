@@ -16,5 +16,3 @@ resources:
 - 11-policies-app-project.yaml
 - 12-clusters-app-ns.yaml
 - 12-policies-app-ns.yaml
-- 13-clusters-app.yaml
-- 13-policies-app.yaml
