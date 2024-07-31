@@ -13,7 +13,7 @@ policyDefaults:
                   operator: In
                   values:
                     - "true"
-    remediationAction: inform
+    remediationAction: enforce
     severity: low
     namespaceSelector:
         exclude:
