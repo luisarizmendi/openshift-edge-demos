@@ -63,7 +63,7 @@ spec:
         bmcAddress: "redfish-virtualmedia+http://192.168.1.170:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890"
         bmcCredentialsName:
           name: "ztp-bmc-secret"
-        bootMACAddress: "02:04:00:00:00:66"
+        bootMACAddress: "52:54:00:fa:5f:8f"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
         #rootDeviceHints:
