@@ -16,6 +16,7 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
         - |
+          set -x
           # Retrieve the unique domain configured for assisted-image-service
           DOMAIN=$(oc get routes --all-namespaces | grep assisted-image-service | awk '{print $3}' | sed 's/assisted-image-service-multicluster-engine.apps.//')
           
@@ -57,10 +58,10 @@ spec:
           for ic in $INGRESS_CONTROLLERS; do
             if [ "$ic" != "ingress-controller-with-nlb" ]; then
               DOMAIN=$(oc get ingresscontroller $ic -n openshift-ingress-operator -o jsonpath='{.spec.domain}')
-              if [ -z "$DOMAIN" ]; then
-                echo "Setting default domain for IngressController $ic to avoid conflict."
-                oc patch ingresscontroller $ic -n openshift-ingress-operator --type=merge -p '{"spec": {"domain": "default-domain.com"}}'
-              fi
+              #if [ -z "$DOMAIN" ]; then
+              #  echo "Setting default domain for IngressController $ic to avoid conflict."
+              #  oc patch ingresscontroller $ic -n openshift-ingress-operator --type=merge -p '{"spec": {"domain": "default-domain.com"}}'
+              #fi
             fi
           done
 
