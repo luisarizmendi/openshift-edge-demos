@@ -1,0 +1,12 @@
+apiVersion: operator.open-cluster-management.io/v1alpha4
+kind: MulticlusterGlobalHub
+metadata:
+  name: multiclusterglobalhub
+  namespace: multicluster-global-hub
+spec:
+  availabilityConfig: High
+  dataLayer:
+    postgres:
+      retention: 18m
+  enableMetrics: true
+
