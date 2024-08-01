@@ -24,9 +24,9 @@ spec:
     resources:
       requests:
         storage: 10Gi
-  osImages:
-    - cpuArchitecture: x86_64
-      openshiftVersion: "4.16"
-      version: "416.94.202407030122-0"
-      rootFSUrl: https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.16/latest/rhcos-live-rootfs.x86_64.img
-      url: https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.16/latest/rhcos-live.x86_64.iso
+  #osImages:
+  #  - cpuArchitecture: x86_64
+  #    openshiftVersion: "4.16"
+  #    version: "416.94.202407030122-0"
+  #    rootFSUrl: https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.16/latest/rhcos-live-rootfs.x86_64.img
+  #    url: https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.16/latest/rhcos-live.x86_64.iso
