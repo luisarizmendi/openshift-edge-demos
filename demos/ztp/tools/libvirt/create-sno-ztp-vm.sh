@@ -48,6 +48,11 @@ sudo semodule -X 300 -i my-dnsmasq.pp
 sudo ausearch -c 'rpc-virtnetwork' --raw | audit2allow -M my-rpcvirtnetwork
 sudo semodule -X 300 -i my-rpcvirtnetwork.pp
 
+sudo ausearch -c 'rpc-virtqemud' --raw | audit2allow -M my-rpcvirtqemud
+sudo semodule -X 300 -i my-rpcvirtqemud.pp
+
+sudo ausearch -c 'prio-rpc-virtqe' --raw | audit2allow -M my-priorpcvirtqe
+sudo semodule -X 300 -i my-priorpcvirtqe.pp
 
 # Create a bridge interface 
 sudo nmcli con delete $BRIDGE_IF 
