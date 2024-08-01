@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "0"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: multicluster-global-hub

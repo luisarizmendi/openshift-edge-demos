@@ -3,4 +3,4 @@ kind: Kustomization
 
 resources:
 - ../../base
-- 06-job-ingress-controller.yaml
+- 10-job-ingress-controller.yaml
