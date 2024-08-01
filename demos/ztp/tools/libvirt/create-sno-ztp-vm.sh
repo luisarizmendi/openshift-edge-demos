@@ -121,7 +121,7 @@ echo "Defining the VM..."
 sudo virsh define ${VM_XML_PATH_BASE}-${VM_NAME}.xml
 check_command "virsh define"
 
-sudo virsh autostart $VM_NAME
-check_command "virsh autostart"
+#sudo virsh autostart $VM_NAME
+#check_command "virsh autostart"
 
 echo "Setup completed successfully."
