@@ -7,13 +7,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "9"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  selector:
-    matchLabels:
-      job-name: apply-argocd-patch
   template:
-    metadata:
-      labels:
-        job-name: apply-argocd-patch
     spec:
       serviceAccountName: openshift-gitops-argocd-application-controller
       containers:

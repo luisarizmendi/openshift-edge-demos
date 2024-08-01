@@ -7,13 +7,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "9"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  selector:
-    matchLabels:
-      job-name: apply-cluster-proxy-addon-patch
   template:
-    metadata:
-      labels:
-        job-name: apply-cluster-proxy-addon-patch
     spec:
       serviceAccountName: openshift-gitops-argocd-application-controller
       containers:
@@ -22,7 +16,6 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
         - |
-          set -x
           echo "Applying patch to cluster-proxy-addon..."
           oc patch multiclusterengines.multicluster.openshift.io multiclusterengine --type=merge --patch "$(cat /patch/cluster-proxy-addon-openshift-gitops-patch.json)"
         volumeMounts:
