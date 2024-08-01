@@ -6,9 +6,6 @@ metadata:
   labels:
     agentclusterinstalls.extensions.hive.openshift.io/location: demo-install-manual
     networkType: dhcp
-  annotations:
-    argocd.argoproj.io/sync-wave: "19"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   pullSecretRef:
     name: pullsecret-demo-install-manual-1

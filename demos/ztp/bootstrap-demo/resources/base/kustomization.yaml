@@ -15,4 +15,4 @@ resources:
 - 15-policies-app.yaml
 - 17-install-manual-ns.yaml
 - 18-install-manual-role.yaml
-- 19-install-manual-infraenv.yaml
+#- 19-install-manual-infraenv.yaml
