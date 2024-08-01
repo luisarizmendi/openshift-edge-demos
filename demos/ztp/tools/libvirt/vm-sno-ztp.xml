@@ -6,8 +6,8 @@
       <libosinfo:os id="http://fedoraproject.org/coreos/stable"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit="KiB">10485760</memory>
-  <currentMemory unit="KiB">10485760</currentMemory>
+  <memory unit="KiB">16777216</memory>
+  <currentMemory unit="KiB">16777216</currentMemory>
   <vcpu placement="static">8</vcpu>
   <os>
     <type arch="x86_64" machine="q35">hvm</type>
