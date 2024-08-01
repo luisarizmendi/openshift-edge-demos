@@ -17,7 +17,7 @@ data:
               "memory": "32Gi"
             },
             "requests": {
-              "cpu": "1",
+              "cpu": "500m",
               "memory": "2Gi"
             }
           }
@@ -50,7 +50,7 @@ data:
                 }
               ],
               "terminationMessagePolicy": "File",
-              "image": "registry.redhat.io/openshift4/ztp-site-generate-rhel8:v4.16.1"
+              "image": "registry.redhat.io/openshift4/ztp-site-generate-rhel8:v4.16"
             },
             {
               "args": [

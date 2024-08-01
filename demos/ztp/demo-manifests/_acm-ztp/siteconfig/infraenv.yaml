@@ -1,7 +1,7 @@
 apiVersion: agent-install.openshift.io/v1beta1
 kind: InfraEnv
 metadata:
-  name: demo-ztp
+  name: demo-ztp-static
   namespace: demo-ztp
   labels:
     agentclusterinstalls.extensions.hive.openshift.io/location: demo-location
