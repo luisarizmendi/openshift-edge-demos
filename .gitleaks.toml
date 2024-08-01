@@ -3,9 +3,9 @@
 
   # Ignore based on any subset of the file path
   paths = [
-    '''demos\/ztp\/demo-manifests\/siteconfig\/ztp-bmc-secret.yaml''',
+    '''demos\/ztp\/demo-manifests\/siteconfig\/ztp-bmc-secret.yaml.example''',
 
-    '''demos\/ztp\/demo-manifests\/siteconfig\/ztp-pull-secret.yaml''',
+    '''demos\/ztp\/demo-manifests\/siteconfig\/ztp-pull-secret.yaml.example''',
 
     '''demos\/ztp\/demo-manifests\/siteconfig\/example-sno.yaml''',
 
