@@ -1,10 +1,10 @@
 apiVersion: agent-install.openshift.io/v1beta1
 kind: InfraEnv
 metadata:
-  name: demo-install-manual
-  namespace: demo-install-manual
+  name: demo-install-manual-1
+  namespace: demo-install-manual-1
   labels:
-    agentclusterinstalls.extensions.hive.openshift.io/location: demo-location
+    agentclusterinstalls.extensions.hive.openshift.io/location: demo-install-manual
     networkType: dhcp
   annotations:
     argocd.argoproj.io/sync-wave: "19"
@@ -15,9 +15,9 @@ spec:
   sshAuthorizedKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCzR2ixpaJIecsCunvgJjg18NEFPPTYKewSa9eD6GMptHNYyybIqYtng/2/AsNSZ9cp54fCqt5QUIsD7OfFJQnN7/1z7sHyeEM5t2PhK1GOykq2klga//HlvCgK3DJTy9az+wq5JVyHLUZnRGtgOQRgYLox2CadThBs2aM8QwSXCDjhIjgApwEvoFuH9yRFAervBNykvIiEx+K8p1w2vkntCn8XsiuZ4xRwNuttiudysCHYq9EkdOHIEt6a+ktR7cxpD8uAoxym4UitoHynCy6Jp7Ji0GNaVNhsE9dkcXjQDmP7s+IRs7s83Om4dDpXzhTAol9++MvHsDjYtEUN5Se/N44jjwyeVXivzF7IjZg1WHJgb1gYiYRUoBhzcqzO8Vft9xdjpS8sZ/46+CQA2XPEw5uxP5iBFHgmzbOYl2GPMr67qK19gtAduXvofSMDiXGkzIPQoXn6xnQjl6QHrn/uCk1q4+76jqYZcRzGj0NNMx4Viu+zws9GLMK9M7arym8=
   nmStateConfigLabelSelector:	
       matchLabels:	
-        infraenvs.agent-install.openshift.io: demo-install-manual
+        infraenvs.agent-install.openshift.io: demo-install-manual-1
   cpuArchitecture: x86_64
 status:
   agentLabelSelector:
     matchLabels:
-      'agentclusterinstalls.extensions.hive.openshift.io/location': demo-location
+      'agentclusterinstalls.extensions.hive.openshift.io/location': demo-install-manual
