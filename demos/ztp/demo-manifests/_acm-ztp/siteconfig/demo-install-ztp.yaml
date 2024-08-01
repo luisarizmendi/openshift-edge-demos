@@ -1,18 +1,18 @@
-# example-node1-bmh-secret & assisted-deployment-pull-secret need to be created under same namespace demo-ztp
+# example-node1-bmh-secret & assisted-deployment-pull-secret need to be created under same namespace demo-install-ztp
 ---
 apiVersion: ran.openshift.io/v1
 kind: SiteConfig
 metadata:
-  name: "demo-ztp"
-  namespace: "demo-ztp"
+  name: "demo-install-ztp"
+  namespace: "demo-install-ztp"
 spec:
   baseDomain: "nip.io"
   pullSecretRef:
-    name: "pullsecret-demo-ztp"
+    name: "demo-install-ztp-pull-secret"
   clusterImageSetNameRef: "img4.16.5-x86-64-appsub"
   sshPublicKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCzR2ixpaJIecsCunvgJjg18NEFPPTYKewSa9eD6GMptHNYyybIqYtng/2/AsNSZ9cp54fCqt5QUIsD7OfFJQnN7/1z7sHyeEM5t2PhK1GOykq2klga//HlvCgK3DJTy9az+wq5JVyHLUZnRGtgOQRgYLox2CadThBs2aM8QwSXCDjhIjgApwEvoFuH9yRFAervBNykvIiEx+K8p1w2vkntCn8XsiuZ4xRwNuttiudysCHYq9EkdOHIEt6a+ktR7cxpD8uAoxym4UitoHynCy6Jp7Ji0GNaVNhsE9dkcXjQDmP7s+IRs7s83Om4dDpXzhTAol9++MvHsDjYtEUN5Se/N44jjwyeVXivzF7IjZg1WHJgb1gYiYRUoBhzcqzO8Vft9xdjpS8sZ/46+CQA2XPEw5uxP5iBFHgmzbOYl2GPMr67qK19gtAduXvofSMDiXGkzIPQoXn6xnQjl6QHrn/uCk1q4+76jqYZcRzGj0NNMx4Viu+zws9GLMK9M7arym8="
   clusters:
-  - clusterName: "sno-1"
+  - clusterName: "demo-install-ztp-1"
     networkType: "OVNKubernetes"
     # installConfigOverrides is a generic way of passing install-config
     # parameters through the siteConfig.  The 'capabilities' field configures
@@ -38,7 +38,7 @@ spec:
     # extraManifestPath: sno-extra-manifest
     clusterLabels:
       common: true
-      sites : "demo-ztp"
+      sites : "demo-install-ztp"
     clusterNetwork:
       - cidr: 10.128.0.0/14
         hostPrefix: 23
@@ -55,14 +55,14 @@ spec:
     #crTemplates:
     #  KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
     nodes:
-      - hostName: "sno-1.83.52.27.104.nip.io"
+      - hostName: "demo-install-ztp-1.83.52.27.104.nip.io"
         role: "master"
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
         bmcAddress: "redfish-virtualmedia+http://83.52.27.10:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890"
         bmcCredentialsName:
-          name: "ztp-bmc-secret"
+          name: "demo-install-ztp-bmc-secret"
         bootMACAddress: "52:54:00:fa:5f:8f"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
