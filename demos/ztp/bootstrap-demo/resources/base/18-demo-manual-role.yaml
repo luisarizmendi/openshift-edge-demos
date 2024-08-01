@@ -5,7 +5,7 @@ metadata:
   name: capi-provider-role
   namespace: demo-manual
   annotations:
-    argocd.argoproj.io/sync-wave: "17"
+    argocd.argoproj.io/sync-wave: "18"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 rules:
   - verbs:

@@ -6,6 +6,9 @@ metadata:
   labels:
     agentclusterinstalls.extensions.hive.openshift.io/location: demo-location
     networkType: dhcp
+  annotations:
+    argocd.argoproj.io/sync-wave: "19"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   agentLabels:
     'agentclusterinstalls.extensions.hive.openshift.io/location': demo-location
@@ -20,16 +23,3 @@ status:
   agentLabelSelector:
     matchLabels:
       'agentclusterinstalls.extensions.hive.openshift.io/location': demo-location
----
-kind: Role
-apiVersion: rbac.authorization.k8s.io/v1
-metadata:
-  name: capi-provider-role
-  namespace: demo-manual
-rules:
-  - verbs:
-      - '*'
-    apiGroups:
-      - agent-install.openshift.io
-    resources:
-      - agents
