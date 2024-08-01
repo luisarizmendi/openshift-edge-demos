@@ -13,3 +13,6 @@ resources:
 - 11-policies-app-project.yaml
 - 15-clusters-app.yaml
 - 15-policies-app.yaml
+- 17-sno-manual-ns.yaml
+- 18-sno-manual-role.yaml
+- 19-sno-manual-infraenv.yaml
