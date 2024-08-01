@@ -5,4 +5,4 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "17"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: demo-install-manual-1
+  name: demo-ztp-assisted-1
