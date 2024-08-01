@@ -16,6 +16,7 @@ spec:
         command: ["/bin/sh", "-c"]
         args:
         - |
+          set -x
           echo "Applying patch to Argo CD..."
           oc patch argocd openshift-gitops -n openshift-gitops --type=merge --patch "$(cat /patch/argocd-openshift-gitops-patch.json)"
         volumeMounts:

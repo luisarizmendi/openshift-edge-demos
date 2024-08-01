@@ -7,7 +7,7 @@
 
     '''demos\/ztp\/demo-manifests\/siteconfig\/ztp-pull-secret.yaml.example''',
 
-    '''demos\/ztp\/demo-manifests\/siteconfig\/example-sno.yaml''',
+    '''demos\/ztp\/demo-manifests\/siteconfig\/demo-ztp.yaml''',
 
   ]
         

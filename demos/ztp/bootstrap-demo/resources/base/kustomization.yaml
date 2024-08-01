@@ -1,9 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-#- 00-multicluster-global-hub-ns.yaml
-#- 01-multicluster-global-hub-operator-group.yaml
-#- 01-multicluster-global-hub-subscription.yaml
 - 03-provisioning.yaml
 - 04-agentserviceconfig.yaml
 - 08-argocd-patch-cm.yaml
