@@ -60,9 +60,9 @@ spec:
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://83.52.27.104:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890/Actions/ComputerSystem.Reset"
-        bmcCredentialsName:
-          name: "demo-ztp-gitops-bmc-secret-1"
+        bmcAddress: "redfish+http://83.52.27.104:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890"
+        bmcCredentialsName: {}
+        #  name: "demo-ztp-gitops-bmc-secret-1"
         bootMACAddress: "52:54:00:fa:5f:8f"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
