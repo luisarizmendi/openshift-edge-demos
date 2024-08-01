@@ -17,7 +17,3 @@ spec:
       matchLabels:	
         infraenvs.agent-install.openshift.io: demo-install-manual-1
   cpuArchitecture: x86_64
-status:
-  agentLabelSelector:
-    matchLabels:
-      'agentclusterinstalls.extensions.hive.openshift.io/location': demo-install-manual
