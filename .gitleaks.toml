@@ -3,11 +3,11 @@
 
   # Ignore based on any subset of the file path
   paths = [
-    '''demos\/ztp\/demo-manifests\/siteconfig\/ztp-bmc-secret.yaml.example''',
+    '''demos\/ztp\/demo-manifests\/01-gitops\/00-gitops-bmc-secret.yaml.example''',
 
-    '''demos\/ztp\/demo-manifests\/siteconfig\/ztp-pull-secret.yaml.example''',
+    '''demos\/ztp\/demo-manifests\/01-gitops\/00-gitops-pull-secret.example''',
 
-    '''demos\/ztp\/demo-manifests\/siteconfig\/demo-ztp.yaml''',
+    '''demos\/ztp\/demo-manifests\/00-assisted\/00-assisted-pull-secret.yaml.example''',
 
   ]
         
