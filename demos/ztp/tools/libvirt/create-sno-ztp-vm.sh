@@ -18,14 +18,43 @@ check_command() {
     fi
 }
 
-# Step 0: Enable libvirt services in Fedora
+# Step 0: Prepare OS
+#Enable libvirt services in Fedora
 echo "Enabling daemon libvirt services..."
-sudo systemctl start virtlogd
-sudo systemctl enable virtlogd
+sudo systemctl start libvirtd
+sudo systemctl enable libvirtd
 
-sudo systemctl start virtnetworkd
-sudo systemctl enable virtnetworkd
+sudo systemctl start virtqemud.service
+sudo systemctl start virtinterfaced.socket
+sudo systemctl start virtnetworkd.socket
+sudo systemctl start virtnodedevd.socket
+sudo systemctl start virtnwfilterd.socket
+sudo systemctl start virtproxyd.socket
+sudo systemctl start virtsecretd.socket
+sudo systemctl start virtstoraged.socket
 
+sudo systemctl enable virtqemud.service
+sudo systemctl enable virtinterfaced.socket
+sudo systemctl enable virtnetworkd.socket
+sudo systemctl enable virtnodedevd.socket
+sudo systemctl enable virtnwfilterd.socket
+sudo systemctl enable virtproxyd.socket
+sudo systemctl enable virtsecretd.socket
+sudo systemctl enable virtstoraged.socket
+
+sudo ausearch -c 'dnsmasq' --raw | audit2allow -M my-dnsmasq
+sudo semodule -X 300 -i my-dnsmasq.pp
+
+sudo ausearch -c 'rpc-virtnetwork' --raw | audit2allow -M my-rpcvirtnetwork
+sudo semodule -X 300 -i my-rpcvirtnetwork.pp
+
+
+# Create a bridge interface 
+sudo nmcli con delete $BRIDGE_IF 
+sudo nmcli con add type bridge ifname $BRIDGE_NAME con-name $BRIDGE_NAME autoconnect yes
+sudo nmcli con add type bridge-slave ifname $BRIDGE_IF master $BRIDGE_NAME autoconnect yes
+sudo nmcli connection modify $BRIDGE_NAME bridge.stp no
+sudo nmcli con up $BRIDGE_NAME
 
 # Step 1: Create and configure the storage pool
 echo "Checking for an existing storage pool..."
@@ -53,16 +82,6 @@ fi
 if $(sudo virsh net-list --all | grep -q "$NETWORK_NAME"); then
     echo "Network $NETWORK_NAME already exists. Skipping network creation."
 else
-    echo "Defining and starting the network..."
-    sudo virsh net-define ${NETWORK_XML_PATH_BASE}-${NETWORK_NAME}.xml
-    check_command "virsh net-define"
-    
-    sudo virsh net-start $NETWORK_NAME
-    check_command "virsh net-start"
-    
-    sudo virsh net-autostart $NETWORK_NAME
-    check_command "virsh net-autostart"
-
     sudo virsh net-define ${NETWORK_XML_PATH_BASE}-${BRIDGE_NAME}.xml
     check_command "virsh net-define"
     
@@ -72,18 +91,20 @@ else
     sudo virsh net-autostart $BRIDGE_NAME
     check_command "virsh net-autostart"
 
+    #echo "Defining and starting the network..."
+    #sudo virsh net-define ${NETWORK_XML_PATH_BASE}-${NETWORK_NAME}.xml
+    #check_command "virsh net-define"
+    
+    #sudo virsh net-start $NETWORK_NAME
+    #check_command "virsh net-start"
+    
+    #sudo virsh net-autostart $NETWORK_NAME
+    #check_command "virsh net-autostart"
 
 fi
 
 # Install bridge-utils if not already installed
 #sudo dnf install bridge-utils
-
-# Create a bridge interface 
-sudo nmcli con delete $BRIDGE_IF 
-sudo nmcli con add type bridge ifname $BRIDGE_NAME con-name $BRIDGE_NAME autoconnect yes
-sudo nmcli con add type bridge-slave ifname $BRIDGE_IF master $BRIDGE_NAME autoconnect yes
-sudo nmcli connection modify $BRIDGE_NAME bridge.stp no
-sudo nmcli con up $BRIDGE_NAME
 
 
 # Step 3: Create the disk if it doesn't exist

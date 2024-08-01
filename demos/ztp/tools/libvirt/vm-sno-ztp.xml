@@ -46,11 +46,6 @@
       <model type="virtio"/>
       <address type="pci" domain="0x0000" bus="0x07" slot="0x00" function="0x0"/>
     </interface>
-    <interface type="network">
-      <source network="sno-ztp"/>
-      <mac address="02:04:00:00:00:66"/>
-      <model type="virtio"/>
-    </interface>
     <console type="pty"/>
     <channel type="unix">
       <source mode="bind"/>

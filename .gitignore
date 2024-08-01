@@ -2,4 +2,7 @@ openshift-deploy
 
 **-secret.yaml
 
+**.pp
+**.te
+
 *!*.example

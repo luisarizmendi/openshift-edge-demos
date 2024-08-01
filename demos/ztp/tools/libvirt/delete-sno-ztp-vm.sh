@@ -1,12 +1,10 @@
 #!/bin/bash
 
-#!/bin/bash
-
-# Define variables
 VM_NAME="sno-ztp"
 NETWORK_NAME="sno-ztp"
 BRIDGE_NAME="sno-ztp-br"
 DISK_PATH="/var/lib/libvirt/images/sno-ztp.qcow2"
+BRIDGE_IF="enp58s0u1u2"
 
 check_command() {
     if [ $? -ne 0 ]; then
@@ -43,12 +41,19 @@ else
 fi
 
 # Step 2: Destroy and undefine the network
+
+
+for i in $(nmcli con show | grep $BRIDGE_IF | awk '{print $2}'); do nmcli con delete $i;done
+for i in $(nmcli con show | grep $BRIDGE_NAME | awk '{print $2}'); do nmcli con delete $i;done
+sudo nmcli con delete virbr99
+sudo nmcli con add type ethernet con-name $BRIDGE_IF ifname $BRIDGE_IF ipv4.method auto ipv6.method auto autoconnect yes
+
+
 echo "Destroying and undefining the network: $NETWORK_NAME"
 sudo virsh net-info $NETWORK_NAME &> /dev/null
 if [ $? -eq 0 ]; then
     # Network exists, attempt to destroy and undefine it
     sudo virsh net-destroy $NETWORK_NAME
-    check_command "virsh net-destroy"
 
     sudo virsh net-undefine $NETWORK_NAME
     check_command "virsh net-undefine"
@@ -60,17 +65,12 @@ sudo virsh net-info $BRIDGE_NAME &> /dev/null
 if [ $? -eq 0 ]; then
     # Network exists, attempt to destroy and undefine it
     sudo virsh net-destroy $BRIDGE_NAME
-    check_command "virsh net-destroy"
 
     sudo virsh net-undefine $BRIDGE_NAME
     check_command "virsh net-undefine"
 else
     echo "Network $BRIDGE_NAME does not exist."
 fi
-
-
-sudo nmcli con delete $BRIDGE_NAME
-sudo nmcli con add type ethernet con-name enp58s0u1u2 ifname enp58s0u1u2 ipv4.method auto ipv6.method auto autoconnect yes
 
 
 echo "Cleanup completed successfully."
