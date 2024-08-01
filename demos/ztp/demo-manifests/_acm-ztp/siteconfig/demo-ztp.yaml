@@ -37,20 +37,28 @@ spec:
     # The crun manifests can be obtained from source-crs/optional-extra-manifest/ and added to the git repo ie.sno-extra-manifest.
     # extraManifestPath: sno-extra-manifest
     clusterLabels:
+      # These example cluster labels correspond to the bindingRules in the PolicyGenTemplate examples
+      du-profile: "latest"
+      # These example cluster labels correspond to the bindingRules in the PolicyGenTemplate examples in ../policygentemplates:
+      # ../policygentemplates/common-ranGen.yaml will apply to all clusters with 'common: true'
       common: true
-      sites : "demo-ztp"
+      # ../policygentemplates/group-du-sno-ranGen.yaml will apply to all clusters with 'group-du-sno: ""'
+      group-du-sno: ""
+      # ../policygentemplates/example-sno-site.yaml will apply to all clusters with 'sites: "example-sno"'
+      # Normally this should match or contain the cluster name so it only applies to a single cluster
+      sites : "example-sno"
     clusterNetwork:
-      - cidr: 10.128.0.0/14
-        hostPrefix: 23
+      - cidr: 1001:1::/48
+        hostPrefix: 64
     machineNetwork:
-      - cidr: 192.168.123.0/24
+      - cidr: 1111:2222:3333:4444::/64
     serviceNetwork:
-      - 172.30.0.0/16
-    #additionalNTPSources:
-    #  - 2.rhel.pool.ntp.org
+      - 1001:2::/112
+    additionalNTPSources:
+      - 1111:2222:3333:4444::2
     # Initiates the cluster for workload partitioning. Setting specific reserved/isolated CPUSets is done via PolicyTemplate
     # please see Workload Partitioning Feature for a complete guide.
-    #cpuPartitioningMode: AllNodes
+    cpuPartitioningMode: AllNodes
     # Optionally; This can be used to override the KlusterletAddonConfig that is created for this cluster:
     #crTemplates:
     #  KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
@@ -111,34 +119,34 @@ spec:
         #      ]
         #    }
         #  }
-        nodeNetwork:
-          interfaces:
-            - name: eno1
-              macAddress: "AA:BB:CC:DD:EE:11"
-          config:
-            interfaces:
-              - name: eno1
-                type: ethernet
-                state: up
-                ipv4:
-                  enabled: false
-                ipv6:
-                  enabled: true
-                  address:
-                  # For SNO sites with static IP addresses, the node-specific,
-                  # API and Ingress IPs should all be the same and configured on
-                  # the interface
-                  - ip: 1111:2222:3333:4444::aaaa:1
-                    prefix-length: 64
-            dns-resolver:
-              config:
-                search:
-                - example.com
-                server:
-                - 1111:2222:3333:4444::2
-            routes:
-              config:
-              - destination: ::/0
-                next-hop-interface: eno1
-                next-hop-address: 1111:2222:3333:4444::1
-                table-id: 254
+        #nodeNetwork:
+        #  interfaces:
+        #    - name: eno1
+        #      macAddress: "AA:BB:CC:DD:EE:11"
+        #  config:
+        #    interfaces:
+        #      - name: eno1
+        #        type: ethernet
+        #        state: up
+        #        ipv4:
+        #          enabled: false
+        #        ipv6:
+        #          enabled: true
+        #          address:
+        #          # For SNO sites with static IP addresses, the node-specific,
+        #          # API and Ingress IPs should all be the same and configured on
+        #          # the interface
+        #          - ip: 1111:2222:3333:4444::aaaa:1
+        #            prefix-length: 64
+        #    dns-resolver:
+        #      config:
+        #        search:
+        #        - example.com
+        #        server:
+        #        - 1111:2222:3333:4444::2
+        #    routes:
+        #      config:
+        #      - destination: ::/0
+        #        next-hop-interface: eno1
+        #        next-hop-address: 1111:2222:3333:4444::1
+        #        table-id: 254
