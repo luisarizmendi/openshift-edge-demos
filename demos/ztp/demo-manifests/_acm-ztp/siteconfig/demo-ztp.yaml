@@ -1,18 +1,18 @@
-# example-node1-bmh-secret & assisted-deployment-pull-secret need to be created under same namespace demo-ztp
+# example-node1-bmh-secret & assisted-deployment-pull-secret need to be created under same namespace example-sno
 ---
 apiVersion: ran.openshift.io/v1
 kind: SiteConfig
 metadata:
-  name: "demo-ztp"
-  namespace: "demo-ztp"
+  name: "example-sno"
+  namespace: "example-sno"
 spec:
   baseDomain: "example.com"
   pullSecretRef:
-    name: "pullsecret-demo-ztp"
-  #clusterImageSetNameRef: "img4.16.4-x86-64-appsub"
-  sshPublicKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCzR2ixpaJIecsCunvgJjg18NEFPPTYKewSa9eD6GMptHNYyybIqYtng/2/AsNSZ9cp54fCqt5QUIsD7OfFJQnN7/1z7sHyeEM5t2PhK1GOykq2klga//HlvCgK3DJTy9az+wq5JVyHLUZnRGtgOQRgYLox2CadThBs2aM8QwSXCDjhIjgApwEvoFuH9yRFAervBNykvIiEx+K8p1w2vkntCn8XsiuZ4xRwNuttiudysCHYq9EkdOHIEt6a+ktR7cxpD8uAoxym4UitoHynCy6Jp7Ji0GNaVNhsE9dkcXjQDmP7s+IRs7s83Om4dDpXzhTAol9++MvHsDjYtEUN5Se/N44jjwyeVXivzF7IjZg1WHJgb1gYiYRUoBhzcqzO8Vft9xdjpS8sZ/46+CQA2XPEw5uxP5iBFHgmzbOYl2GPMr67qK19gtAduXvofSMDiXGkzIPQoXn6xnQjl6QHrn/uCk1q4+76jqYZcRzGj0NNMx4Viu+zws9GLMK9M7arym8="
+    name: "assisted-deployment-pull-secret"
+  clusterImageSetNameRef: "openshift-4.16"
+  sshPublicKey: "ssh-rsa AAAA..."
   clusters:
-  - clusterName: "sno-1"
+  - clusterName: "example-sno"
     networkType: "OVNKubernetes"
     # installConfigOverrides is a generic way of passing install-config
     # parameters through the siteConfig.  The 'capabilities' field configures
@@ -22,123 +22,131 @@ spec:
     # - OperatorLifecycleManager is needed for 4.15 and later
     # - NodeTuning is needed for 4.13 and later, not for 4.12 and earlier
     # - Ingress is needed for 4.16 and later
-    #installConfigOverrides: |
-    #  {
-    #    "capabilities": {
-    #      "baselineCapabilitySet": "None",
-    #      "additionalEnabledCapabilities": [
-    #        "NodeTuning",
-    #        "OperatorLifecycleManager",
-    #        "Ingress"
-    #      ]
-    #    }
-    #  }
+    installConfigOverrides: |
+      {
+        "capabilities": {
+          "baselineCapabilitySet": "None",
+          "additionalEnabledCapabilities": [
+            "NodeTuning",
+            "OperatorLifecycleManager",
+            "Ingress"
+          ]
+        }
+      }
     # It is strongly recommended to include crun manifests as part of the additional install-time manifests for 4.13+.
     # The crun manifests can be obtained from source-crs/optional-extra-manifest/ and added to the git repo ie.sno-extra-manifest.
     # extraManifestPath: sno-extra-manifest
     clusterLabels:
+      # These example cluster labels correspond to the bindingRules in the PolicyGenTemplate examples
+      du-profile: "latest"
+      # These example cluster labels correspond to the bindingRules in the PolicyGenTemplate examples in ../policygentemplates:
+      # ../policygentemplates/common-ranGen.yaml will apply to all clusters with 'common: true'
       common: true
-      sites : "demo-ztp"
+      # ../policygentemplates/group-du-sno-ranGen.yaml will apply to all clusters with 'group-du-sno: ""'
+      group-du-sno: ""
+      # ../policygentemplates/example-sno-site.yaml will apply to all clusters with 'sites: "example-sno"'
+      # Normally this should match or contain the cluster name so it only applies to a single cluster
+      sites : "example-sno"
     clusterNetwork:
-      - cidr: 10.128.0.0/14
-        hostPrefix: 23
+      - cidr: 1001:1::/48
+        hostPrefix: 64
     machineNetwork:
-      - cidr: 192.168.123.0/24
+      - cidr: 1111:2222:3333:4444::/64
     serviceNetwork:
-      - 172.30.0.0/16
-    #additionalNTPSources:
-    #  - 2.rhel.pool.ntp.org
+      - 1001:2::/112
+    additionalNTPSources:
+      - 1111:2222:3333:4444::2
     # Initiates the cluster for workload partitioning. Setting specific reserved/isolated CPUSets is done via PolicyTemplate
     # please see Workload Partitioning Feature for a complete guide.
-    #cpuPartitioningMode: AllNodes
+    cpuPartitioningMode: AllNodes
     # Optionally; This can be used to override the KlusterletAddonConfig that is created for this cluster:
     #crTemplates:
     #  KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
     nodes:
-      - hostName: "sno-1.83.52.27.104.nip.io"
+      - hostName: "example-node1.example.com"
         role: "master"
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://83.52.27.10:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890"
+        bmcAddress: "idrac-virtualmedia+https://[1111:2222:3333:4444::bbbb:1]/redfish/v1/Systems/System.Embedded.1"
         bmcCredentialsName:
-          name: "ztp-bmc-secret"
-        bootMACAddress: "52:54:00:fa:5f:8f"
+          name: "example-node1-bmh-secret"
+        bootMACAddress: "AA:BB:CC:DD:EE:11"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
-        #rootDeviceHints:
-        #  deviceName: "/dev/disk/by-path/pci-0000:01:00.0-scsi-0:2:0:0"
+        rootDeviceHints:
+          deviceName: "/dev/disk/by-path/pci-0000:01:00.0-scsi-0:2:0:0"
         # disk partition at `/var/lib/containers` with ignitionConfigOverride. Some values must be updated. See DiskPartitionContainer.md for more details
-        #ignitionConfigOverride: |
-        #  {
-        #    "ignition": {
-        #      "version": "3.2.0"
-        #    },
-        #    "storage": {
-        #      "disks": [
-        #        {
-        #          "device": "/dev/disk/by-id/wwn-0x6b07b250ebb9d0002a33509f24af1f62",
-        #          "partitions": [
-        #            {
-        #              "label": "var-lib-containers",
-        #              "sizeMiB": 0,
-        #              "startMiB": 250000
-        #            }
-        #          ],
-        #          "wipeTable": false
-        #        }
-        #      ],
-        #      "filesystems": [
-        #        {
-        #          "device": "/dev/disk/by-partlabel/var-lib-containers",
-        #          "format": "xfs",
-        #          "mountOptions": [
-        #            "defaults",
-        #            "prjquota"
-        #          ],
-        #          "path": "/var/lib/containers",
-        #          "wipeFilesystem": true
-        #        }
-        #      ]
-        #    },
-        #    "systemd": {
-        #      "units": [
-        #        {
-        #          "contents": "# Generated by Butane\n[Unit]\nRequires=systemd-fsck@dev-disk-by\\x2dpartlabel-var\\x2dlib\\x2dcontainers.service\nAfter=systemd-fsck@dev-disk-by\\x2dpartlabel-var\\x2dlib\\x2dcontainers.service\n\n[Mount]\nWhere=/var/lib/containers\nWhat=/dev/disk/by-partlabel/var-lib-containers\nType=xfs\nOptions=defaults,prjquota\n\n[Install]\nRequiredBy=local-fs.target",
-        #          "enabled": true,
-        #          "name": "var-lib-containers.mount"
-        #        }
-        #      ]
-        #    }
-        #  }
-        #nodeNetwork:
-        #  interfaces:
-        #    - name: eno1
-        #      macAddress: "AA:BB:CC:DD:EE:11"
-        #  config:
-        #    interfaces:
-        #      - name: eno1
-        #        type: ethernet
-        #        state: up
-        #        ipv4:
-        #          enabled: false
-        #        ipv6:
-        #          enabled: true
-        #          address:
-        #          # For SNO sites with static IP addresses, the node-specific,
-        #          # API and Ingress IPs should all be the same and configured on
-        #          # the interface
-        #          - ip: 1111:2222:3333:4444::aaaa:1
-        #            prefix-length: 64
-        #    dns-resolver:
-        #      config:
-        #        search:
-        #        - example.com
-        #        server:
-        #        - 1111:2222:3333:4444::2
-        #    routes:
-        #      config:
-        #      - destination: ::/0
-        #        next-hop-interface: eno1
-        #        next-hop-address: 1111:2222:3333:4444::1
-        #        table-id: 254
+        ignitionConfigOverride: |
+          {
+            "ignition": {
+              "version": "3.2.0"
+            },
+            "storage": {
+              "disks": [
+                {
+                  "device": "/dev/disk/by-id/wwn-0x6b07b250ebb9d0002a33509f24af1f62",
+                  "partitions": [
+                    {
+                      "label": "var-lib-containers",
+                      "sizeMiB": 0,
+                      "startMiB": 250000
+                    }
+                  ],
+                  "wipeTable": false
+                }
+              ],
+              "filesystems": [
+                {
+                  "device": "/dev/disk/by-partlabel/var-lib-containers",
+                  "format": "xfs",
+                  "mountOptions": [
+                    "defaults",
+                    "prjquota"
+                  ],
+                  "path": "/var/lib/containers",
+                  "wipeFilesystem": true
+                }
+              ]
+            },
+            "systemd": {
+              "units": [
+                {
+                  "contents": "# Generated by Butane\n[Unit]\nRequires=systemd-fsck@dev-disk-by\\x2dpartlabel-var\\x2dlib\\x2dcontainers.service\nAfter=systemd-fsck@dev-disk-by\\x2dpartlabel-var\\x2dlib\\x2dcontainers.service\n\n[Mount]\nWhere=/var/lib/containers\nWhat=/dev/disk/by-partlabel/var-lib-containers\nType=xfs\nOptions=defaults,prjquota\n\n[Install]\nRequiredBy=local-fs.target",
+                  "enabled": true,
+                  "name": "var-lib-containers.mount"
+                }
+              ]
+            }
+          }
+        nodeNetwork:
+          interfaces:
+            - name: eno1
+              macAddress: "AA:BB:CC:DD:EE:11"
+          config:
+            interfaces:
+              - name: eno1
+                type: ethernet
+                state: up
+                ipv4:
+                  enabled: false
+                ipv6:
+                  enabled: true
+                  address:
+                  # For SNO sites with static IP addresses, the node-specific,
+                  # API and Ingress IPs should all be the same and configured on
+                  # the interface
+                  - ip: 1111:2222:3333:4444::aaaa:1
+                    prefix-length: 64
+            dns-resolver:
+              config:
+                search:
+                - example.com
+                server:
+                - 1111:2222:3333:4444::2
+            routes:
+              config:
+              - destination: ::/0
+                next-hop-interface: eno1
+                next-hop-address: 1111:2222:3333:4444::1
+                table-id: 254
