@@ -12,5 +12,4 @@ resources:
 - 11-app-project.yaml
 - 11-policies-app-project.yaml
 - 17-demo-assisted-ns.yaml
-- 18-demo-assisted-role.yaml
 

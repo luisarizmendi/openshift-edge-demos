@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: demo-ztp-gitops
+  name: demo-ztp-gitops-global
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/managed-by: demo-ztp-gitops
