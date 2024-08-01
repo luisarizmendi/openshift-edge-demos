@@ -1,16 +1,16 @@
-# example-node1-bmh-secret & assisted-deployment-pull-secret need to be created under same namespace demo-ztp
+# example-node1-bmh-secret & assisted-deployment-pull-secret need to be created under same namespace example-sno
 ---
 apiVersion: ran.openshift.io/v1
 kind: SiteConfig
 metadata:
-  name: "demo-ztp"
-  namespace: "demo-ztp"
+  name: "example-sno"
+  namespace: "example-sno"
 spec:
   baseDomain: "example.com"
   pullSecretRef:
-    name: "pullsecret-demo-ztp"
+    name: "assisted-deployment-pull-secret"
   clusterImageSetNameRef: "openshift-4.16"
-  sshPublicKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCzR2ixpaJIecsCunvgJjg18NEFPPTYKewSa9eD6GMptHNYyybIqYtng/2/AsNSZ9cp54fCqt5QUIsD7OfFJQnN7/1z7sHyeEM5t2PhK1GOykq2klga//HlvCgK3DJTy9az+wq5JVyHLUZnRGtgOQRgYLox2CadThBs2aM8QwSXCDjhIjgApwEvoFuH9yRFAervBNykvIiEx+K8p1w2vkntCn8XsiuZ4xRwNuttiudysCHYq9EkdOHIEt6a+ktR7cxpD8uAoxym4UitoHynCy6Jp7Ji0GNaVNhsE9dkcXjQDmP7s+IRs7s83Om4dDpXzhTAol9++MvHsDjYtEUN5Se/N44jjwyeVXivzF7IjZg1WHJgb1gYiYRUoBhzcqzO8Vft9xdjpS8sZ/46+CQA2XPEw5uxP5iBFHgmzbOYl2GPMr67qK19gtAduXvofSMDiXGkzIPQoXn6xnQjl6QHrn/uCk1q4+76jqYZcRzGj0NNMx4Viu+zws9GLMK9M7arym8="
+  sshPublicKey: "ssh-rsa AAAA..."
   clusters:
   - clusterName: "sno-1"
     networkType: "OVNKubernetes"
