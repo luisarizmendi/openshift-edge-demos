@@ -1,8 +1,13 @@
 openshift-deploy
-
 **-secret.yaml
 
+# ztp demo
+vars_secret.yaml
 **.pp
 **.te
-
 *!*.example
+appliance-config.yaml
+demos/ztp/demo-manifests/02-appliance/appliance_assets/build-image/run/*
+demos/ztp/demo-manifests/02-appliance/appliance_assets/build-config-iso/run/*
+demos/ztp/demo-manifests/02-appliance/appliance_assets/build-image/output/*
+demos/ztp/demo-manifests/02-appliance/appliance_assets/build-config-iso/output/*

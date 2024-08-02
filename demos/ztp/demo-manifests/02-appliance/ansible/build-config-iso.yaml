@@ -1,0 +1,71 @@
+---
+- name: Generate Cluster Configuration Image
+  hosts: localhost
+  gather_facts: no
+
+  vars_files:
+    - vars.yaml
+    - vars_secret.yaml
+
+  tasks:
+
+    - name: Ensure directories exists
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "{{ appliance_assets_config_iso }}"
+        - "{{ appliance_assets_config_iso }}/config"
+        - "{{ appliance_assets_config_iso }}/run"
+        - "{{ appliance_assets_config_iso }}/output"
+
+
+    - name: Create openshift manifests directory (if needed)
+      ansible.builtin.file:
+        path: "{{ appliance_assets_config_iso }}/run/openshift"
+        state: directory
+
+    - name: Check for install-config.yaml
+      ansible.builtin.stat:
+        path: "{{ install_config_file_template }}"
+      register: install_config_file_check
+
+    - name: Configure install-config.yaml
+      ansible.builtin.template:
+        src: "{{ install_config_file_template }}"
+        dest: "{{ appliance_assets_config_iso }}/run/install-config.yaml"
+      when: install_config_file_check.stat.exists
+
+    - name: Check for agent-config.yaml"
+      ansible.builtin.stat:
+        path: "{{ agent_config_file }}"
+      register: agent_config_file_check
+
+    - name: Configure agent-config.yaml"
+      ansible.builtin.template:
+        src: "{{ agent_config_file }}"
+        dest: "{{ appliance_assets_config_iso }}/run/agent-config.yaml"
+      when: agent_config_file_check.stat.exists
+
+    - name: Add custom manifests to the cluster config directory
+      ansible.builtin.copy:
+        src: "{{ item }}"
+        dest: "{{ appliance_assets_config_iso }}/run/openshift/{{ item | basename }}"
+      with_fileglob:
+        - "{{ custom_manifests_dir }}/**/*.yaml"
+        - "{{ custom_manifests_dir }}/**/*.yml"
+      when: custom_manifests_dir is defined and custom_manifests_dir | length > 0
+
+    - name: Generate the configuration image
+      ansible.builtin.command:
+        cmd: "openshift-install agent create config-image --dir {{ appliance_assets_config_iso }}/run"
+      args:
+        chdir: "{{ appliance_assets_config_iso }}/run"
+      register: config_image_result
+      ignore_errors: yes
+
+    - name: Output result of config image generation
+      ansible.builtin.debug:
+        msg: "{{ config_image_result.stdout }}"
+      when: config_image_result is defined and config_image_result.stdout is defined
+

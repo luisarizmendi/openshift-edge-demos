@@ -1,0 +1,6 @@
+operators:
+  - catalog: registry.redhat.io/redhat/redhat-operator-index:v4.14
+    packages:
+      - name: elasticsearch-operator
+        channels:
+          - name: stable-5.8
