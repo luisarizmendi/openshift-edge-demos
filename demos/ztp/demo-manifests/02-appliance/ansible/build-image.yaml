@@ -42,7 +42,7 @@
         file: "{{ appliance_config_file }}"
       when: appliance_config_check.stat.exists
 
-    - name: Configure appliance-config.yaml
+    - name: Configure appliance-config.yamlc
       ansible.builtin.template:
         src: "{{ appliance_config_file }}"
         dest: "{{ appliance_assets_image }}/run/appliance-config.yaml"
@@ -113,12 +113,16 @@
         podman run --rm -it --pull newer --privileged --net=host -v {{ appliance_assets_image }}/run:/assets:Z {{ appliance_image_preinstall }} build
       register: build_result
 
+    - name: Copy ISO post deployment script
+      ansible.builtin.copy:
+        src: "{{ iso_post_deployment_script}}"
+        dest: "{{ appliance_assets_image }}/run/{{ iso_post_deployment_script | basename }}"
+
     - name: Build the appliance ISO
       become: true
       ansible.builtin.shell: |
-        podman run --rm -it --privileged -v {{ appliance_assets_image }}/run:/assets:Z {{ appliance_image_preinstall }} build iso --post {{ iso_post_deployment_script }} --target-device {{ appliance_target_dev }}
+        podman run --rm -it --privileged -v {{ appliance_assets_image }}/run:/assets:Z {{ appliance_image_preinstall }} build iso --post-script {{ iso_post_deployment_script | basename }} --target-device {{ appliance_target_dev }}
       register: build_result
-
 
     - name: Move the appliance.raw to the output directory 
       ansible.builtin.shell: "mv -f {{ appliance_assets_image }}/run/{{ item }} {{ appliance_assets_image }}/output"

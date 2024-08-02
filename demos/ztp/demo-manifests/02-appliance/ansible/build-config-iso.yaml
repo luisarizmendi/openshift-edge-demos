@@ -8,6 +8,13 @@
     - vars_secret.yaml
 
   tasks:
+    - name: Remove old directories
+      ansible.builtin.file:
+        path: "{{ items }}"
+        state: absent
+      with_items:
+        - "{{ appliance_assets_config_iso }}/run"
+        - "{{ appliance_assets_config_iso }}/output"
 
     - name: Ensure directories exists
       ansible.builtin.file:
@@ -18,12 +25,6 @@
         - "{{ appliance_assets_config_iso }}/config"
         - "{{ appliance_assets_config_iso }}/run"
         - "{{ appliance_assets_config_iso }}/output"
-
-
-    - name: Create openshift manifests directory (if needed)
-      ansible.builtin.file:
-        path: "{{ appliance_assets_config_iso }}/run/openshift"
-        state: directory
 
     - name: Check for install-config.yaml
       ansible.builtin.stat:
@@ -47,6 +48,12 @@
         dest: "{{ appliance_assets_config_iso }}/run/agent-config.yaml"
       when: agent_config_file_check.stat.exists
 
+    - name: Create openshift manifests directory (if needed)
+      ansible.builtin.file:
+        path: "{{ appliance_assets_config_iso }}/run/openshift"
+        state: directory
+      when: custom_manifests_dir is defined and custom_manifests_dir | length > 0
+
     - name: Add custom manifests to the cluster config directory
       ansible.builtin.copy:
         src: "{{ item }}"
@@ -58,14 +65,16 @@
 
     - name: Generate the configuration image
       ansible.builtin.command:
-        cmd: "openshift-install agent create config-image --dir {{ appliance_assets_config_iso }}/run"
-      args:
-        chdir: "{{ appliance_assets_config_iso }}/run"
+        cmd: "openshift-install agent create config-image --dir {{ appliance_assets_config_iso }}/run/"
       register: config_image_result
       ignore_errors: yes
 
-    - name: Output result of config image generation
-      ansible.builtin.debug:
-        msg: "{{ config_image_result.stdout }}"
-      when: config_image_result is defined and config_image_result.stdout is defined
+
+    - name: Move the results to output directory 
+      ansible.builtin.shell: "mv -f {{ appliance_assets_config_iso }}/run/{{ item }} {{ appliance_assets_config_iso }}/output"
+      with_items:
+        - auth/
+        - agentconfig.noarch.iso
+
+
 
