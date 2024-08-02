@@ -10,7 +10,7 @@
   tasks:
     - name: Remove old directories
       ansible.builtin.file:
-        path: "{{ items }}"
+        path: "{{ item }}"
         state: absent
       with_items:
         - "{{ appliance_assets_config_iso }}/run"
