@@ -1,0 +1,5 @@
+apiVersion: v1beta1
+kind: AgentConfig
+metadata:
+  name: "{{ appliance_name }}"
+rendezvousIP: "{{ appliance_rendezvous }}"

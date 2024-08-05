@@ -43,6 +43,32 @@ appliance
 ----------------
 poner el vars_secret
 
+
+
+necistas bastante espacio de disco (en mi prueba 170GB), también tener en cuenta que la iso es de 32 GB:
+appliance_assets/build-image/output on  main [!] 
+❯ ls -lh
+total 61G
+-rw-r--r--. 1 root root 32G Aug  5 09:57 appliance.iso
+-rw-r--r--. 1 root root 29G Aug  5 09:47 appliance.raw
+
+appliance_assets/build-image/output on  main [!] 
+❯ ls -lh ../../build-
+build-config-iso/ build-image/      
+
+appliance_assets/build-image/output on  main [!] 
+❯ ls -lh ../../build-config-iso/output/
+total 56K
+-rw-r--r--. 1 larizmen larizmen 56K Aug  5 09:57 agentconfig.noarch.iso
+drwxr-x---. 1 larizmen larizmen  56 Aug  5 09:57 auth
+
+
+
+
+
+
+
+
 log into registry.redhat.io en usuario y root
 
 pull secret cuidado con las comas simples, tiene que ser asi: pullSecret: '{"auths":{<redacted>}}'

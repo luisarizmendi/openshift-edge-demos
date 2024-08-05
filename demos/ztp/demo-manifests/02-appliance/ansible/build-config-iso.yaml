@@ -37,6 +37,12 @@
         dest: "{{ appliance_assets_config_iso }}/run/install-config.yaml"
       when: install_config_file_check.stat.exists
 
+    - name: Backup install-config.yaml
+      ansible.builtin.template:
+        src: "{{ install_config_file_template }}"
+        dest: "{{ appliance_assets_config_iso }}/output/install-config.yaml"
+      when: install_config_file_check.stat.exists
+
     - name: Check for agent-config.yaml"
       ansible.builtin.stat:
         path: "{{ agent_config_file }}"
@@ -46,6 +52,12 @@
       ansible.builtin.template:
         src: "{{ agent_config_file }}"
         dest: "{{ appliance_assets_config_iso }}/run/agent-config.yaml"
+      when: agent_config_file_check.stat.exists
+
+    - name: Backup agent-config.yaml"
+      ansible.builtin.template:
+        src: "{{ agent_config_file }}"
+        dest: "{{ appliance_assets_config_iso }}/output/agent-config.yaml"
       when: agent_config_file_check.stat.exists
 
     - name: Create openshift manifests directory (if needed)
