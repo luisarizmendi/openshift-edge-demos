@@ -1,5 +1,7 @@
 user_core_pass: "R3dh4t1!"
-ocp_release_version: "4.16"
+ocp_release_version: "4.16.4"
+ocp_release_channel: "stable"
+cpu_architecture: "x86_64"
 disk_size_gb: 200
 
 appliance_name: "ocp-appliance"
@@ -23,5 +25,4 @@ appliance_image_preinstall: "registry.redhat.io/assisted/agent-preinstall-image-
 
 ssh_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
-ocp_release_channel: "stable"
-cpu_architecture: "x86_64"
+

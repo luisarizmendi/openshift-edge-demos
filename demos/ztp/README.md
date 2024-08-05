@@ -64,6 +64,7 @@ drwxr-x---. 1 larizmen larizmen  56 Aug  5 09:57 auth
 
 
 
+estate seguro de que es la misma versión de openshift-install que la de la imagen
 
 
 
