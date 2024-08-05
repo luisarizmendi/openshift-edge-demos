@@ -4,7 +4,7 @@ disk_size_gb: 200
 
 appliance_name: "ocp-appliance"
 appliance_basedomain: "{{ appliance_rendezvous }}.nip.io"
-appliance_target_dev: /dev/vda0
+appliance_target_dev: /dev/vda
 appliance_rendezvous: 192.168.122.88
 
 appliance_assets_image: "../appliance_assets/build-image"
