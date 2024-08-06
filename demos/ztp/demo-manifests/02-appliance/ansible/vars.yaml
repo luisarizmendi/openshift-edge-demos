@@ -1,13 +1,8 @@
-user_core_pass: "R3dh4t1!"
-ocp_release_version: "4.16.4"
-ocp_release_channel: "stable"
-cpu_architecture: "x86_64"
-disk_size_gb: 200
+## Common
+ssh_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
-appliance_name: "ocp-appliance"
-appliance_basedomain: "{{ appliance_rendezvous }}.nip.io"
-appliance_target_dev: /dev/vda
-appliance_rendezvous: 192.168.122.73
+## Image creation
+appliance_image_preinstall: "registry.redhat.io/assisted/agent-preinstall-image-builder-rhel9:1.0-1714506949"
 
 appliance_assets_image: "../appliance_assets/build-image"
 appliance_config_file: "{{ appliance_assets_image }}/config/appliance-config-template.yaml"
@@ -16,13 +11,24 @@ custom_images_file: "{{ appliance_assets_image }}/config/custom-images.yaml"
 custom_operators_file: "{{ appliance_assets_image }}/config/custom-operators.yaml"
 iso_post_deployment_script: "{{ appliance_assets_image }}/config/iso-post-deployment.sh"
 
+user_core_pass: "R3dh4t1!"
+ocp_release_version: "4.16.4"
+ocp_release_channel: "stable"
+cpu_architecture: "x86_64"
+disk_size_gb: 200
+
+
+## Config generation
+appliance_name: "ocp-appliance"
+appliance_basedomain: "{{ appliance_rendezvous }}.nip.io"
+appliance_target_dev: /dev/vda
+appliance_rendezvous: 192.168.122.73
+
 appliance_assets_config_iso: "../appliance_assets/build-config-iso"
 install_config_file_template: "{{ appliance_assets_config_iso }}/config/install-config-template.yaml"
 agent_config_file: "{{ appliance_assets_config_iso }}/config/agent-config-template.yaml"
 custom_iso_manifests_dir: "{{ appliance_assets_config_iso }}/config/manifests"
 
-appliance_image_preinstall: "registry.redhat.io/assisted/agent-preinstall-image-builder-rhel9:1.0-1714506949"
 
-ssh_key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
 
 

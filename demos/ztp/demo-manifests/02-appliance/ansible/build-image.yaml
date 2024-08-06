@@ -7,17 +7,14 @@
     - vars_secret.yaml
 
   tasks:
-    - name: Remove old appliance config
-      ansible.builtin.file:
-        path: "{{ appliance_assets_image }}/run/appliance-config.yaml"
-        state: absent
-
     - name: Remove old directories
+      become: true
       ansible.builtin.file:
         path: "{{ item }}"
         state: absent
       with_items:
         - "{{ appliance_assets_image }}/output"
+        - "{{ appliance_assets_image }}/run"
 
     - name: Ensure appliance_assets_image directory exists
       ansible.builtin.file:
@@ -158,12 +155,3 @@
 
           You can also use directly the RAW file as VM drive.
 
-
-    - name: ISO deployment info
-      ansible.builtin.debug:
-        msg: |
-          *******************************************
-          *     INFORMATION TO USE THE ISO file     *
-          *******************************************
-
-          ...Well...nothing to say here...just use it.

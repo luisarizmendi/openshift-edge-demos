@@ -9,6 +9,7 @@
 
   tasks:
     - name: Remove old directories
+      become: true
       ansible.builtin.file:
         path: "{{ item }}"
         state: absent
