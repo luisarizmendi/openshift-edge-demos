@@ -20,7 +20,7 @@ disk_size_gb: 200
 
 ## Config generation
 appliance_name: "ocp-appliance"
-appliance_basedomain: "{{ appliance_rendezvous }}.nip.io"
+appliance_basedomain: "sandbox2707.opentlc.com"
 appliance_target_dev: /dev/vda
 appliance_rendezvous: 192.168.122.73
 

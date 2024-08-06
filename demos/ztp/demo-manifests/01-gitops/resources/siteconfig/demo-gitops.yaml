@@ -6,7 +6,7 @@ metadata:
   name: "demo-ztp-gitops"
   namespace: "demo-ztp-gitops"
 spec:
-  baseDomain: "nip.io"
+  baseDomain: "sandbox2707.opentlc.com"
   pullSecretRef:
     name: "demo-ztp-gitops-pull-secret"
   clusterImageSetNameRef: "img4.16.5-multi-appsub"
@@ -55,7 +55,7 @@ spec:
     #crTemplates:
     #  KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
     nodes:
-      - hostName: "demo-ztp-gitops-1.83.52.27.104.nip.io"
+      - hostName: "demo-ztp-gitops-1.sandbox2707.opentlc.com"
         role: "master"
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
