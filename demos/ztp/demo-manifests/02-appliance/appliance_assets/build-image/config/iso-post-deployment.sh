@@ -1,3 +1,4 @@
 #!/bin/bash
 
-date > /root/done
+echo Rebooting the machine...
+reboot
