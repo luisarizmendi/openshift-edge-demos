@@ -71,7 +71,7 @@ To deploy the child applications, create the parent `ApplicationSet` object with
             generators:
               - git:
                   directories:
-                    - path: demos/placement/apps/welcome/*
+                    - path: apps/welcome/*
                   repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
                   revision: main
               - list:
@@ -131,7 +131,7 @@ Now we are going to switch the app from the Cloud to the Edge clusters. To do th
             generators:
               - git:
                   directories:
-                    - path: demos/placement/apps/welcome/*
+                    - path: apps/welcome/*
                   repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
                   revision: main
               - list:

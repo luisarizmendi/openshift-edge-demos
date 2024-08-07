@@ -142,7 +142,7 @@ Ok, now that we have prepared the initial state of our clusters, we can deploy t
             generators:
               - git:
                   directories:
-                    - path: demos/placement/apps/welcome/*
+                    - path: apps/welcome/*
                   repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
                   revision: main
               - clusterDecisionResource:

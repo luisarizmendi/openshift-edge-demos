@@ -77,3 +77,13 @@ pull secret cuidado con las comas simples, tiene que ser asi: pullSecret: '{"aut
 
 
 install openshift-install  https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/
+
+
+
+
+
+
+
+
+BEYOND
+static ip

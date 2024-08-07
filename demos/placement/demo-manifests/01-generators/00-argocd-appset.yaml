@@ -11,7 +11,7 @@ spec:
         generators:
           - git:
               directories:
-                - path: demos/placement/apps/welcome/*
+                - path: apps/welcome/*
               repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
               revision: main
           - list:

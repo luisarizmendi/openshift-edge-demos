@@ -3,7 +3,7 @@ kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: capi-provider-role
-  namespace: demo-ztp-assisted-1
+  namespace: demo-ztp-gui-1
   annotations:
     argocd.argoproj.io/sync-wave: "18"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
