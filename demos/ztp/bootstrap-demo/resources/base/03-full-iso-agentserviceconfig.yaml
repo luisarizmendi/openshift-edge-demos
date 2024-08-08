@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: full-iso-assisted-service-config
+  namespace: multicluster-engine
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+data:
+  ISO_IMAGE_TYPE: full-iso

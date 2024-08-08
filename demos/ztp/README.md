@@ -15,17 +15,24 @@ cat ~/pull-secret | base64 -w0
 
 
 
-assisted can take time while populating
-
-
-
-
 
 check that new argocd repo pod is generated and not in pedning because no resources
 
 
 
+sobre las VMs:
+libvirt con current and maximum memory para tener mas memoria en la VM
 
+
+
+
+DNS config -> se puede hacer en AWS
+
+
+
+
+GUI
+---------------
 
 
 

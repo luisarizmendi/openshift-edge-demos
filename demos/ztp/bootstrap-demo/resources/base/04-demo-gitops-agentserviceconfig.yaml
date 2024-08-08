@@ -5,6 +5,7 @@ metadata:
  annotations:
    argocd.argoproj.io/sync-wave: "4"
    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+   unsupported.agent-install.openshift.io/assisted-service-configmap: full-iso-config
 spec:
   databaseStorage:
     accessModes:
