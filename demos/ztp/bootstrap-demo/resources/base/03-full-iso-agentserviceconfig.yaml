@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: full-iso-assisted-service-config
+  name: full-iso-config
   namespace: multicluster-engine
   annotations:
     argocd.argoproj.io/sync-wave: "3"
