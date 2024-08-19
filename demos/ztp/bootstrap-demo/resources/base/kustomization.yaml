@@ -15,7 +15,7 @@ resources:
 - 17-demo-gui-ns.yaml
 - 18-demo-gui-managedclustersetbinding.yaml
 - 19-demo-gui-placement.yaml
-- 20-demo-gui-gitops-clusters.yaml
+#- 20-demo-gui-gitops-clusters.yaml
 - 20-demo-gui-policies.yaml
 - 21-demo-gui-policyset.yaml
 - 22-demo-gui-policysetbind.yaml
