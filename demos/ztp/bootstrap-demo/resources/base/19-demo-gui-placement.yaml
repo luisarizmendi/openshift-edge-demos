@@ -2,7 +2,7 @@ apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
   name: demo-ztp-gui-placement
-  namespace: demo-ztp-gui-1
+  namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "19"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
