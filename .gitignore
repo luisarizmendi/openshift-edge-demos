@@ -11,3 +11,6 @@ demos/ztp/demo-manifests/02-appliance/appliance_assets/build-image/run/*
 demos/ztp/demo-manifests/02-appliance/appliance_assets/build-config-iso/run/*
 demos/ztp/demo-manifests/02-appliance/appliance_assets/build-image/output/*
 demos/ztp/demo-manifests/02-appliance/appliance_assets/build-config-iso/output/*
+
+demos/ztp/tools/aws/create_vpn/ipsec.*
+demos/ztp/tools/aws/create_vpn/generic-vpn-config.txt
