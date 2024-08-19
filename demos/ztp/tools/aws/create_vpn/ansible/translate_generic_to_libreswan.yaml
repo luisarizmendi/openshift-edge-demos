@@ -1,0 +1,84 @@
+---
+- name: Generate Libreswan configuration from AWS Generic VPN config
+  hosts: localhost
+  gather_facts: no
+  vars:
+    vpn_config_file: "../generic-vpn-config.txt" 
+    libreswan_config_file: "../ipsec.conf"
+    libreswan_secrets_file: "../ipsec.secrets"
+  tasks:
+    - name: Read the generic VPN configuration file
+      slurp:
+        src: "{{ vpn_config_file }}"
+      register: vpn_config_content
+
+    - name: Decode and parse the VPN configuration
+      set_fact:
+        vpn_config: "{{ vpn_config_content['content'] | b64decode }}"
+
+    - name: Extract values from the configuration (Tunnel 1 and 2)
+      set_fact:
+        pre_shared_key_tunnel_1: "{{ vpn_config | regex_search('Pre-Shared Key\\s+:\\s+([\\w\\d]+)', '\\1') }}"
+        pre_shared_key_tunnel_2: "{{ vpn_config | regex_search('Pre-Shared Key\\s+:\\s+([\\w\\d]+)', '\\1', start=2) }}"
+        customer_gateway_ip_tunnel_1: "{{ vpn_config | regex_search('Customer Gateway\\s+:\\s+([\\d.]+)', '\\1') }}"
+        vpg_ip_tunnel_1: "{{ vpn_config | regex_search('Virtual Private Gateway\\s+:\\s+([\\d.]+)', '\\1') }}"
+        customer_gateway_ip_tunnel_2: "{{ vpn_config | regex_search('Customer Gateway\\s+:\\s+([\\d.]+)', '\\1', start=2) }}"
+        vpg_ip_tunnel_2: "{{ vpn_config | regex_search('Virtual Private Gateway\\s+:\\s+([\\d.]+)', '\\1', start=2) }}"
+        phase1_encryption_algorithm: "{{ vpn_config | regex_search('Encryption Algorithm\\s+:\\s+([\\w-]+)', '\\1') }}"
+        phase1_auth_algorithm: "{{ vpn_config | regex_search('Authentication Algorithm\\s+:\\s+(\\w+)', '\\1') }}"
+        mtu_size: "{{ vpn_config | regex_search('Tunnel interface MTU\\s+:\\s+(\\d+)', '\\1') }}"
+        dpd_interval: "{{ vpn_config | regex_search('DPD Interval\\s+:\\s+(\\d+)', '\\1') }}"
+        dpd_retries: "{{ vpn_config | regex_search('DPD Retries\\s+:\\s+(\\d+)', '\\1') }}"
+        ike_version: "ikev1"
+        dh_group: "modp1024"
+
+    - name: Generate Libreswan IPsec configuration
+      copy:
+        dest: "{{ libreswan_config_file }}"
+        content: |
+          config setup
+            nat_traversal=yes
+            virtual_private=%v4:192.168.0.0/16,%v4:10.0.0.0/8
+            protostack=netkey
+            uniqueids=no
+
+          conn aws-vpn-tunnel1
+            authby=secret
+            left=%defaultroute
+            leftid={{ customer_gateway_ip_tunnel_1 }}
+            leftsubnet=0.0.0.0/0
+            right={{ vpg_ip_tunnel_1 }}
+            rightsubnet=169.254.127.9/30
+            ike={{ phase1_encryption_algorithm }}-{{ phase1_auth_algorithm }};{{ dh_group }}
+            phase2=esp
+            phase2alg={{ phase1_encryption_algorithm }}-{{ phase1_auth_algorithm }};{{ dh_group }}
+            ikelifetime=28800s
+            salifetime=3600s
+            dpdaction=restart
+            dpddelay={{ dpd_interval }}
+            dpdtimeout=30
+            auto=start
+
+          conn aws-vpn-tunnel2
+            authby=secret
+            left=%defaultroute
+            leftid={{ customer_gateway_ip_tunnel_2 }}
+            leftsubnet=0.0.0.0/0
+            right={{ vpg_ip_tunnel_2 }}
+            rightsubnet=169.254.218.33/30
+            ike={{ phase1_encryption_algorithm }}-{{ phase1_auth_algorithm }};{{ dh_group }}
+            phase2=esp
+            phase2alg={{ phase1_encryption_algorithm }}-{{ phase1_auth_algorithm }};{{ dh_group }}
+            ikelifetime=28800s
+            salifetime=3600s
+            dpdaction=restart
+            dpddelay={{ dpd_interval }}
+            dpdtimeout=30
+            auto=start
+
+    - name: Generate Libreswan IPsec secrets file
+      copy:
+        dest: "{{ libreswan_secrets_file }}"
+        content: |
+          {{ customer_gateway_ip_tunnel_1 }} {{ vpg_ip_tunnel_1 }} : PSK "{{ pre_shared_key_tunnel_1 }}"
+          {{ customer_gateway_ip_tunnel_2 }} {{ vpg_ip_tunnel_2 }} : PSK "{{ pre_shared_key_tunnel_2 }}"

@@ -38,9 +38,15 @@ GUI
 si tiene 16GB de memoria justo, puede que exista un tiempo despues de incluir el server que ponga 15 con algo... hay que esperar
 
 
+steps:
 
+1) create dns records
 
-para reducir el sno añadir:
+2) create new cluster->host inventory->standalone->Add new hosts
+
+3) include: clsuter name, base domain, "install sno", pull-secret
+
+4) enable yaml view and para reducir el sno añadir:
 
 kind: AgentClusterInstall
 metadata:
