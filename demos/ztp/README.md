@@ -35,6 +35,36 @@ GUI
 ---------------
 
 
+si tiene 16GB de memoria justo, puede que exista un tiempo despues de incluir el server que ponga 15 con algo... hay que esperar
+
+
+
+
+para reducir el sno añadir:
+
+kind: AgentClusterInstall
+metadata:
+  annotations:
+    agent-install.openshift.io/install-config-overrides: |
+      {"networking":{"networkType":"OVNKubernetes"},
+        "capabilities": {
+          "baselineCapabilitySet": "None",
+          "additionalEnabledCapabilities": [
+            "NodeTuning",
+            "OperatorLifecycleManager",
+            "Ingress"
+          ]
+        }
+      }
+
+
+
+cuando lo revisas no aparecen las annotations (la pagina con el fondo blanco) pero si están ahí
+
+
+
+
+
 
 
 siteconfig

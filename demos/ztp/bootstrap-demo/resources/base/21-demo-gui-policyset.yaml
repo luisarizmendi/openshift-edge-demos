@@ -11,4 +11,4 @@ spec:
   description: ""
   policies:
     - demo-ztp-gui-operators
-    - demo-ztp-gui-apps
+

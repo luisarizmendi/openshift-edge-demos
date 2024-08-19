@@ -10,13 +10,13 @@ resources:
 - 09-demo-gitops-cluster-proxy-addon-job.yaml
 - 10-demo-gitops-cluster-rolebinding.yaml
 - 10-demo-gitops-policy-rolebinding.yaml
-- 11-demo-gitops-app-project.yaml
 - 11-demo-gitops-policies-app-project.yaml
 - 17-demo-gui-managedclusterset.yaml
 - 17-demo-gui-ns.yaml
 - 17-demo-gitops-app-project.yaml
 - 18-demo-gui-managedclustersetbinding.yaml
 - 19-demo-gui-placement.yaml
+- 20-demo-gui-gitops-clusters.yaml
 - 20-demo-gui-policies.yaml
 - 21-demo-gui-policyset.yaml
 - 22-demo-gui-policysetbind.yaml

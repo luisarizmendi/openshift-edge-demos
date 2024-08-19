@@ -23,5 +23,11 @@ networking:
   - 172.30.0.0/16
 platform:
   none: {}
+capabilities:
+  baselineCapabilitySet: None
+  additionalEnabledCapabilities:
+  - NodeTuning
+  - OperatorLifecycleManager
+  - Ingress
 pullSecret: '{{ pull_secret }}'
 sshKey: "{{ ssh_key }}"
