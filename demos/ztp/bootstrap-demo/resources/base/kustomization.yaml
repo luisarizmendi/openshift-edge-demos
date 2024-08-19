@@ -20,4 +20,5 @@ resources:
 - 20-demo-gui-policies.yaml
 - 21-demo-gui-policyset.yaml
 - 22-demo-gui-policysetbind.yaml
+- 23-demo-gui-welcome-app.yaml
 
