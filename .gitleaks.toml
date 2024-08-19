@@ -9,5 +9,6 @@
 
     '''demos\/ztp\/demo-manifests\/00-gui\/00-gui-pull-secret.yaml.example''',
 
+    '''demos\/ztp\/tools\/aws\/create_vpn\/ipsec.secrets''',
   ]
         
