@@ -3,10 +3,10 @@ apiVersion: apps.open-cluster-management.io/v1beta1
 kind: GitOpsCluster
 metadata:
   annotations:
-    argocd.argoproj.io/sync-wave: "20"
+    argocd.argoproj.io/sync-wave: "4"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: gitops-clusters-ztp-gui
-  namespace: openshift-gitops
+  name: global-gitops-clusters
+  namespace: open-cluster-management-global-set
 spec:
   argoServer:
     cluster: local-cluster
@@ -14,5 +14,5 @@ spec:
   placementRef:
     kind: Placement
     apiVersion: cluster.open-cluster-management.io/v1beta1
-    name: demo-ztp-gui-placement
-    namespace: demo-ztp-gui-1
+    name: global
+    namespace: open-cluster-management-global-set
