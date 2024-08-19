@@ -1,0 +1,6 @@
+---
+global:
+  cluster: SNO
+  environment: Edge
+
+

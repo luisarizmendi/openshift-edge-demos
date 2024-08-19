@@ -41,7 +41,7 @@ spec:
         helm:
           valueFiles:
             - values.yaml
-            - environment/values-edge-1.yaml
+            - environment/values-sno.yaml
         path: '{{.path.path}}'
         repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
         targetRevision: main
