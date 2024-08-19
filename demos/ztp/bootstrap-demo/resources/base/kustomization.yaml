@@ -13,12 +13,11 @@ resources:
 - 11-demo-gitops-policies-app-project.yaml
 - 17-demo-gui-managedclusterset.yaml
 - 17-demo-gui-ns.yaml
-- 17-demo-gitops-app-project.yaml
 - 18-demo-gui-managedclustersetbinding.yaml
 - 19-demo-gui-placement.yaml
 - 20-demo-gui-gitops-clusters.yaml
 - 20-demo-gui-policies.yaml
 - 21-demo-gui-policyset.yaml
 - 22-demo-gui-policysetbind.yaml
-#- 23-demo-gui-welcome-app.yaml
+- 23-demo-gui-welcome-app.yaml
 

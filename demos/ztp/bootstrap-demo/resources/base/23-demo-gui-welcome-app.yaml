@@ -36,7 +36,7 @@ spec:
       destination:
         namespace: '{{.path.basename}}'
         server: '{{.server}}'
-      project: demo-ztp-gui-app-project
+      project: default
       source:
         helm:
           valueFiles:
