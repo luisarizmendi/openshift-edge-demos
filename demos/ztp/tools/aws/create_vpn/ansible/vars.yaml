@@ -1,0 +1,8 @@
+customer_gateway_ip: "83.52.27.104"  # CHANGE TO YOUR PUBLIC IP
+
+aws_region: "eu-west-1" 
+vpc_id: ""  # Leave blank to auto-select the first VPC
+local_ipv4_cidr: "192.168.0.0/16"
+remote_ipv4_cidr: "10.0.0.0/8"
+customer_gateway_asn: 65000 
+aws_vgw_asn: 7224

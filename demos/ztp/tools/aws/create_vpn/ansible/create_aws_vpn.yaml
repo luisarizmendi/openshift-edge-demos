@@ -2,81 +2,59 @@
 - name: Create AWS VPN connection
   hosts: localhost
   gather_facts: no
-  vars:
-    aws_region: "us-east-1"  # Update to your region
-    vpc_id: ""  # Leave blank to auto-select the first VPC
-    local_ipv4_cidr: "192.168.0.0/16"
-    remote_ipv4_cidr: "10.0.0.0/8"
-    customer_gateway_ip: "your_public_ip_here"  # Update to your public IP
-    customer_gateway_asn: 65000  # Default ASN for BGP
-    aws_vgw_asn: 7224  # AWS default ASN for virtual private gateway
+  vars_files:
+    - vars.yaml
 
   tasks:
     - name: Gather information about existing VPCs
-      ec2_vpc_facts:
+      amazon.aws.ec2_vpc_net_info :
         region: "{{ aws_region }}"
       register: vpc_facts
 
     - name: Select the first VPC if vpc_id is not provided
       set_fact:
-        vpc_id: "{{ vpc_facts.vpcs[0].id }}"
-      when: vpc_id == ""
+        vpc_id: "{{ vpc_facts.vpcs[0].vpc_id }}"
+      when: vpc_id is not defined or vpc_id | length == 0
 
     - name: Ensure VPC ID is selected
       fail:
         msg: "No VPC found in the account. Please create a VPC first."
-      when: vpc_id == "" and vpc_facts.vpcs | length == 0
+      when: vpc_id is not defined or vpc_id | length == 0
 
     - name: Create Virtual Private Gateway
-      aws_vgw:
-        region: "{{ aws_region }}"
-        amazon_side_asn: "{{ aws_vgw_asn }}"
-        state: present
-      register: vgw_result
-
-    - name: Attach Virtual Private Gateway to VPC
-      ec2_vpc_vgw:
+      community.aws.ec2_vpc_vgw:
         region: "{{ aws_region }}"
         vpc_id: "{{ vpc_id }}"
-        vgw_id: "{{ vgw_result.vgw_id }}"
-        state: attached
-      when: vgw_result.changed
+        state: present
+        name: demo-vpn
+      register: vgw_result
 
     - name: Create Customer Gateway
-      ec2_customer_gateway:
+      community.aws.ec2_customer_gateway:
         region: "{{ aws_region }}"
         ip_address: "{{ customer_gateway_ip }}"
         bgp_asn: "{{ customer_gateway_asn }}"
-        type: ipsec.1
         state: present
+        name: demo-vpn
       register: cgw_result
 
     - name: Create Site-to-Site VPN connection
-      ec2_vpn:
+      community.aws.ec2_vpc_vpn:
         region: "{{ aws_region }}"
-        customer_gateway_id: "{{ cgw_result.customer_gateway_id }}"
-        type: ipsec.1
-        static_routes_only: no
-        vgw_id: "{{ vgw_result.vgw_id }}"
-        tunnels:
-          - local_ipv4_network_cidr: "{{ local_ipv4_cidr }}"
-            remote_ipv4_network_cidr: "{{ remote_ipv4_cidr }}"
+        state: present
+        customer_gateway_id: "{{ cgw_result.gateway.customer_gateway.customer_gateway_id }}"
+        vpn_gateway_id: "{{ vgw_result.vgw.id }}"
       register: vpn_result
 
-    - name: Wait for VPN connection to become available
-      ec2_vpn_facts:
-        region: "{{ aws_region }}"
-        vpn_ids: "{{ vpn_result.vpn_id }}"
-        wait: yes
-        state: available
-
     - name: Download VPN configuration
-      ec2_vpn_config:
+      community.aws.ec2_vpc_vpn:
         region: "{{ aws_region }}"
-        vpn_id: "{{ vpn_result.vpn_id }}"
-        filename: "vpn-config.txt"
-        format: generic
+        vpn_connection_id: "{{ vpn_result.vpn_connection.id }}"
+        state: present
+        download_config: true
+        config_path: "vpn-config.txt"
+        config_format: generic
 
     - name: Output VPN details
       debug:
-        msg: "VPN connection created with ID {{ vpn_result.vpn_id }}. Configuration saved to vpn-config.txt."
+        msg: "VPN connection created. Go to AWS console and download the appropiate config file for your system."

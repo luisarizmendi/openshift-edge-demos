@@ -37,3 +37,21 @@ sno-ztp-br       UP             192.168.140.231/24 fdff:7dd7:a83c::1d0/128 fdff:
 inbound nat:
 8000 -> laptop
 6443 -> sno VM (with bridge)
+
+
+
+
+
+
+
+
+
+
+
+
+-----------
+
+
+vpn openwrt
+
+opkg install strongswan-default ip iptables-mod-nat-extra djbdns-tools
