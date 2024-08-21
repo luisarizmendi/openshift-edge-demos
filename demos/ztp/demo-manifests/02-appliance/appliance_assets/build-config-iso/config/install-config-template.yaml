@@ -28,6 +28,7 @@ capabilities:
   additionalEnabledCapabilities:
   - NodeTuning
   - OperatorLifecycleManager
+  - Marketplace
   - Ingress
 pullSecret: '{{ pull_secret }}'
 sshKey: "{{ ssh_key }}"

@@ -167,6 +167,7 @@ metadata:
           "additionalEnabledCapabilities": [
             "NodeTuning",
             "OperatorLifecycleManager",
+            "Marketplace",
             "Ingress"
           ]
         }

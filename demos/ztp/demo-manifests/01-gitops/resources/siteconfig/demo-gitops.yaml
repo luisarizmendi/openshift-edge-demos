@@ -29,6 +29,7 @@ spec:
           "additionalEnabledCapabilities": [
             "NodeTuning",
             "OperatorLifecycleManager",
+            "Marketplace",
             "Ingress"
           ]
         }
