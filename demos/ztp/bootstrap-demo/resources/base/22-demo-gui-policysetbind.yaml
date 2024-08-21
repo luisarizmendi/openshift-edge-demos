@@ -1,13 +1,13 @@
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
-  name: demo-ztp-gui-placement
+  name: demo-ztp-gui-placement-policy
   namespace: demo-ztp-gui-1
   annotations:
     argocd.argoproj.io/sync-wave: "22"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 placementRef:
-  name: demo-ztp-gui-placement
+  name: demo-ztp-gui-placement-policy
   apiGroup: cluster.open-cluster-management.io
   kind: Placement
 subjects:
