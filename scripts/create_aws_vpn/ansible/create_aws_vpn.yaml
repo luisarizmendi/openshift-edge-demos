@@ -1,5 +1,5 @@
 ---
-- name: Create AWS VPN connection
+- name: Create AWS VPN connection and enable route propagation
   hosts: localhost
   gather_facts: no
   vars_files:
@@ -7,7 +7,7 @@
 
   tasks:
     - name: Gather information about existing VPCs
-      amazon.aws.ec2_vpc_net_info :
+      amazon.aws.ec2_vpc_net_info:
         region: "{{ aws_region }}"
       register: vpc_facts
 
@@ -46,8 +46,25 @@
         customer_gateway_id: "{{ cgw_result.gateway.customer_gateway.customer_gateway_id }}"
         vpn_gateway_id: "{{ vgw_result.vgw.id }}"
         routes:
-          - "{{ vpn_route | default('192.168.0.0/16') }}"
+          - "{{ local_ipv4_cidr }}"
       register: vpn_result
+
+    - name: Get information about existing VPC route tables
+      amazon.aws.ec2_vpc_route_table_info:
+        region: "{{ aws_region }}"
+        filters:
+          vpc-id: "{{ vpc_id }}"
+      register: existing_route_tables
+
+    - name: Enable route propagation for existing route tables
+      amazon.aws.ec2_vpc_route_table:
+        region: "{{ aws_region }}"
+        lookup: id
+        route_table_id: "{{ item.route_table_id }}"
+        vpc_id: "{{ item.vpc_id }}"
+        propagating_vgw_ids:
+          - "{{ vgw_result.vgw.id }}"
+      loop: "{{ existing_route_tables.route_tables }}"
 
     - name: Output VPN details
       debug:
