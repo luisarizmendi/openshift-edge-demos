@@ -32,7 +32,7 @@
 
     - name: Generate Libreswan IPsec configuration
       copy:
-        dest: "{{ libreswan_config_file | default('../ipsec.conf') }}"
+        dest: "{{ libreswan_config_file | default('../libreswan_ipsec.conf') }}"
         content: |
           config setup
             nat_traversal=yes
@@ -76,7 +76,7 @@
 
     - name: Generate Libreswan IPsec secrets file
       copy:
-        dest: "{{ libreswan_secrets_file | default('../ipsec.secrets') }}"
+        dest: "{{ libreswan_secrets_file | default('../libreswan_ipsec.secrets') }}"
         content: |
           {{ customer_gateway_ip_tunnel_1 }} {{ vpg_ip_tunnel_1 }} : PSK "{{ pre_shared_key_tunnel_1 }}"
           {{ customer_gateway_ip_tunnel_2 }} {{ vpg_ip_tunnel_2 }} : PSK "{{ pre_shared_key_tunnel_2 }}"

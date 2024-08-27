@@ -54,20 +54,13 @@ steps:
 
 * (optional set static IP)
 
-
-
-(optional static ip)
-
-Change networkType from dhcp to static:
-
-apiVersion: agent-install.openshift.io/v1beta1
-kind: InfraEnv
-metadata:
-  labels:
-    networkType: static
-
-
 * Click Create
+
+
+(NOTE: puedes encontrar un error trtansitorio en la web de que ciertos componentes no existen o no están corriendo correctamente. espera un minuto a ver si se van)
+
+
+
 
 * Create nmstate yaml with +
 
@@ -144,6 +137,8 @@ spec:
 
 
 
+
+
 * Download ISO
 
 
@@ -167,7 +162,7 @@ metadata:
           "additionalEnabledCapabilities": [
             "NodeTuning",
             "OperatorLifecycleManager",
-            "Marketplace",
+            "marketplace",
             "Ingress"
           ]
         }
@@ -203,7 +198,8 @@ VPN
 
 appliance
 ----------------
-poner el vars_secret
+poner el vars_secret. pull secret cuidado con las comas simples, tiene que ser asi: pullSecret: '{"auths":{<redacted>}}'
+
 
 
 
@@ -234,7 +230,6 @@ estate seguro de que es la misma versión de openshift-install que la de la imag
 
 log into registry.redhat.io en usuario y root
 
-pull secret cuidado con las comas simples, tiene que ser asi: pullSecret: '{"auths":{<redacted>}}'
 
 
 
@@ -249,3 +244,7 @@ install openshift-install  https://mirror.openshift.com/pub/openshift-v4/x86_64/
 
 BEYOND
 static ip
+
+
+
+

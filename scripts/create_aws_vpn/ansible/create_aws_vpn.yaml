@@ -33,27 +33,21 @@
       community.aws.ec2_customer_gateway:
         region: "{{ aws_region }}"
         ip_address: "{{ customer_gateway_ip }}"
-        bgp_asn: "{{ customer_gateway_asn }}"
         state: present
         name: demo-vpn
+        routing: static
       register: cgw_result
 
     - name: Create Site-to-Site VPN connection
       community.aws.ec2_vpc_vpn:
         region: "{{ aws_region }}"
         state: present
+        static_only: true
         customer_gateway_id: "{{ cgw_result.gateway.customer_gateway.customer_gateway_id }}"
         vpn_gateway_id: "{{ vgw_result.vgw.id }}"
+        routes:
+          - "{{ vpn_route | default('192.168.0.0/16') }}"
       register: vpn_result
-
-    - name: Download VPN configuration
-      community.aws.ec2_vpc_vpn:
-        region: "{{ aws_region }}"
-        vpn_connection_id: "{{ vpn_result.vpn_connection.id }}"
-        state: present
-        download_config: true
-        config_path: "vpn-config.txt"
-        config_format: generic
 
     - name: Output VPN details
       debug:
