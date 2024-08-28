@@ -57,7 +57,14 @@ steps:
 * Click Create
 
 
-(NOTE: puedes encontrar un error trtansitorio en la web de que ciertos componentes no existen o no están corriendo correctamente. espera un minuto a ver si se van)
+(NOTE: puedes encontrar un error trtansitorio en la web de que ciertos componentes no existen o no están corriendo correctamente. espera un minuto a ver si se van) algo como esto:
+
+Danger alert:Failing infrastructure environment
+
+    Failed to create image due to an internal error
+    failed to find secret pullsecret-demo-sno-gui
+    failed to get secret demo-sno-gui/pullsecret-demo-sno-gui from API
+    secrets "pullsecret-demo-sno-gui" not found
 
 
 

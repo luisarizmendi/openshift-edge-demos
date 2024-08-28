@@ -61,6 +61,9 @@
         region: "{{ aws_region }}"
         lookup: id
         route_table_id: "{{ item.route_table_id }}"
+        purge_routes: "no"
+        purge_subnets: "no"
+        purge_tags: "no"
         vpc_id: "{{ item.vpc_id }}"
         propagating_vgw_ids:
           - "{{ vgw_result.vgw.id }}"

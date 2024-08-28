@@ -13,8 +13,8 @@ echo ""
 echo "Now go and download the config file from AWS"
 echo ""
 
-# Libreswan
+# Libreswan (/etc/ipsec.conf and /etc/ipsec.secrets)
 #ansible-playbook -i ansible/inventory -e vpn_config_file=~/Downloads/vpn-aws.txt -vv ansible/translate_generic_ikev2_to_libreswan.yaml
 
-# Strongswan with OpenWRT
-#ansible-playbook -i ansible/inventory -e vpn_config_file=~/Downloads/vpn-aws.txt -e router_wan_interface=serrada -vv ansible/translate_generic_ikev2_to_openwrt.yaml
+# to OpenWRT 
+#ansible-playbook -i ansible/inventory -e interface_name=serrada  -e vpn_config_file=~/Downloads/vpn-aws.txt -vv ansible/translate_generic_ikev2_to_openwrt_strongswan.yaml
