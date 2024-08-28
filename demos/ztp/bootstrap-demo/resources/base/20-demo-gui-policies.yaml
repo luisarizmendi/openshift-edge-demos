@@ -16,7 +16,7 @@ spec:
         apiVersion: policy.open-cluster-management.io/v1
         kind: ConfigurationPolicy
         metadata:
-          name: comp-operator-ns
+          name: compliance-operator-ns
         spec:
           remediationAction: enforce
           severity: high
