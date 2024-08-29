@@ -16,6 +16,7 @@
 
     - name: Extract values from the configuration (Tunnel 1 and 2)
       set_fact:
+        local_internal_ip_tunnel_1: "{{ (vpn_config | regex_search('Inside IP Addresses\\n\\s+- Customer Gateway\\s+:\\s+([\\d./]+)', '\\1')) | first }}"
         pre_shared_key_tunnel_1: "{{ (vpn_config | regex_search('Pre-Shared Key\\s+:\\s+([\\w\\d\\.-]+)', '\\1')) | first }}"
         customer_gateway_ip_tunnel_1: "{{ (vpn_config | regex_search('Customer Gateway\\s+:\\s+([\\d.]+)', '\\1')) | first }}"
         vpg_ip_tunnel_1: "{{ (vpn_config | regex_search('Virtual Private Gateway\\s+:\\s+([\\d.]+)', '\\1')) | first }}"
@@ -27,70 +28,60 @@
         dpd_retries: "{{ (vpn_config | regex_search('DPD Retries\\s+:\\s+(\\d+)', '\\1')) | first }}"
         ike_version: "ikev2"
         dh_group: "modp2048"
-        xfrm_local_ip_tunnel_1: "{{ (vpn_config | regex_search('Inside IP Addresses\\n\\s+- Customer Gateway\\s+:\\s+([\\d./]+)', '\\1')) | first }}"
 
-    - name: Create OpenWrt Libreswan config file
+
+    - name: Create /etc/ipsec.conf file
       copy:
-        dest: "{{ output_ipsec_file | default('../openwrt_ipsec') }}"
+        dest: "{{ libreswan_config_file | default('../openwrt_ipsec.conf') }}"
         content: |
-          config 'ipsec'
-            list 'interface' ''
-            option 'zone' 'vpn'
-            option 'debug' '2'
+          config setup
+            uniqueids=no
 
-          config 'remote' 'aws-vpn-tunnel'
-            option 'enabled' '1'
-            option 'local_ip' '{{ customer_gateway_ip_tunnel_1 }}'
-            option 'gateway' '{{ vpg_ip_tunnel_1 }}'
-            option 'authentication_method' 'psk'
-            option 'ike_version' 'ikev2'
-            option 'pre_shared_key' '{{ pre_shared_key_tunnel_1 }}'
-            option 'fragmentation' '1'
-            list 'crypto_proposal' 'ike_proposal'
-            list 'tunnel' 'tun_aws-vpn-tunnel'
+          conn aws-vpn-tunnel
+            authby=secret
+            left=%defaultroute
+            leftid={{ customer_gateway_ip_tunnel_1 }}
+            leftsubnet={{ local_ipv4_cidr }}
+            right={{ vpg_ip_tunnel_1 }}
+            rightsubnet={{ remote_ipv4_cidr }}
+            ike={{ phase1_encryption_algorithm }}-{{ phase1_auth_algorithm }}-{{ dh_group }}
+            ikelifetime=28800s
+            dpdaction=restart
+            dpddelay={{ dpd_interval }}
+            dpdtimeout=30
+            auto=start
 
-          config 'crypto_proposal' 'ike_proposal'
-            option 'encryption_algorithm' '{{ phase1_encryption_algorithm }}'
-            option 'auth_algorithm' '{{ phase1_auth_algorithm }}'
-            option 'dh_group' '{{ dh_group }}'
 
-          config 'tunnel' 'tun_aws-vpn-tunnel'
-            list 'local_subnet' '{{ local_ipv4_cidr }}'
-            list 'remote_subnet' '{{ remote_ipv4_cidr }}'
-            option 'dpd_interval' '{{ dpd_interval }}'
-            option 'dpd_retries' '3'
-            option 'tcp_mss_adjustment' '1436'
-            option 'mtu' '1436'
-            option 'startaction' 'none'
-            option 'closeaction' 'none'
-            list 'crypto_proposal' 'esp_proposal'
+    - name: Create /etc/ipsec.secrets file
+      copy:
+        dest: "{{ libreswan_secrets_file | default('../openwrt_ipsec.secrets') }}"
+        content: |
+          {{ customer_gateway_ip_tunnel_1 }} {{ vpg_ip_tunnel_1 }} : PSK "{{ pre_shared_key_tunnel_1 }}"
 
-          config 'crypto_proposal' 'esp_proposal'
-            option 'encryption_algorithm' '{{ phase1_encryption_algorithm }}'
-            option 'auth_algorithm' '{{ phase1_auth_algorithm }}'
-            option 'dh_group' '{{ dh_group }}'
 
     - name: Create /etc/config/network file
       copy:
         dest: "{{ output_network_file | default('../openwrt_network') }}"
         content: |
-          config interface 'xfrm0'
-            option ifid '357'
+          config interface 'vti1'
+            option proto 'vti'
+            option mtu '1500'
             option tunlink '{{ interface_name }}'
-            option mtu '1438'
+            option peeraddr '{{ vpg_ip_tunnel_1 }}'
             option zone 'vpn'
-            option proto 'xfrm'
-            option multicast 'true'
-          
-          config interface 'xfrm0_s'
-            option device '@xfrm0'
+            option ikey '100'
+            option okey '100'
+
+          config interface 'vti1_static'
             option proto 'static'
-            option ipaddr '{{ xfrm_local_ip_tunnel_1 }}'
-          
+            option device '@vti1'
+            list ipaddr '{{ local_internal_ip_tunnel_1 }}'
+
           config route
-            option interface 'xfrm0'
             option target '{{ remote_ipv4_cidr }}'
-            option source '{{ customer_gateway_ip_tunnel_1 }}'
+            option interface 'vti1_static'
+
+
 
     - name: Create /etc/config/firewall file
       copy:
@@ -98,7 +89,7 @@
         content: |
           config 'zone'
             option 'name' 'vpn'
-            option 'network' 'xfrm0'
+            option 'network' 'vti1'
             option 'input' 'ACCEPT'
             option 'output' 'ACCEPT'
             option 'forward' 'ACCEPT'
@@ -131,8 +122,6 @@
     - name: Next steps
       debug:
         msg: |
-          
-          1) Copy the ipsec file into /etc/config/ipsec on the router, enable with '/etc/init.d/swanctl enable' and restart with '/etc/init.d/swanctl restart'
-          2) Append the contents of network file into /etc/config/network and restart with '/etc/init.d/network restart'
-          3) Append the contents of firewall file into /etc/config/firewall and restart with '/etc/init.d/firewall restart'
+          1) Append the contents of network file into /etc/config/network and restart with '/etc/init.d/network restart'
+          2) Append the contents of firewall file into /etc/config/firewall and restart with '/etc/init.d/firewall restart'
 

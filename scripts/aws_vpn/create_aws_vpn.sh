@@ -17,4 +17,4 @@ echo ""
 #ansible-playbook -i ansible/inventory -e vpn_config_file=~/Downloads/vpn-aws.txt -vv ansible/translate_generic_ikev2_to_libreswan.yaml
 
 # to OpenWRT 
-#ansible-playbook -i ansible/inventory -e interface_name=serrada  -e vpn_config_file=~/Downloads/vpn-aws.txt -vv ansible/translate_generic_ikev2_to_openwrt_strongswan.yaml
+#ansible-playbook -i ansible/inventory -e interface_name=serrada  -e vpn_config_file=~/Downloads/vpn-aws.txt -vv ansible/translate_generic_ikev2_to_openwrt.yaml

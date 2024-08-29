@@ -207,7 +207,7 @@ appliance
 ----------------
 poner el vars_secret. pull secret cuidado con las comas simples, tiene que ser asi: pullSecret: '{"auths":{<redacted>}}'
 
-
+crea la imagen antes de comenzar la demo
 
 
 necistas bastante espacio de disco (en mi prueba 170GB), también tener en cuenta que la iso es de 32 GB:
