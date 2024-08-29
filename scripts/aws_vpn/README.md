@@ -8,6 +8,16 @@ DONT USE IN PRODUCTION AWS ENVIRONMENTS
 instala ocp o mete el vpc_id a mano (coge el primero si no)
 
 
+libreswan
+-----------------------------
+
+install libreswan
+
+copy .conf and .secrets files
+
+
+systemctl restart ipsec 
+
 
 
 

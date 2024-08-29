@@ -207,6 +207,12 @@ appliance
 ----------------
 poner el vars_secret. pull secret cuidado con las comas simples, tiene que ser asi: pullSecret: '{"auths":{<redacted>}}'
 
+
+
+log into registry.redhat.io en usuario y root
+
+
+
 crea la imagen antes de comenzar la demo
 
 
@@ -233,9 +239,6 @@ estate seguro de que es la misma versión de openshift-install que la de la imag
 
 
 
-
-
-log into registry.redhat.io en usuario y root
 
 
 

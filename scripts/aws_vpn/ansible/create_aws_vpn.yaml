@@ -69,6 +69,39 @@
           - "{{ vgw_result.vgw.id }}"
       loop: "{{ existing_route_tables.route_tables }}"
 
+
+    - name: Gather existing security groups in the VPC
+      amazon.aws.ec2_security_group_info:
+        region: "{{ aws_region }}"
+        filters:
+          vpc-id: "{{ vpc_id }}"
+      register: sg_facts
+
+    - name: Add inbound rule to all security groups
+      amazon.aws.ec2_security_group:
+        name: "{{ item.group_name }}"
+        description: "{{ item.description }}"
+        region: "{{ aws_region }}"
+        state: present
+        group_id: "{{ item.group_id }}"
+        vpc_id: "{{ vpc_id }}"
+        purge_rules: false
+        purge_rules_egress: false
+        purge_tags: false
+        rules:
+          - proto: all
+            from_port: 0
+            to_port: 65535
+            cidr_ip: "{{ local_ipv4_cidr }}"
+        rules_egress:
+          - proto: all
+            from_port: 0
+            to_port: 65535
+            cidr_ip: "{{ local_ipv4_cidr }}"
+      loop: "{{ sg_facts.security_groups }}"
+
+
+
     - name: Output VPN details
       debug:
         msg: "VPN connection created. Go to AWS console and download the appropiate config file for your system."
