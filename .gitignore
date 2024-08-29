@@ -12,6 +12,6 @@ demos/ztp/demo-manifests/02-appliance/appliance_assets/build-config-iso/run/*
 demos/ztp/demo-manifests/02-appliance/appliance_assets/build-image/output/*
 demos/ztp/demo-manifests/02-appliance/appliance_assets/build-config-iso/output/*
 
-scripts/aws_vpn/libreswan_*.*
-scripts/aws_vpn/openwrt_*.*
-scripts/aws_vpn/generic-vpn-config.txt
+tools/aws_vpn/libreswan_*
+tools/aws_vpn/openwrt_*
+tools/aws_vpn/generic-vpn-config.txt

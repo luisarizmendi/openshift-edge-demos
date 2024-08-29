@@ -27,7 +27,7 @@ To change values during the demo, fork this repository.
 3. Run the `change_repo_url.sh` script to update all repository references to your fork:
 
    ```bash
-   cd scripts
+   cd tools
    ./change_repo_url.sh https://github.com/<your-github-username>/<fork-name>
    ```
   > **NOTE**
