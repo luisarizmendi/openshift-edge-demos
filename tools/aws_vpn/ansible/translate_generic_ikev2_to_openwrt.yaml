@@ -39,7 +39,7 @@
 
           conn aws-vpn-tunnel
             authby=secret
-            left=%defaultroute
+            left={{ local_internal_ip_tunnel_1.split('/')[0] }}
             leftid={{ customer_gateway_ip_tunnel_1 }}
             leftsubnet={{ local_ipv4_cidr }}
             right={{ vpg_ip_tunnel_1 }}
