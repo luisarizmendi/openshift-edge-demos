@@ -2,8 +2,8 @@
 
 cd ansible
 
-ansible-playbook -vv build-image.yaml
+ansible-playbook -vv build-image-base.yaml
 
-ansible-playbook -vv build-config-iso.yaml
+ansible-playbook -vv build-image-config.yaml
 
 cd ..

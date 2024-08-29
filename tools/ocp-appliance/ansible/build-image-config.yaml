@@ -14,7 +14,7 @@
         path: "{{ item }}"
         state: absent
       with_items:
-        - "tmp-files/image-config"
+        - "../tmp-files/image-config"
         - "../output/image-config"
 
     - name: Ensure directories exists
@@ -23,7 +23,7 @@
         state: directory
       with_items:
         - "{{ appliance_assets_config_iso }}"
-        - "tmp-files/config"
+        - "../tmp-files/image-config"
         - "../output/image-config"
 
     - name: Check for install-config.yaml
@@ -34,7 +34,7 @@
     - name: Configure install-config.yaml
       ansible.builtin.template:
         src: "{{ install_config_file_template }}"
-        dest: "tmp-files/image-config/install-config.yaml"
+        dest: "../tmp-files/image-config/install-config.yaml"
       when: install_config_file_check.stat.exists
 
     - name: Backup install-config.yaml
@@ -51,7 +51,7 @@
     - name: Configure agent-config.yaml"
       ansible.builtin.template:
         src: "{{ agent_config_file }}"
-        dest: "tmp-files/image-config/agent-config.yaml"
+        dest: "../tmp-files/image-config/agent-config.yaml"
       when: agent_config_file_check.stat.exists
 
     - name: Backup agent-config.yaml"
@@ -62,28 +62,36 @@
 
     - name: Create openshift manifests directory (if needed)
       ansible.builtin.file:
-        path: "tmp-files/image-config/openshift"
+        path: "../tmp-files/image-config/openshift"
         state: directory
-      when: custom_manifests_dir is defined and custom_manifests_dir | length > 0
+      when: manifests_dir_config_iso is defined and manifests_dir_config_iso | length > 0
 
-    - name: Add custom manifests to the cluster config directory
+    - name: Check for custom manifests files
+      ansible.builtin.find:
+        paths: "{{ manifests_dir_config_iso }}"
+        patterns:
+          - "*.yaml"
+          - "*.yml"
+        recurse: yes
+        file_type: file
+      register: manifests
+      when: manifests_dir_config_iso is defined and manifests_dir_config_iso | length > 0
+
+    - name: Copy all custom manifests files to target directory without subdirectories
       ansible.builtin.copy:
-        src: "{{ item }}"
-        dest: "tmp-files/image-config/openshift/{{ item | basename }}"
-      with_fileglob:
-        - "{{ custom_manifests_dir }}/**/*.yaml"
-        - "{{ custom_manifests_dir }}/**/*.yml"
-      when: custom_manifests_dir is defined and custom_manifests_dir | length > 0
+        src: "{{ item.path }}"
+        dest: "../tmp-files/image-config/openshift/{{ item.path | basename }}"
+      with_items: "{{ manifests.files }}"
+      when: manifests.matched > 0
 
     - name: Generate the configuration image
       ansible.builtin.command:
-        cmd: "openshift-install agent create config-image --dir tmp-files/image-config/"
+        cmd: "openshift-install agent create config-image --dir ../tmp-files/image-config/"
       register: config_image_result
       ignore_errors: yes
 
-
     - name: Move the results to output directory 
-      ansible.builtin.shell: "mv -f tmp-files/image-config/{{ item }} ../output/image-config"
+      ansible.builtin.shell: "mv -f ../tmp-files/image-config/{{ item }} ../output/image-config"
       with_items:
         - auth/
         - agentconfig.noarch.iso

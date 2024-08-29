@@ -271,6 +271,10 @@ hosts:
 //
 
 
+*** NOTE IF YOU CONFIGURE STATIC IP YOU NEED TO HAVE nmstatectl INSTALLED IN YOUR LAPTOP to check the config while creating the image-config iso. If you use Fedora do it by installing sudo nmstate package
+
+
+
 
 
 OPTIONAL COMPOSABLE (in appliance_assets/build-config-iso/config/install-config-template.yaml)
@@ -312,3 +316,10 @@ INFO Create configuration ISO using: openshift-install agent create config-image
 INFO Download openshift-install from: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/4.16.4/openshift-install-linux.tar.gz 
 
 
+
+
+demo start:
+- deploy the image with the base usb
+- check that you can ssh, check ip, check container images
+- deploy config
+- check ip, check apps, check operators

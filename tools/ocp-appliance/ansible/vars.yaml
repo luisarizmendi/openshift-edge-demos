@@ -27,7 +27,7 @@ appliance_rendezvous: 192.168.140.2
 appliance_assets_config_iso: "../../../demos/ztp/demo-manifests/02-appliance/01-image-config"
 install_config_file_template: "{{ appliance_assets_config_iso }}/install-config-template.yaml"
 agent_config_file: "{{ appliance_assets_config_iso }}/agent-config-template.yaml"
-custom_iso_manifests_dir: "{{ appliance_assets_config_iso }}/manifests"
+manifests_dir_config_iso: "{{ appliance_assets_config_iso }}/manifests"
 
 
 
