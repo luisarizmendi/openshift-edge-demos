@@ -7,10 +7,9 @@ vars_secret.yaml
 **.te
 *!*.example
 appliance-config.yaml
-demos/ztp/demo-manifests/02-appliance/appliance_assets/build-image/run/*
-demos/ztp/demo-manifests/02-appliance/appliance_assets/build-config-iso/run/*
-demos/ztp/demo-manifests/02-appliance/appliance_assets/build-image/output/*
-demos/ztp/demo-manifests/02-appliance/appliance_assets/build-config-iso/output/*
+
+tools/ocp-appliance/tmp-files/*
+tools/ocp-appliance/output/*
 
 tools/aws_vpn/libreswan_*
 tools/aws_vpn/openwrt_*

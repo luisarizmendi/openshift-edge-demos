@@ -14,8 +14,8 @@
         path: "{{ item }}"
         state: absent
       with_items:
-        - "{{ appliance_assets_config_iso }}/run"
-        - "{{ appliance_assets_config_iso }}/output"
+        - "tmp-files/image-config"
+        - "../output/image-config"
 
     - name: Ensure directories exists
       ansible.builtin.file:
@@ -23,9 +23,8 @@
         state: directory
       with_items:
         - "{{ appliance_assets_config_iso }}"
-        - "{{ appliance_assets_config_iso }}/config"
-        - "{{ appliance_assets_config_iso }}/run"
-        - "{{ appliance_assets_config_iso }}/output"
+        - "tmp-files/config"
+        - "../output/image-config"
 
     - name: Check for install-config.yaml
       ansible.builtin.stat:
@@ -35,13 +34,13 @@
     - name: Configure install-config.yaml
       ansible.builtin.template:
         src: "{{ install_config_file_template }}"
-        dest: "{{ appliance_assets_config_iso }}/run/install-config.yaml"
+        dest: "tmp-files/image-config/install-config.yaml"
       when: install_config_file_check.stat.exists
 
     - name: Backup install-config.yaml
       ansible.builtin.template:
         src: "{{ install_config_file_template }}"
-        dest: "{{ appliance_assets_config_iso }}/output/install-config.yaml"
+        dest: "../output/image-config/install-config.yaml"
       when: install_config_file_check.stat.exists
 
     - name: Check for agent-config.yaml"
@@ -52,25 +51,25 @@
     - name: Configure agent-config.yaml"
       ansible.builtin.template:
         src: "{{ agent_config_file }}"
-        dest: "{{ appliance_assets_config_iso }}/run/agent-config.yaml"
+        dest: "tmp-files/image-config/agent-config.yaml"
       when: agent_config_file_check.stat.exists
 
     - name: Backup agent-config.yaml"
       ansible.builtin.template:
         src: "{{ agent_config_file }}"
-        dest: "{{ appliance_assets_config_iso }}/output/agent-config.yaml"
+        dest: "../output/image-config/agent-config.yaml"
       when: agent_config_file_check.stat.exists
 
     - name: Create openshift manifests directory (if needed)
       ansible.builtin.file:
-        path: "{{ appliance_assets_config_iso }}/run/openshift"
+        path: "tmp-files/image-config/openshift"
         state: directory
       when: custom_manifests_dir is defined and custom_manifests_dir | length > 0
 
     - name: Add custom manifests to the cluster config directory
       ansible.builtin.copy:
         src: "{{ item }}"
-        dest: "{{ appliance_assets_config_iso }}/run/openshift/{{ item | basename }}"
+        dest: "tmp-files/image-config/openshift/{{ item | basename }}"
       with_fileglob:
         - "{{ custom_manifests_dir }}/**/*.yaml"
         - "{{ custom_manifests_dir }}/**/*.yml"
@@ -78,13 +77,13 @@
 
     - name: Generate the configuration image
       ansible.builtin.command:
-        cmd: "openshift-install agent create config-image --dir {{ appliance_assets_config_iso }}/run/"
+        cmd: "openshift-install agent create config-image --dir tmp-files/image-config/"
       register: config_image_result
       ignore_errors: yes
 
 
     - name: Move the results to output directory 
-      ansible.builtin.shell: "mv -f {{ appliance_assets_config_iso }}/run/{{ item }} {{ appliance_assets_config_iso }}/output"
+      ansible.builtin.shell: "mv -f tmp-files/image-config/{{ item }} ../output/image-config"
       with_items:
         - auth/
         - agentconfig.noarch.iso

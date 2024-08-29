@@ -13,27 +13,26 @@
         path: "{{ item }}"
         state: absent
       with_items:
-        - "{{ appliance_assets_image }}/output"
-        - "{{ appliance_assets_image }}/run"
+        - "../output/image-base"
+        - "../tmp-files/image-base"
 
-    - name: Ensure appliance_assets_image directory exists
+    - name: Ensure directories exists
       ansible.builtin.file:
         path: "{{ item }}"
         state: directory
       with_items:
         - "{{ appliance_assets_image }}"
-        - "{{ appliance_assets_image }}/config"
-        - "{{ appliance_assets_image }}/run"
-        - "{{ appliance_assets_image }}/output"
+        - "../tmp-files/image-base"
+        - "../output/image-base"
 
     #- name: Generate appliance config template
     #  ansible.builtin.shell: |
     #    export REGISTRY_AUTH_FILE=~/.config/containers/auth.json
-    #    podman run --rm -it --pull newer -v {{ appliance_assets_image }}/run:/assets:Z {{ appliance_image_preinstall }} generate-config
+    #    podman run --rm -it --pull newer -v ../tmp-files/image-base:/assets:Z {{ appliance_image_preinstall }} generate-config
 
     - name: Ensure openshift manifests directory exists
       ansible.builtin.file:
-        path: "{{ appliance_assets_image }}/run/openshift"
+        path: "../tmp-files/image-base/openshift"
         state: directory
 
     - name: Check for appliance config template file
@@ -46,16 +45,16 @@
         file: "{{ appliance_config_file }}"
       when: appliance_config_check.stat.exists
 
-    - name: Configure appliance-config.yamlc
+    - name: Configure appliance-config.yaml
       ansible.builtin.template:
         src: "{{ appliance_config_file }}"
-        dest: "{{ appliance_assets_image }}/run/appliance-config.yaml"
+        dest: "../tmp-files/image-base/appliance-config.yaml"
       when: appliance_config_check.stat.exists
 
     # Check for custom manifests files
-    - name: Ensure appliance_assets_image directory exists
+    - name: Ensure tm run openshift directory exists
       ansible.builtin.file:
-        path: "{{ appliance_assets_image }}/run/openshift"
+        path: "../tmp-files/image-base/openshift"
         state: directory
 
     - name: Check for custom manifests files
@@ -71,7 +70,7 @@
     - name: Copy all custom manifests files to target directory without subdirectories
       ansible.builtin.copy:
         src: "{{ item.path }}"
-        dest: "{{ appliance_assets_image }}/run/openshift/{{ item.path | basename }}"
+        dest: "../tmp-files/image-base/openshift/{{ item.path | basename }}"
       with_items: "{{ manifests.files }}"
       when: manifests.matched > 0
 
@@ -83,7 +82,7 @@
 
     - name: Append custom images to appliance-config.yaml
       ansible.builtin.blockinfile:
-        path: "{{ appliance_assets_image }}/run/appliance-config.yaml"
+        path: "../tmp-files/image-base/appliance-config.yaml"
         block: |
           {{ lookup('file', custom_images_file) }}
         marker: "# {mark} CUSTOM IMAGES"
@@ -97,7 +96,7 @@
 
     - name: Append operators to appliance-config.yaml
       ansible.builtin.blockinfile:
-        path: "{{ appliance_assets_image }}/run/appliance-config.yaml"
+        path: "../tmp-files/image-base/appliance-config.yaml"
         block: |
           {{ lookup('file', custom_operators_file) }}
         marker: "# {mark} CUSTOM OPERATORS"
@@ -108,28 +107,28 @@
     - name: Clean
       become: true
       ansible.builtin.shell: |
-        podman run --rm -it -v {{ appliance_assets_image }}/run:/assets:Z {{ appliance_image_preinstall }} clean
+        podman run --rm -it -v ../tmp-files/image-base:/assets:Z {{ appliance_image_preinstall }} clean
       register: build_result
 
     - name: Build the appliance disk image raw
       become: true
       ansible.builtin.shell: |
-        podman run --rm -it --pull newer --privileged --net=host -v {{ appliance_assets_image }}/run:/assets:Z {{ appliance_image_preinstall }} build
+        podman run --rm -it --pull newer --privileged --net=host -v ../tmp-files/image-base:/assets:Z {{ appliance_image_preinstall }} build
       register: build_result
 
     - name: Copy ISO post deployment script
       ansible.builtin.copy:
         src: "{{ iso_post_deployment_script}}"
-        dest: "{{ appliance_assets_image }}/run/{{ iso_post_deployment_script | basename }}"
+        dest: "../tmp-files/image-base/{{ iso_post_deployment_script | basename }}"
 
     - name: Build the appliance ISO
       become: true
       ansible.builtin.shell: |
-        podman run --rm -it --privileged -v {{ appliance_assets_image }}/run:/assets:Z {{ appliance_image_preinstall }} build iso --post-script {{ iso_post_deployment_script | basename }} --target-device {{ appliance_target_dev }}
+        podman run --rm -it --privileged -v ../tmp-files/image-base:/assets:Z {{ appliance_image_preinstall }} build iso --post-script {{ iso_post_deployment_script | basename }} --target-device {{ appliance_target_dev }}
       register: build_result
 
     - name: Move the appliance.raw to the output directory 
-      ansible.builtin.shell: "mv -f {{ appliance_assets_image }}/run/{{ item }} {{ appliance_assets_image }}/output"
+      ansible.builtin.shell: "mv -f ../tmp-files/image-base/{{ item }} ../output/image-base"
       with_items:
         - appliance.raw
         - appliance.iso
@@ -149,7 +148,7 @@
           If you didn't include information about disk size, you can run  resize and clone the disk image with:
 
               sudo podman run --rm -it --privileged --net=host \
-                -v {{ appliance_assets_image }}/run:/assets \
+                -v ../tmp-files/image-base:/assets \
                 --entrypoint virt-resize {{ appliance_image_preinstall }} \
                 --expand /dev/sda4 /assets/appliance.raw {{ appliance_target_dev }} --no-sparse
 
