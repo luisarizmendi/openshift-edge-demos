@@ -27,7 +27,7 @@ This playbook enables you to create and configure the necessary AWS components t
 
 Once the script completes, the VPN will be created. Navigate to **VPC > Site-to-Site VPN** in the AWS console to download the configuration file for your VPN. Depending on your local VPN endpoint, choose the appropriate configuration file.
 
-- If using Linux, OpenWRT, or another non-listed system, download the "Generic" (IKEv2) configuration file.
+If using Linux, OpenWRT, or another non-listed system, download the "Generic" (IKEv2) configuration file.
 
 ### 4. Configure Your Local VPN Endpoint
 
