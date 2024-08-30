@@ -1,46 +1,91 @@
+# Create an IPSEC VPN in AWS
+
+This playbook enables you to create and configure the necessary AWS components to establish a VPN for demonstration purposes.
+
+> **Note**  
+> This setup is intended for demonstration purposes only. It functions correctly but is not recommended for production environments.
+
+## Prerequisites
+
+### 1. VPC in AWS
+
+- **If deploying OpenShift in AWS:** A VPC will already be created, so no additional setup is required.
+- **If not deploying OpenShift:** You will need to create a VPC for the VPN.
+
+## Creating the VPN
+
+### 2. Create the VPN in AWS using the Ansible Playbook
+
+1. Modify the values in `ansible/vars.yaml` to fit your environment, specifically:
+   - `customer_gateway_ip`
+   - `aws_region`
+   - `local_ipv4_cidr`
+
+2. Run the `create_aws_vpn.sh` shell script to create the VPN.
+
+### 3. Download the AWS VPN Configuration File
+
+Once the script completes, the VPN will be created. Navigate to **VPC > Site-to-Site VPN** in the AWS console to download the configuration file for your VPN. Depending on your local VPN endpoint, choose the appropriate configuration file.
+
+- If using Linux, OpenWRT, or another non-listed system, download the "Generic" (IKEv2) configuration file.
+
+### 4. Configure Your Local VPN Endpoint
+
+To assist with configuring your local VPN endpoint, additional Ansible playbooks are provided:
+
+#### a. Libreswan on Linux
+
+1. Run the following command to generate the necessary configuration files for `libreswan`:
+
+   ```bash
+   ansible-playbook -i ansible/inventory -e vpn_config_file=<path to the AWS generic config file> -vv ansible/translate_generic_ikev2_to_libreswan.yaml
+   ```
+
+2. This will generate `libreswan_ipsec.conf` and `libreswan_ipsec.secrets`. Copy these files to `/etc/ipsec.conf` and `/etc/ipsec.secrets` on your system (or to `/etc/ipsec.d` if you prefer to keep them in separate files).
+
+3. Restart the IPsec service with:
+
+   ```bash
+   systemctl restart ipsec
+   ```
+
+4. The VPN should now be established.
 
 
+#### b. Strongswan on OpenWRT
 
+1. Install the required packages on the OpenWRT router:
 
-DONT USE IN PRODUCTION AWS ENVIRONMENTS
+   ```bash
+   opkg install strongswan-minimal strongswan-mod-aes strongswan-mod-hmac strongswan-mod-sha1 kmod-ip-vti vti luci-proto-vti strongswan-mod-kdf
+   ```
 
+2. Identify the name of your outbound external interface on the OpenWRT router. It is usually wan for a cabled network, or the SSID of your wireless network if using Wi-Fi as the default route.
 
-instala ocp o mete el vpc_id a mano (coge el primero si no)
+3. Run the following playbook on your laptop:
 
+   ```bash
+   ansible-playbook -i ansible/inventory -e interface_name=<wan interface name> -e vpn_config_file=<path to the AWS generic config file> -vv ansible/translate_generic_ikev2_to_openwrt.yaml
+   ```
 
-libreswan
------------------------------
+4. This will generate the `openwrt_ipsec.conf` and `openwrt_ipsec.secrets` files. Copy these to `/etc/ipsec.conf` and `/etc/ipsec.secrets` on your router.
 
-install libreswan
+5. The playbook also generates content for `openwrt_network` and `openwrt_firewall`. **Append** this content to the end of the` /etc/config/network` and `/etc/config/firewall` files on your router.
 
-copy .conf and .secrets files
+6. Restart the necessary services on the router:
 
+   ```bash
+   /etc/init.d/ipsec restart
+   /etc/init.d/firewall restart
+   /etc/init.d/network restart
+   ```
 
-systemctl restart ipsec 
+7. The VPN should be up within a few seconds. Verify the status by checking the system logs with logread or reviewing the tunnel status with ipsec statusall.
 
+## Deleting the VPN
 
+To delete the VPN, run the destroy_aws_vpn.sh shell script.
 
-
-vpn openwrt
------------------------------
-
-opkg install strongswan-minimal strongswan-mod-aes strongswan-mod-hmac strongswan-mod-sha1  kmod-ip-vti vti luci-proto-vti strongswan-mod-kdf
-
-
-copy ipsec files
-
-add interfaces and firewall rules
-
-
-root@OpenWrt:~# /etc/init.d/ipsec enable
-root@OpenWrt:~# /etc/init.d/ipsec restart
-
-
-
-
-
-check logs:
-  logread -f
-  ipsec statusall
-
+> **Important**  
+> If you have an active OpenShift cluster and need to delete it while a VPN is active, the deletion process may stall. This occurs because the VPC associated with OpenShift is attached to the VPN. To avoid this issue, either detach the VPC from the VPN or delete the VPN before removing your OpenShift cluster.
 
