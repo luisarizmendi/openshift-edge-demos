@@ -54,7 +54,7 @@ Complete the following steps before deploying your demo:
    - Click the `+` button to add resources.
    - Paste the content from the [bootstrap-environment.yaml](../../../bootstrap-environment/bootstrap-environment.yaml) file.
 
-   ![](../../../doc/images/bootstrap-environment-deploy.gif)
+   ![](../../../bootstrap-environment/doc/images/bootstrap-environment-deploy.gif)
 
    > **Note**
    >
@@ -62,7 +62,7 @@ Complete the following steps before deploying your demo:
 
 3. **Wait Until the Advanced Cluster Manager Console is Accessible**
 
-   ![](../../../doc/images/bootstrap-environment-wait.gif)
+   ![](../../../bootstrap-environment/doc/images/bootstrap-environment-wait.gif)
 
 ### 2. Import the OpenShift Clusters into ACM
 
