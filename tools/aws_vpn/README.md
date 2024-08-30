@@ -9,8 +9,8 @@ This playbook enables you to create and configure the necessary AWS components t
 
 ### 1. VPC in AWS
 
-- **If deploying OpenShift in AWS:** A VPC will already be created, so no additional setup is required.
-- **If not deploying OpenShift:** You will need to create a VPC for the VPN.
+- **If you deployed OpenShift in AWS:** A VPC will already be created, so no additional setup is required.
+- **If you didn't deploy (yet?) OpenShift:** You will need to create a VPC for the VPN.
 
 ## Creating the VPN
 
