@@ -95,7 +95,7 @@ You will have a Base image in both RAW and ISO formats, and as many Configuratio
 2. Power on the device (booting from either the disk if using RAW or the USB/Virtual Drive if using ISO) and wait for the zero-touch provisioning to complete.
 
 > **IMPORTANT**  
-> There is currently an [issue](https://issues.redhat.com/browse/MGMT-18555) with the USB partition table when created with the OpenShift Appliance ISOs. This issue may prevent your system from booting directly from it. If you encounter this problem, consider using the RAW image (for both physical and virtual systems) or deploying the OpenShift Appliance in a VM (mounting with Virtual Media is not affected).
+> There is currently an [issue](https://issues.redhat.com/browse/MGMT-18693) with the USB partition table when created with the OpenShift Appliance ISOs. This issue may prevent your system from booting directly from it. If you encounter this problem, consider using the RAW image (for both physical and virtual systems) or deploying the OpenShift Appliance in a VM (mounting with Virtual Media is not affected).
 
 3. Create a USB with the Configuration ISO (or use the ISO in your device VM) and plug it into the system.
 
