@@ -8,13 +8,13 @@ hosts:
   - hostname: sno-appliance
     interfaces:
       - name: eth0
-        macAddress: 84:8b:cd:4d:15:37
+        macAddress: 52:54:00:fa:5f:8f
     networkConfig:
       interfaces:
         - name: eth0
           type: ethernet
           state: up
-          mac-address: 84:8b:cd:4d:15:37
+          mac-address: 52:54:00:fa:5f:8f
           ipv4:
             enabled: true
             address:

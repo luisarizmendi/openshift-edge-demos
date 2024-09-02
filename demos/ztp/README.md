@@ -320,6 +320,11 @@ INFO Download openshift-install from: https://mirror.openshift.com/pub/openshift
 
 demo start:
 - deploy the image with the base usb
-- check that you can ssh, check ip, check container images
 - deploy config
-- check ip, check apps, check operators
+- check ip, check /etc/assistecd/ 
+- when finish: check apps, check operators
+
+
+
+
+-> se puede ver el progreso con `watch "oc --kubeconfig image-config/auth/kubeconfig get pod --all-namespaces"` y también en los containers de root (podman logs y también crictl logs)
