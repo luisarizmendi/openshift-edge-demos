@@ -22,7 +22,7 @@ disk_size_gb: 200
 appliance_name: "ocp-appliance"
 appliance_basedomain: "sandbox795.opentlc.com"
 appliance_target_dev: /dev/sda
-appliance_rendezvous: 192.168.140.2
+appliance_rendezvous: 192.168.140.3
 
 appliance_assets_config_iso: "../../../demos/ztp/demo-manifests/02-appliance/01-image-config"
 install_config_file_template: "{{ appliance_assets_config_iso }}/install-config-template.yaml"

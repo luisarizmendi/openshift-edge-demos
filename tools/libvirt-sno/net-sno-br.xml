@@ -1,0 +1,5 @@
+<network>
+  <name>sno-br</name>
+  <forward mode="bridge"/>
+  <bridge name="sno-br"/>
+</network>

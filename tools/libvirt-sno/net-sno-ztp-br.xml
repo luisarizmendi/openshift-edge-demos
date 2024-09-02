@@ -1,5 +1,0 @@
-<network>
-  <name>sno-ztp-br</name>
-  <forward mode="bridge"/>
-  <bridge name="sno-ztp-br"/>
-</network>

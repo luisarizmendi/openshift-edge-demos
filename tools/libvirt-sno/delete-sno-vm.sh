@@ -1,10 +1,12 @@
 #!/bin/bash
 
-VM_NAME="sno-ztp"
-NETWORK_NAME="sno-ztp"
-BRIDGE_NAME="sno-ztp-br"
-DISK_PATH="/var/lib/libvirt/images/sno-ztp.qcow2"
 BRIDGE_IF="enp58s0u1u2"
+
+VM_NAME="sno"
+NETWORK_NAME="sno"
+BRIDGE_NAME="sno-br"
+DISK_PATH="/var/lib/libvirt/images/sno.qcow2"
+
 
 check_command() {
     if [ $? -ne 0 ]; then

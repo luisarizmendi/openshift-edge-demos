@@ -1,15 +1,16 @@
 #!/bin/bash
 
+BRIDGE_IF="enp58s0u1u2"
+
 POOL_NAME="default"
 POOL_PATH="/var/lib/libvirt/images"
 NETWORK_XML_PATH_BASE="net" 
 VM_XML_PATH_BASE="vm"       
-DISK_PATH="/var/lib/libvirt/images/sno-ztp.qcow2"
+DISK_PATH="/var/lib/libvirt/images/sno.qcow2"
 DISK_SIZE="200G"
-VM_NAME="sno-ztp"
-NETWORK_NAME="sno-ztp"
-BRIDGE_NAME="sno-ztp-br"
-BRIDGE_IF="enp58s0u1u2"
+VM_NAME="sno"
+NETWORK_NAME="sno"
+BRIDGE_NAME="sno-br"
 
 check_command() {
     if [ $? -ne 0 ]; then
@@ -24,35 +25,17 @@ echo "Enabling daemon libvirt services..."
 sudo systemctl start libvirtd
 sudo systemctl enable libvirtd
 
-sudo systemctl start virtqemud.service
-sudo systemctl start virtinterfaced.socket
-sudo systemctl start virtnetworkd.socket
-sudo systemctl start virtnodedevd.socket
-sudo systemctl start virtnwfilterd.socket
-sudo systemctl start virtproxyd.socket
-sudo systemctl start virtsecretd.socket
-sudo systemctl start virtstoraged.socket
+#sudo ausearch -c 'dnsmasq' --raw | audit2allow -M my-dnsmasq
+#sudo semodule -X 300 -i my-dnsmasq.pp
 
-sudo systemctl enable virtqemud.service
-sudo systemctl enable virtinterfaced.socket
-sudo systemctl enable virtnetworkd.socket
-sudo systemctl enable virtnodedevd.socket
-sudo systemctl enable virtnwfilterd.socket
-sudo systemctl enable virtproxyd.socket
-sudo systemctl enable virtsecretd.socket
-sudo systemctl enable virtstoraged.socket
+#sudo ausearch -c 'rpc-virtnetwork' --raw | audit2allow -M my-rpcvirtnetwork
+#sudo semodule -X 300 -i my-rpcvirtnetwork.pp
 
-sudo ausearch -c 'dnsmasq' --raw | audit2allow -M my-dnsmasq
-sudo semodule -X 300 -i my-dnsmasq.pp
+#sudo ausearch -c 'rpc-virtqemud' --raw | audit2allow -M my-rpcvirtqemud
+#sudo semodule -X 300 -i my-rpcvirtqemud.pp
 
-sudo ausearch -c 'rpc-virtnetwork' --raw | audit2allow -M my-rpcvirtnetwork
-sudo semodule -X 300 -i my-rpcvirtnetwork.pp
-
-sudo ausearch -c 'rpc-virtqemud' --raw | audit2allow -M my-rpcvirtqemud
-sudo semodule -X 300 -i my-rpcvirtqemud.pp
-
-sudo ausearch -c 'prio-rpc-virtqe' --raw | audit2allow -M my-priorpcvirtqe
-sudo semodule -X 300 -i my-priorpcvirtqe.pp
+#sudo ausearch -c 'prio-rpc-virtqe' --raw | audit2allow -M my-priorpcvirtqe
+#sudo semodule -X 300 -i my-priorpcvirtqe.pp
 
 # Create a bridge interface 
 sudo nmcli con delete $BRIDGE_IF 

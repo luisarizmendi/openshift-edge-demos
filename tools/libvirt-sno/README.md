@@ -1,52 +1,45 @@
+# SNO VM in Libvirt
+
+These scripts helps creating a virtual machine for Single Node OpenShift on top of libvirt in Fedora (tested with Fedora 40) and the associated Host network configuration to permit direct external connectivity to the VM.
+
+The `create-sno-vm.sh` script will:
+
+* Create a bridge interface (`net-sno-br.xml`)
+* Create and configure the libvirt storage pool
+* Define and start the network (`net-sno.xml`)
+* Create the VM disk if it doesn't exist
+* Create the SNO VM (`vm-sno.xml`)
 
 
+## Usage
+
+### Creating the VM and network resources
+
+1. Open the `create-sno-vm.sh` and check that the environment variables are OK for you. You probably want to change the `BRIDGE_IF` that is the physical interface that will be used for the bridge interface. Please bear in mind that you cannot use Wireless interface for the bridge, since you won't be able to have multiple different IPs attached to a single Wireless connection.
+
+2. Run the `create-sno-vm.sh`. If you find issues with SELinux you might need to run these commands:
+
+```bash
+sudo ausearch -c 'dnsmasq' --raw | audit2allow -M my-dnsmasq
+sudo semodule -X 300 -i my-dnsmasq.pp
+
+sudo ausearch -c 'rpc-virtnetwork' --raw | audit2allow -M my-rpcvirtnetwork
+sudo semodule -X 300 -i my-rpcvirtnetwork.pp
+
+sudo ausearch -c 'rpc-virtqemud' --raw | audit2allow -M my-rpcvirtqemud
+sudo semodule -X 300 -i my-rpcvirtqemud.pp
+
+sudo ausearch -c 'prio-rpc-virtqe' --raw | audit2allow -M my-priorpcvirtqe
+sudo semodule -X 300 -i my-priorpcvirtqe.pp
+```
+
+3. Check network connection after the script finish
 
 
-
-selinux
-
+That's all. Remember that if you want to access the SNO VM from outside your local network you will need to configure your router to forward port 6443, 443 and 80 to the VM.
 
 
-check bridge, maybe delete nmcli connection eth (script deletes nm con with same name than interface)
+### Deleting the VM and network resources
 
+1. Run the `deletesno-vm.sh`. The script will also delete the bridge interface (deletes using `nmcli` looking for the same name than interface).
 
-
-dhcp en el bridge -> no wifi
-dhcp static
-
-
-❯ ip -o -br a
-lo               UNKNOWN        127.0.0.1/8 ::1/128 
-wlp59s0          UP             192.168.1.40/24 fe80::341f:eca3:e1a7:c6bb/64 
-virbr1           DOWN           192.168.100.1/24 
-tailscale0       UNKNOWN        fe80::7a57:60fb:9fd9:1f81/64 
-virbr2           DOWN           
-virbr3           DOWN           192.168.99.254/24 
-virbr0           DOWN           192.168.122.1/24 
-virbr5           DOWN           192.168.150.1/24 
-podman0          UP             10.88.0.1/16 fe80::e873:22ff:fe6e:95e3/64 
-veth0@if2        UP             fe80::c80f:faff:feec:a250/64 
-enp58s0u1u2      UP             
-virbr10          DOWN           192.168.123.1/24 
-sno-ztp-br       UP             192.168.140.231/24 fdff:7dd7:a83c::1d0/128 fdff:7dd7:a83c:0:9a73:df29:5bfb:1de6/64 fe80::5844:39f9:57c4:11e9/64 
-
-
-
-
-
-inbound nat:
-8000 -> laptop
-6443 -> sno VM (with bridge)
-
-
-
-
-
-
-
-
-
-
-
-
------------

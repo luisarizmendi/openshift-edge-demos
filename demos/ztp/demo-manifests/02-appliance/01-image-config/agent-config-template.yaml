@@ -7,14 +7,14 @@ rendezvousIP: "{{ appliance_rendezvous }}"
 hosts:
   - hostname: sno-appliance
     interfaces:
-      - name: eth0
-        macAddress: 84:8b:cd:4d:15:37
+      - name: enp7s0
+        macAddress: 52:54:00:fa:5f:8f
     networkConfig:
       interfaces:
-        - name: eth0
+        - name: enp7s0
           type: ethernet
           state: up
-          mac-address: 84:8b:cd:4d:15:37
+          mac-address: 52:54:00:fa:5f:8f
           ipv4:
             enabled: true
             address:
@@ -29,6 +29,6 @@ hosts:
         config:
           - destination: 0.0.0.0/0
             next-hop-address: 192.168.140.1
-            next-hop-interface: eth0
+            next-hop-interface: enp7s0
             table-id: 254
 

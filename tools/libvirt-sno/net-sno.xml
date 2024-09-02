@@ -1,5 +1,5 @@
 <network xmlns:dnsmasq="http://libvirt.org/schemas/network/dnsmasq/1.0">
-  <name>sno-ztp</name>
+  <name>sno</name>
   <forward mode='nat'>
     <nat>
       <port start='1024' end='65535'/>
