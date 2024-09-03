@@ -1,3 +1,134 @@
+# OpenShift Zero Touch Provisioning
+
+## Background
+
+### The Challenge
+
+The Edge Computing use cases use to have characteristics such as high number of devices and locations or lack of on-site specialized personell that makes not possible to use the same kind of environment deployment approaches that we use at the Data Center or Cloud, since we cannot expect neither the people that are at the edge location follow any complicated installation procedure nor sending someone with the right knowledge to all the edge locations, since that will imply a high cost and deployment delays. 
+
+### The Solution
+
+Instead of performing a solution deployment that comprehends multiple steps in the edge location, we can prepare all the assets in advance to automate as much as we can the deployment procedure, enabling a "zero-touch provisioning" experience.
+
+We still need specialized people, but those don't need to move to the edge locations, and since the deployment does not need any interaction, any non-specialized person will be able to perform the installation.
+
+
+
+## Concepts Reviewed During the Demo
+
+* Advanced Cluster Management 
+* OpenShift GitOps
+* OpenShift Appliance
+* OpenShift Assisted Installer
+
+
+## Architecture
+
+![](doc/images/architecture.png)
+
+
+### Recommended Hardware
+
+
+### Required connectivity
+
+
+
+
+
+
+
+
+
+## Preparation and Requirements
+
+* [Preparation and requirements ](doc/00-preparation.md).
+
+
+## Demo
+
+**Time required for preparing the demo**: <120 minutes
+
+**Time required for delivering the demo**: <90 minutes 
+
+### TL/DR
+
+If you already know the demo details and just want a list of demo steps, you can jump into the [steps summary](doc/steps-summary.md).
+
+
+### Demo Sections
+
+In this demo, we will explore three different ways to deploy an OpenShift cluster (Single Node OpenShift in this case) using a zero-touch provisioning approach.
+
+
+### [1 - Assisted installer with Advanced Cluster Management](doc/01-gui.md)
+
+In this first section we are going to pre-configure the cluster in Red Hat Advanced Cluster Management, creating a Discovery ISO that will be used at the edge location to boot and auto-configure the device.
+
+This is the (simplified) deployment workflow that will be used in this section:
+
+1. Configure the Inventory and OpenShift cluster in ACM
+
+2. Create and download the "Discovery ISO" from ACM
+
+3. Boot the device from the "Discovery ISO"
+
+4. Approve the device in ACM
+
+5. Launch OpenShift cluster deployment from ACM
+
+Once the OpenShift is installed, Application delivery and Cluster Policy enforcement are automatically done in that cluster.
+
+For a more comprehensive workflow, including roles and locations, take a look to the following diagram:
+
+![](doc/images/acm-gui.png)
+
+
+### [2 - GitOps provisioning with Advanced Cluster Management](doc/02-gitops.md)
+
+During the second section we will use the GitOps approach for the OpenShift cluster deployment. Instead of performing the steps on the ACM GUI, we will prepare ACM and create the associated objects required for the cluster  
+
+
+
+BMC
+
+
+
+![](doc/images/acm-gitops.png)
+
+
+
+
+
+###  [3 - OpenShift Appliance](doc/03-appliance.md)
+
+
+
+
+![](doc/images/appliance-raw.png)
+
+
+
+![](doc/images/appliance-iso.png)
+
+
+
+
+
+### Demo recording
+
+TBD
+
+## Closing
+
+
+
+
+
+
+
+
+
 
 
 
@@ -207,7 +338,7 @@ appliance
 ----------------
 
 
-Configura DNS api.<name> and *.apps.<name>
+Configura DNS api.<name> and *.apps.<name>  and api-int
 
 
 
@@ -328,3 +459,5 @@ demo start:
 
 
 -> se puede ver el progreso con `watch "oc --kubeconfig image-config/auth/kubeconfig get pod --all-namespaces"` y también en los containers de root (podman logs y también crictl logs)
+
+also oc --kubeconfig output/image-config/auth/kubeconfig get clusterversion and also "get co"
