@@ -9,62 +9,19 @@
   >
   > The "Hub" Cluster is where ACM is deployed. For this demo, it will serve as the "Cloud" cluster.
 
-## Environment Setup
+## 1. Base environment Setup
 
-The demo deployment involves three main steps:
+Refer to the [base environment setup document](../../../bootstrap-environment/doc/bootstrap-environment-steps.md).
 
-1. **Clone this repository and adjust values**
-2. **OpenShift "Hub" Cluster base configuration**
-3. **Import the OpenShift clusters into ACM**
-4. **Demo-specific setup**
+## 2. Demo-Specific preparation steps
 
-### 1. Fork this Repository and Adjust Values
+The demo specific deployment involves these steps:
 
-To change values during the demo, fork this repository.
+1. **Import the OpenShift clusters into ACM**
+2. **Apply the Demo-Specific Setup**
+3. **Wait Until All Applications Are in "Sync" Status in the Argo CD Console**
 
-1. Fork `https://github.com/luisarizmendi/openshift-edge-demos` into your GitHub account.
-2. Clone it locally on your desktop.
-3. Run the `change_repo_url.sh` script to update all repository references to your fork:
-
-   ```bash
-   cd tools
-   ./change_repo_url.sh https://github.com/<your-github-username>/<fork-name>
-   ```
-  > **NOTE**
-  >
-  > Do not include the tailing `.git` or any slash at the end.
-
-3. Push changes to your fork repo
-
-   ```bash
-   cd ..
-   git add .
-   git commit -m "Change repo references"
-   git push
-   ```
-
-### 1. OpenShift "Hub" Cluster Base Configuration
-
-Complete the following steps before deploying your demo:
-
-1. **Prepare Your OpenShift Clusters**: Ensure that the required OpenShift clusters are freshly installed. This demo has been tested with OpenShift 4.16.
-
-2. **Apply the Base Configuration to the Hub Cluster**:
-   - Access your OpenShift console in the Hub cluster.
-   - Click the `+` button to add resources.
-   - Paste the content from the [bootstrap-environment.yaml](../../../bootstrap-environment/bootstrap-environment.yaml) file.
-
-   ![](../../../bootstrap-environment/doc/images/bootstrap-environment-deploy.gif)
-
-   > **Note**
-   >
-   > If you try to access ACM immediately after seeing the web plugin update message, you might encounter a warning stating "Red Hat Advanced Management for Kubernetes is not ready." Please wait a bit longer for ACM to fully initialize.
-
-3. **Wait Until the Advanced Cluster Manager Console is Accessible**
-
-   ![](../../../bootstrap-environment/doc/images/bootstrap-environment-wait.gif)
-
-### 2. Import the OpenShift Clusters into ACM
+1. **Import the OpenShift Clusters into ACM**
 
 For this demo, you will be scheduling applications across multiple OpenShift clusters. Thus, you need more than one OpenShift cluster managed by ACM and Argo CD. We will use one "Cloud" cluster (the "Hub") and one additional Edge cluster. The Hub cluster is already imported into ACM (`local-cluster`), so you only need to add the additional Edge cluster.
 
@@ -97,18 +54,15 @@ As mentioned earlier, a `GitOpsCluster` object was created during the bootstrap 
 
    ![](images/00-import-cluster-argocd.png)
 
-### 3. Demo-Specific Setup
 
-Now you can deploy the components required for your demo and apply the necessary configurations.
-
-1. **Apply the Demo-Specific Setup**:
+2. **Apply the Demo-Specific Setup**:
    - Access your OpenShift console in the Hub cluster.
    - Click the `+` button to add resources.
    - Paste the content from the [bootstrap-demo.yaml](../bootstrap-demo/bootstrap-demo.yaml) file.
 
    ![](images/bootstrap-demo-deploy.gif)
 
-2. **Wait Until All Applications Are in "Sync" Status in the Argo CD Console**:
+3. **Wait Until All Applications Are in "Sync" Status in the Argo CD Console**:
 
    ![](images/bootstrap-demo-wait.gif)
 

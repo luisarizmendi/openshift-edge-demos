@@ -1,3 +1,16 @@
+# OpenShift ZTP demo preparation
+
+## Environment & Hardware Requirements
+
+* **OpenShift "Hub" Cluster**: Typically configured with 3 worker nodes, each having 8 cores and 16GB of memory.
+* **OpenShift "Edge" Clusters**: At least one additional OpenShift cluster (minimal resources are acceptable).
+
+  > **Note**
+  >
+  > The "Hub" Cluster is where ACM is deployed. For this demo, it will serve as the "Cloud" cluster.
+
+## Environment Setup
+
 
 
 
