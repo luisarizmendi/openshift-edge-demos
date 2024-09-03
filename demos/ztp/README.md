@@ -1,463 +1,133 @@
-# OpenShift Zero Touch Provisioning
+# OpenShift Zero-Touch Provisioning
 
-## Background
+## Overview
 
 ### The Challenge
 
-The Edge Computing use cases use to have characteristics such as high number of devices and locations or lack of on-site specialized personell that makes not possible to use the same kind of environment deployment approaches that we use at the Data Center or Cloud, since we cannot expect neither the people that are at the edge location follow any complicated installation procedure nor sending someone with the right knowledge to all the edge locations, since that will imply a high cost and deployment delays. 
+Edge computing use cases often involve a large number of devices and locations, combined with a lack of on-site specialized personnel. This makes it impractical to use the same deployment approaches that are common in data centers or cloud environments. At the edge, we cannot rely on individuals to follow complex installation procedures, nor is it cost-effective or timely to send experts to each location.
 
 ### The Solution
 
-Instead of performing a solution deployment that comprehends multiple steps in the edge location, we can prepare all the assets in advance to automate as much as we can the deployment procedure, enabling a "zero-touch provisioning" experience.
+To address these challenges, we can prepare all deployment assets in advance to automate the process as much as possible, enabling a "zero-touch provisioning" experience. While specialized personnel are still required, they can remain at a central location. The actual deployment at the edge can be carried out by anyone capable of booting a device from an ISO, eliminating the need for technical expertise on-site.
 
-We still need specialized people, but those don't need to move to the edge locations, and since the deployment does not need any interaction, any non-specialized person will be able to perform the installation.
+## Key Concepts Covered in the Demo
 
-
-
-## Concepts Reviewed During the Demo
-
-* Advanced Cluster Management 
+* Advanced Cluster Management (ACM)
 * OpenShift GitOps
 * OpenShift Appliance
 * OpenShift Assisted Installer
 
-
 ## Architecture
 
-![](doc/images/architecture.png)
-
+![Architecture Diagram](doc/images/architecture.png)
 
 ### Recommended Hardware
 
+To be determined (TBD).
 
-### Required connectivity
+### Required Connectivity
 
-
-
-
-
-
-
-
+To be determined (TBD).
 
 ## Preparation and Requirements
 
-* [Preparation and requirements ](doc/00-preparation.md).
+Refer to the [Preparation and Requirements Guide](doc/00-preparation.md) for detailed setup instructions.
 
+## Demo Overview
 
-## Demo
+**Time required for preparing the demo:** Less than 120 minutes
 
-**Time required for preparing the demo**: <120 minutes
+**Time required for delivering the demo:** Less than 90 minutes
 
-**Time required for delivering the demo**: <90 minutes 
+### TL;DR
 
-### TL/DR
-
-If you already know the demo details and just want a list of demo steps, you can jump into the [steps summary](doc/steps-summary.md).
-
+If you're already familiar with the demo details and just need a list of steps, you can skip to the [steps summary](doc/steps-summary.md).
 
 ### Demo Sections
 
-In this demo, we will explore three different ways to deploy an OpenShift cluster (Single Node OpenShift in this case) using a zero-touch provisioning approach.
+This demo explores three different methods to deploy an OpenShift cluster (specifically, a Single Node OpenShift) using a zero-touch provisioning approach.
 
+### [1 - Assisted Installer with Advanced Cluster Management](doc/01-gui.md)
 
-### [1 - Assisted installer with Advanced Cluster Management](doc/01-gui.md)
+In this section, we pre-configure the cluster in Red Hat Advanced Cluster Management (ACM) and create a Discovery ISO, which is used at the edge location to boot and auto-configure the device. These steps can be performed centrally by a specialized person, while the actual deployment can be done by anyone who knows how to boot the device from an ISO (e.g., via USB).
 
-In this first section we are going to pre-configure the cluster in Red Hat Advanced Cluster Management, creating a Discovery ISO that will be used at the edge location to boot and auto-configure the device.
+**Deployment Workflow:**
 
-This is the (simplified) deployment workflow that will be used in this section:
+1. Configure the inventory and OpenShift cluster in ACM.
+2. Create and download the "Discovery ISO" from ACM.
+3. Boot the device from the "Discovery ISO."
+4. Approve the device in ACM.
+5. Launch the OpenShift cluster deployment from ACM.
 
-1. Configure the Inventory and OpenShift cluster in ACM
+Once OpenShift is installed, application delivery and cluster policy enforcement are automatically handled.
 
-2. Create and download the "Discovery ISO" from ACM
+For multiple OpenShift clusters, repeat the above steps for each cluster.
 
-3. Boot the device from the "Discovery ISO"
+**Detailed Workflow Diagram:**
 
-4. Approve the device in ACM
+![Assisted Installer Workflow](doc/images/acm-gui.png)
 
-5. Launch OpenShift cluster deployment from ACM
+### [2 - GitOps Provisioning with Advanced Cluster Management](doc/02-gitops.md)
 
-Once the OpenShift is installed, Application delivery and Cluster Policy enforcement are automatically done in that cluster.
+The previous workflow offers a zero-touch provisioning experience, but it can be further automated using a GitOps approach. Instead of performing steps in the ACM GUI, we'll create the necessary objects for cluster deployment and store them in a Git repository. 
 
-For a more comprehensive workflow, including roles and locations, take a look to the following diagram:
+Additionally, we can eliminate the need for on-site personnel to boot the device from the "Discovery ISO" by utilizing a [Baseboard Management Controller (BMC)](https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface#Baseboard_management_controller) from the central site. This approach saves time and simplifies the process for edge personnel, although it requires appropriate connectivity and may increase device costs.
 
-![](doc/images/acm-gui.png)
+**High-Level Workflow:**
 
+1. Configure ACM and create the OpenShift deployment objects.
+2. Store these objects in a Git repository.
+3. ACM powers on the device using the BMC.
+4. The device downloads the discovery ISO directly from ACM.
+5. The OpenShift cluster is auto-provisioned.
 
-### [2 - GitOps provisioning with Advanced Cluster Management](doc/02-gitops.md)
+For multiple OpenShift clusters, create separate manifests for each cluster and push them to the Git repository.
 
-During the second section we will use the GitOps approach for the OpenShift cluster deployment. Instead of performing the steps on the ACM GUI, we will prepare ACM and create the associated objects required for the cluster  
+**Detailed Workflow Diagram:**
 
+![GitOps Workflow](doc/images/acm-gitops.png)
 
+### [3 - OpenShift Appliance](doc/03-appliance.md)
 
-BMC
+The previous approach offers the most automation but requires a device with BMC and the associated connectivity. If such connectivity cannot be provided, or if it is slow or unstable, a different zero-touch provisioning method is required, in this case you can use the "OpenShift Appliance".
 
+With the OpenShift Appliance approach, you create a device with all necessary manifests and images embedded, allowing for self-provisioning on first boot and automatic configuration when a USB with the required OpenShift customizations is inserted.
 
+This method involves two key assets:
 
-![](doc/images/acm-gitops.png)
+1. **Base Image:** This image contains all the container images and manifests common to all OpenShift clusters you plan to deploy. It can be either a RAW image that you burn directly onto the device or an ISO for first-time deployment.
+2. **Configuration ISO:** This is unique to each cluster, containing specific cluster details (e.g., cluster name, base domain) and manifests.
 
+**Simplified Workflow:**
 
+1. Create the Base Image (can be done on your laptop; ACM is not required).
+2. Create the Configuration ISO.
+3. Burn the Base RAW Image onto the device or boot from the Base Image ISO.
+4. Connect the Configuration ISO (this triggers automatic customization).
 
+For multiple OpenShift clusters, create a different Configuration ISO for each one.
 
+**RAW Image Workflow Diagram:**
 
-###  [3 - OpenShift Appliance](doc/03-appliance.md)
+![Appliance RAW Workflow](doc/images/appliance-raw.png)
 
+**ISO Workflow Diagram:**
 
+![Appliance ISO Workflow](doc/images/appliance-iso.png)
 
+### Demo Recording
 
-![](doc/images/appliance-raw.png)
+To be determined (TBD).
 
+## Conclusion
 
+In this demo, we've explored how to deploy OpenShift in edge computing scenarios where on-site specialized personnel are not available. OpenShift's flexibility shines in these challenging environments, offering multiple zero-touch provisioning methods tailored to various needs:
 
-![](doc/images/appliance-iso.png)
+1. **Assisted Installer with ACM:** This method allows for the easy pre-configuration of clusters, enabling non-technical personnel at edge locations to deploy OpenShift simply by booting from an ISO. This approach minimizes human error and accelerates deployment timelines.
 
+2. **GitOps with ACM and BMC:** By automating the deployment process further with GitOps and leveraging BMC for remote device management, you can reduce on-site interaction to nearly zero. This not only streamlines operations but also ensures consistency and scalability across numerous edge locations.
 
+3. **OpenShift Appliance:** For disconnected or semi-disconnected environments, the OpenShift Appliance method provides a robust solution. It embeds all necessary components directly into the device, making deployment as easy as plugging in a USB stick. This approach is ideal for remote locations with limited connectivity, ensuring that OpenShift can be deployed anywhere, regardless of network conditions.
 
+The benefits of using OpenShift for edge use cases are clear. It simplifies the complexities of deploying and managing Kubernetes clusters across dispersed and challenging environments, reduces the need for on-site technical expertise, and accelerates time-to-value. OpenShift’s robust and versatile tools make it an exceptional choice for organizations looking to extend their cloud-native capabilities to the edge, ensuring reliable, scalable, and secure operations no matter where your infrastructure resides.
 
-
-### Demo recording
-
-TBD
-
-## Closing
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-recordar que tarda tiempo los demo-ztp-cluster y demo-ztp policies porque se está aplicando el path
-
-
-
-
-crear namespace "demo-ztp" con los secrets
-
-cat ~/pull-secret | base64 -w0
-
-
-
-
-
-check that new argocd repo pod is generated and not in pedning because no resources
-
-
-
-sobre las VMs:
-libvirt con current and maximum memory para tener mas memoria en la VM
-
-
-
-
-DNS config -> se puede hacer en AWS
-
-
-
-
-GUI
----------------
-
-
-
-si tiene 16GB de memoria justo, puede que exista un tiempo despues de incluir el server que ponga 15 con algo... hay que esperar
-    Success alert:1 host selected out of 1 identified.
-    Total compute: 12 CPUs | 15.46 GiB Memory
-
-
-
-
-
-steps:
-
-1) create dns records
-
-2) Add hosts to inventory > Create infrastructure environment
-
-* Add env. name, localtion, pull secret
-
-* (optional set static IP)
-
-* Click Create
-
-
-(NOTE: puedes encontrar un error trtansitorio en la web de que ciertos componentes no existen o no están corriendo correctamente. espera un minuto a ver si se van) algo como esto:
-
-Danger alert:Failing infrastructure environment
-
-    Failed to create image due to an internal error
-    failed to find secret pullsecret-demo-sno-gui
-    failed to get secret demo-sno-gui/pullsecret-demo-sno-gui from API
-    secrets "pullsecret-demo-sno-gui" not found
-
-
-
-
-* Create nmstate yaml with +
-
-apiVersion: agent-install.openshift.io/v1beta1
-kind: NMStateConfig
-metadata:
-  name: <node name>
-  namespace: <environment name>
-  labels:
-    infraenvs.agent-install.openshift.io: <environment name>
-spec:
-  config:
-    interfaces:
-      - name: eth0
-        type: ethernet
-        state: up
-        mac-address: <device mac>
-        ipv4:
-          enabled: true
-          address:
-            - ip: <ip address>
-              prefix-length: <net mask>
-          dhcp: false
-    dns-resolver:
-      config:
-        server:
-          - <dns server>
-    routes:
-      config:
-        - destination: 0.0.0.0/0
-          next-hop-address: <gateway ip>
-          next-hop-interface: eth0
-          table-id: 254
-  interfaces:
-    - name: "eth0"
-      macAddress: "<device mac>"
-
-
-example:
-
-apiVersion: agent-install.openshift.io/v1beta1
-kind: NMStateConfig
-metadata:
-  name: sno-gui
-  namespace: demo-gui
-  labels:
-    infraenvs.agent-install.openshift.io: demo-gui
-spec:
-  config:
-    interfaces:
-      - name: eth0
-        type: ethernet
-        state: up
-        mac-address: 84:8b:cd:4d:15:37
-        ipv4:
-          enabled: true
-          address:
-            - ip: 192.168.140.3
-              prefix-length: 24
-          dhcp: false
-    dns-resolver:
-      config:
-        server:
-          - 8.8.8.8
-    routes:
-      config:
-        - destination: 0.0.0.0/0
-          next-hop-address: 192.168.140.1
-          next-hop-interface: eth0
-          table-id: 254
-  interfaces:
-    - name: "eth0"
-      macAddress: "84:8b:cd:4d:15:37"
-
-
-
-
-
-* Download ISO
-
-
-* Start device with ISO, wait and approve host
-
-
-
-2) create new cluster->host inventory->standalone > Use exsitiing host
-
-* include: clsuter name, cluster set, base domain, "install sno", pull-secret
-
-* enable yaml view and para reducir el sno añadir:
-
-kind: AgentClusterInstall
-metadata:
-  annotations:
-    agent-install.openshift.io/install-config-overrides: |
-      {"networking":{"networkType":"OVNKubernetes"},
-        "capabilities": {
-          "baselineCapabilitySet": "None",
-          "additionalEnabledCapabilities": [
-            "NodeTuning",
-            "OperatorLifecycleManager",
-            "marketplace",
-            "Ingress"
-          ]
-        }
-      }
-
-
-cuando lo revisas no aparecen las annotations (la pagina con el fondo blanco) pero si están ahí
-
-* Autoselect host or manually, next
-
-* (optional add ssh key), next
-
-* Click "Install cluster" and Wait
-
-
-
-
-
-
-
-3) Check argocd, it should install the demo hello app
-
-
-
-siteconfig
----------------
-
-VPN
-
-
-
-
-
-appliance
-----------------
-
-
-Configura DNS api.<name> and *.apps.<name>  and api-int
-
-
-
-
-poner el vars_secret. pull secret cuidado con las comas simples, tiene que ser asi: pullSecret: '{"auths":{<redacted>}}'
-
-revisar vars.yaml (ip, dns name...).
-
-
-
-log into registry.redhat.io en usuario y root
-
-
-
-
-necistas bastante espacio de disco (en mi prueba 170GB), también tener en cuenta que la iso es de 32 GB:
-appliance_assets/build-image/output on  main [!] 
-❯ ls -lh
-total 61G
--rw-r--r--. 1 root root 32G Aug  5 09:57 appliance.iso
--rw-r--r--. 1 root root 29G Aug  5 09:47 appliance.raw
-
-
-
-
-install openshift-install desde  https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/ pero estate seguro de que es la misma versión de openshift-install que la de la imagen (ocp_release_version)
-
-
-
-
-OPTIONAL IP STATIC (in appliance_assets/build-config-iso/config/agent-config-template.yaml)
-//
-hosts:
-  - hostname: sno-appliance
-    interfaces:
-      - name: eth0
-        macAddress: 84:8b:cd:4d:15:37
-    networkConfig:
-      interfaces:
-        - name: eth0
-          type: ethernet
-          state: up
-          mac-address: 84:8b:cd:4d:15:37
-          ipv4:
-            enabled: true
-            address:
-              - ip: 192.168.140.3
-                prefix-length: 24
-            dhcp: false
-      dns-resolver:
-        config:
-          server:
-            - 8.8.8.8
-      routes:
-        config:
-          - destination: 0.0.0.0/0
-            next-hop-address: 192.168.140.1
-            next-hop-interface: eth0
-            table-id: 254
-
-//
-
-
-*** NOTE IF YOU CONFIGURE STATIC IP YOU NEED TO HAVE nmstatectl INSTALLED IN YOUR LAPTOP to check the config while creating the image-config iso. If you use Fedora do it by installing sudo nmstate package
-
-
-
-
-
-OPTIONAL COMPOSABLE (in appliance_assets/build-config-iso/config/install-config-template.yaml)
-//
-capabilities:
-  baselineCapabilitySet: None
-  additionalEnabledCapabilities:
-  - NodeTuning
-  - OperatorLifecycleManager
-  - marketplace
-  - Ingress
-
-//
-
-
-
-crea la imagen e iso antes de comenzar la demo con el script 00-build-appliance.sh
-
-NOTE: Takes time and needs reliable network (descarga 30GB en imagenes), 
-
-Si quieres puedes ver el log en `sudo podman logs -f 8fc71e1c987d` siendo el id del container, este es un ejemplo del log final de la generación del RAW image:
-❯ sudo podman logs -f 8fc71e1c987d
-WARNING OCP release version 4.16.4 is not supported. Latest supported version: 4.15. 
-INFO Successfully downloaded appliance base disk image 
-INFO Successfully extracted appliance base disk image 
-INFO Successfully pulled container registry image 
-INFO Successfully pulled OpenShift 4.16.4 release images required for bootstrap 
-INFO Successfully pulled OpenShift 4.16.4 release images required for installation 
-INFO Successfully generated data ISO              
-INFO Successfully fetched openshift-install binary 
-INFO Successfully downloaded CoreOS ISO           
-INFO Successfully generated recovery CoreOS ISO   
-INFO Successfully generated appliance disk image  
-INFO Time elapsed: 33m13s                         
-INFO                                              
-INFO Appliance disk image was successfully created in assets directory: assets/appliance.raw 
-INFO                                              
-INFO Create configuration ISO using: openshift-install agent create config-image 
-INFO Download openshift-install from: https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/4.16.4/openshift-install-linux.tar.gz 
-
-
-
-
-demo start:
-- deploy the image with the base usb
-- deploy config
-- check ip, check /etc/assistecd/ 
-- when finish: check apps, check operators
-
-
-
-
--> se puede ver el progreso con `watch "oc --kubeconfig image-config/auth/kubeconfig get pod --all-namespaces"` y también en los containers de root (podman logs y también crictl logs)
-
-also oc --kubeconfig output/image-config/auth/kubeconfig get clusterversion and also "get co"
