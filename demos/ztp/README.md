@@ -23,11 +23,11 @@ To address these challenges, we can prepare all deployment assets in advance to 
 
 ### Recommended Hardware
 
-To be determined (TBD).
+(TBD).
 
 ### Required Connectivity
 
-To be determined (TBD).
+(TBD).
 
 ## Preparation and Requirements
 
@@ -117,7 +117,7 @@ For multiple OpenShift clusters, create a different Configuration ISO for each o
 
 ### Demo Recording
 
-To be determined (TBD).
+(TBD).
 
 ## Conclusion
 
