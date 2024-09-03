@@ -126,3 +126,26 @@ demo start:
 -> se puede ver el progreso con `watch "oc --kubeconfig image-config/auth/kubeconfig get pod --all-namespaces"` y también en los containers de root (podman logs y también crictl logs)
 
 also oc --kubeconfig output/image-config/auth/kubeconfig get clusterversion and also "get co"
+
+
+
+
+
+
+
+base
+
+reboot
+
+Agent Install (config ISO)
+
+reboot
+
+ostree-0  (upgrade ?)
+
+reboot 
+
+recovery reinstall cluster  (it also appears ostree-1 and if you click it works)
+
+
+

@@ -10,4 +10,4 @@ Explore the following demos to see OpenShift in action:
 
 ## Additional Resources
 
-For more edge computing demos beyond OpenShift, check out our [Red Hat Device Edge and Ansible Automation Platform demos](https://github.com/luisarizmendi/rhde-aap-gitops-demo).
+For more edge computing demos beyond OpenShift, check out [Red Hat Device Edge and Ansible Automation Platform demos](https://github.com/luisarizmendi/rhde-aap-gitops-demo).
