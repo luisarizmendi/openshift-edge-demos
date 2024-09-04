@@ -49,6 +49,7 @@ In this section, we pre-configure the cluster in Red Hat Advanced Cluster Manage
 
 **Deployment Workflow:**
 
+0. Configure DNS
 1. Configure the inventory and OpenShift cluster in ACM.
 2. Create and download the "Discovery ISO" from ACM.
 3. Boot the device from the "Discovery ISO."
@@ -71,6 +72,7 @@ Additionally, we can eliminate the need for on-site personnel to boot the device
 
 **High-Level Workflow:**
 
+0. Configure DNS
 1. Configure ACM and create the OpenShift deployment objects.
 2. Store these objects in a Git repository.
 3. ACM powers on the device using the BMC.
@@ -96,6 +98,7 @@ This method involves two key assets:
 
 **Simplified Workflow:**
 
+0. Configure DNS
 1. Create the Base Image (can be done on your laptop; ACM is not required).
 2. Create the Configuration ISO.
 3. Burn the Base RAW Image onto the device or boot from the Base Image ISO.
