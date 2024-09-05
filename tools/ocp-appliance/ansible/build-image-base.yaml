@@ -28,7 +28,7 @@
     #- name: Generate appliance config template
     #  ansible.builtin.shell: |
     #    export REGISTRY_AUTH_FILE=~/.config/containers/auth.json
-    #    podman run --rm -it --pull newer -v ../tmp-files/image-base:/assets:Z {{ appliance_image_preinstall }} generate-config
+    #    podman run --rm -it --pull newer -v ../tmp-files/image-base:/assets:Z {{ appliance_image }} generate-config
 
     - name: Ensure openshift manifests directory exists
       ansible.builtin.file:
@@ -107,13 +107,13 @@
     - name: Clean
       become: true
       ansible.builtin.shell: |
-        podman run --rm -it -v ../tmp-files/image-base:/assets:Z {{ appliance_image_preinstall }} clean
+        podman run --rm -it -v ../tmp-files/image-base:/assets:Z {{ appliance_image }} clean
       register: build_result
 
     - name: Build the appliance disk image raw
       become: true
       ansible.builtin.shell: |
-        podman run --rm -it --pull newer --privileged --net=host -v ../tmp-files/image-base:/assets:Z {{ appliance_image_preinstall }} build
+        podman run --rm -it --pull newer --privileged --net=host -v ../tmp-files/image-base:/assets:Z {{ appliance_image }} build
       register: build_result
 
     - name: Copy ISO post deployment script
@@ -124,7 +124,7 @@
     - name: Build the appliance ISO
       become: true
       ansible.builtin.shell: |
-        podman run --rm -it --privileged -v ../tmp-files/image-base:/assets:Z {{ appliance_image_preinstall }} build iso --post-script {{ iso_post_deployment_script | basename }} --target-device {{ appliance_target_dev }}
+        podman run --rm -it --privileged -v ../tmp-files/image-base:/assets:Z {{ appliance_image }} build iso --post-script {{ iso_post_deployment_script | basename }} --target-device {{ appliance_target_dev }}
       register: build_result
 
     - name: Move the appliance.raw to the output directory 
@@ -149,7 +149,7 @@
 
               sudo podman run --rm -it --privileged --net=host \
                 -v ../tmp-files/image-base:/assets \
-                --entrypoint virt-resize {{ appliance_image_preinstall }} \
+                --entrypoint virt-resize {{ appliance_image }} \
                 --expand /dev/sda4 /assets/appliance.raw {{ appliance_target_dev }} --no-sparse
 
           You can also use directly the RAW file as VM drive.

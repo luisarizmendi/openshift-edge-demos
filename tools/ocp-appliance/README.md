@@ -42,7 +42,7 @@ Before running the script, ensure the values in `ansible/vars.yaml` are correct 
 
 - **Key Variables:**
   - `appliance_assets_image` and `appliance_assets_config_iso`: Directories for OpenShift appliance customizations.
-  - `ocp_release_version`: OpenShift release version (tested with 4.16.4).
+  - `ocp_release_version`: OpenShift release version (tested with 4.16.9).
   - `core_user_password`: Password for the Core user.
 
 Also, check the customization variables for the Configuration ISO, such as the appliance device, system IP (Rendezvous IP in SNO), DNS base domain, and cluster name.

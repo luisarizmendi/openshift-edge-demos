@@ -1,3 +1,61 @@
+# Section 1 - Assisted Installer with Advanced Cluster Management
+
+## Recording
+TBD
+
+
+## Environment review
+
+
+
+## Demo steps
+
+### 0. Configure DNS
+
+### 1. Configure the inventory and OpenShift cluster in ACM.
+
+### 2. Create and download the "Discovery ISO" from ACM.
+
+### 3. Boot the device from the "Discovery ISO."
+
+### 4. Approve the device in ACM.
+
+### 5. Launch the OpenShift cluster deployment from ACM.
+
+
+
+
+
+## Closing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
