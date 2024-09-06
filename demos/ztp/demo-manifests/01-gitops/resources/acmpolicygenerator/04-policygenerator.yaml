@@ -1,0 +1,33 @@
+apiVersion: policy.open-cluster-management.io/v1
+kind: PolicyGenerator
+metadata:
+  name: "common"
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+policyDefaults:
+    namespace: demo-ztp-gui-1
+    remediationAction: enforce
+    severity: high
+    namespaceSelector:
+        exclude:
+            - kube-*
+        include:
+            - '*'
+    evaluationInterval:
+        compliant: 10m
+        noncompliant: 10s
+policies:
+    - name: demo-ztp-gui-operators
+      policyAnnotations:
+        ran.openshift.io/ztp-deploy-wave: "4"
+      disabled: false
+      manifests:
+        - path: policies
+policySets:
+  - name: "demo-ztp-gui-policies"
+    policies: 
+    - demo-ztp-gui-operators
+    placement: 
+    - demo-ztp-gui-placement-policy
+    generatePolicySetPlacement: true

@@ -6,7 +6,7 @@ metadata:
   name: "demo-ztp-gitops"
   namespace: "demo-ztp-gitops"
 spec:
-  baseDomain: "sandbox2707.opentlc.com"
+  baseDomain: "sandbox184.opentlc.com"
   pullSecretRef:
     name: "demo-ztp-gitops-pull-secret"
   clusterImageSetNameRef: "img4.16.5-multi-appsub"
@@ -44,7 +44,7 @@ spec:
       - cidr: 10.128.0.0/14
         hostPrefix: 23
     machineNetwork:
-      - cidr: 192.168.123.0/24
+      - cidr: 192.168.140.0/24
     serviceNetwork:
       - 172.30.0.0/16
     #additionalNTPSources:
@@ -56,12 +56,12 @@ spec:
     #crTemplates:
     #  KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
     nodes:
-      - hostName: "sno-gitops.sandbox2707.opentlc.com"
+      - hostName: "sno-gitops.sandbox187.opentlc.com"
         role: "master"
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://83.52.27.104:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890"
+        bmcAddress: "redfish-virtualmedia+http://192.168.1.40:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890"
         bmcCredentialsName: 
           name: "demo-ztp-gitops-bmc-secret-1"
         bootMACAddress: "52:54:00:fa:5f:8f"
@@ -112,34 +112,38 @@ spec:
         #      ]
         #    }
         #  }
-        #nodeNetwork:
-        #  interfaces:
-        #    - name: eno1
-        #      macAddress: "AA:BB:CC:DD:EE:11"
-        #  config:
-        #    interfaces:
-        #      - name: eno1
-        #        type: ethernet
-        #        state: up
-        #        ipv4:
-        #          enabled: false
-        #        ipv6:
-        #          enabled: true
-        #          address:
-        #          # For SNO sites with static IP addresses, the node-specific,
-        #          # API and Ingress IPs should all be the same and configured on
-        #          # the interface
-        #          - ip: 1111:2222:3333:4444::aaaa:1
-        #            prefix-length: 64
-        #    dns-resolver:
-        #      config:
-        #        search:
-        #        - example.com
-        #        server:
-        #        - 1111:2222:3333:4444::2
-        #    routes:
-        #      config:
-        #      - destination: ::/0
-        #        next-hop-interface: eno1
-        #        next-hop-address: 1111:2222:3333:4444::1
-        #        table-id: 254
+        nodeNetwork:
+          interfaces:
+            - name: eth0
+              macAddress: "52:54:00:fa:5f:8f"
+          config:
+            interfaces:
+              - name: eth0
+                type: ethernet
+                state: up
+                ipv4:
+                  enabled: false
+                  address:
+                    - ip: 192.168.140.3
+                      prefix-length: 24
+                  dhcp: false
+                ipv6:
+                  enabled: false
+                  #address:
+                  ## For SNO sites with static IP addresses, the node-specific,
+                  ## API and Ingress IPs should all be the same and configured on
+                  ## the interface
+                  #- ip: 1111:2222:3333:4444::aaaa:1
+                  #  prefix-length: 64
+            dns-resolver:
+              config:
+                search:
+                - example.com
+                server:
+                - 8.8.8.8
+            routes:
+              config:
+              - destination: 0.0.0.0/0
+                next-hop-address: 192.168.140.1
+                next-hop-interface: eth0
+                table-id: 254

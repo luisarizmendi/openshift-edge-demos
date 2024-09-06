@@ -1,32 +1,22 @@
-apiVersion: cluster.open-cluster-management.io/v1beta2
-kind: ManagedClusterSetBinding
-metadata:
-  name: global
-  namespace: ztp-common
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-spec:
-  clusterSet: global
 ---
 apiVersion: cluster.open-cluster-management.io/v1beta2
 kind: ManagedClusterSetBinding
 metadata:
-  name: global
-  namespace: ztp-group
   annotations:
     argocd.argoproj.io/sync-wave: "1"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: demo-ztp-gitops
+  namespace: demo-ztp-gitops-1
 spec:
-  clusterSet: global
+  clusterSet: demo-ztp-gitops
 ---
 apiVersion: cluster.open-cluster-management.io/v1beta2
 kind: ManagedClusterSetBinding
 metadata:
-  name: global
-  namespace: ztp-site
   annotations:
     argocd.argoproj.io/sync-wave: "1"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: demo-ztp-gitops
+  namespace: openshift-gitops
 spec:
-  clusterSet: global
+  clusterSet: demo-ztp-gitops

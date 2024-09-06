@@ -1,6 +1,9 @@
 generators:
-- 02-policygenerator.yaml
+- 04-policygenerator.yaml
 
 resources:
 - 00-ns.yaml
+- 00-managedclusterset.yaml
 - 01-managedclustersetbinding.yaml
+- 02-placement.yaml
+- 03-gitops-clusters.yaml

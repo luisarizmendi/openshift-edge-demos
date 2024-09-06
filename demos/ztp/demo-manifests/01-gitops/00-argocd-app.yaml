@@ -1,22 +1,33 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
   name: demo-ztp-gitops-global
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/managed-by: demo-ztp-gitops
 spec:
-  project: default
-
-  source:
-    repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
-    targetRevision: main
-    path: demos/ztp/demo-manifests/01-gitops/resources/argocd/
-
-  destination:
-    server: 'https://kubernetes.default.svc'
-
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - git:
+        repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+        revision: main
+        directories:
+        - path: demos/ztp/demo-manifests/01-gitops/resources/argocd/
+  template:
+    metadata:
+      name: "{{`{{.path.basename}}`}}-{{ .name }}"
+      labels:
+        app.kubernetes.io/managed-by: demo-placement-global
+    spec:
+      project: default
+      source:
+        repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+        targetRevision: main
+        path: "{{`{{.path.path}}`}}"
+      destination:
+        server: 'https://kubernetes.default.svc'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true

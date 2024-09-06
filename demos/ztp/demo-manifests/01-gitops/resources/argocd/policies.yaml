@@ -3,9 +3,6 @@ kind: Application
 metadata:
   name: demo-ztp-policies
   namespace: openshift-gitops
-  annotations:
-    argocd.argoproj.io/sync-wave: "15"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   destination:
     server: https://kubernetes.default.svc
