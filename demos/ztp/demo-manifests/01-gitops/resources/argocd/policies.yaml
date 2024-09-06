@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: demo-ztp-policies
+  name: demo-ztp-gitops-policies
   namespace: openshift-gitops
 spec:
   destination:

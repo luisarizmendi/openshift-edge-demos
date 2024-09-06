@@ -57,6 +57,7 @@ To assist with configuring your local VPN endpoint, additional Ansible playbooks
 1. Install the required packages on the OpenWRT router:
 
    ```bash
+   opkg update
    opkg install strongswan-minimal strongswan-mod-aes strongswan-mod-hmac strongswan-mod-sha1 kmod-ip-vti vti luci-proto-vti strongswan-mod-kdf
    ```
 
@@ -75,6 +76,7 @@ To assist with configuring your local VPN endpoint, additional Ansible playbooks
 6. Restart the necessary services on the router:
 
    ```bash
+   /etc/init.d/ipsec enable
    /etc/init.d/ipsec restart
    /etc/init.d/firewall restart
    /etc/init.d/network restart

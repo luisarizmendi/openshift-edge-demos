@@ -3,8 +3,8 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   labels:
-    app.kubernetes.io/managed-by: demo-ztp-gui-apps-global
-  name: demo-ztp-gui-apps-global
+    app.kubernetes.io/managed-by: demo-ztp-gui-apps
+  name: demo-ztp-gui-apps
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "23"
@@ -30,7 +30,7 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/managed-by: demo-ztp-gui-apps-global
+        app.kubernetes.io/managed-by: demo-ztp-gui-apps
       name: '{{.path.basename}}-{{.name}}'
     spec:
       destination:
