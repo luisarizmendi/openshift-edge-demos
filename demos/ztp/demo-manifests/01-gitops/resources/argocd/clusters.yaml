@@ -7,7 +7,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: clusters-sub
-  project: ztp-app-project
+  project: default
   source:
     path: demos/ztp/demo-manifests/01-gitops/resources/siteconfig
     repoURL: https://github.com/luisarizmendi/openshift-edge-demos

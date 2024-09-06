@@ -7,7 +7,7 @@ spec:
   destination:
     server: https://kubernetes.default.svc
     namespace: policies-sub
-  project: policy-app-project
+  project: default
   source:
     path: demos/ztp/demo-manifests/01-gitops/resources/acmpolicygenerator
     repoURL: https://github.com/luisarizmendi/openshift-edge-demos
