@@ -93,7 +93,8 @@
             option 'input' 'ACCEPT'
             option 'output' 'ACCEPT'
             option 'forward' 'ACCEPT'
-            option 'mtu_fix' '1'
+            option 'mtu_fix' '1'                     
+            list network '{{ interface_name }}'
           
           config 'forwarding'
             option 'src' 'lan'
