@@ -4,7 +4,7 @@ apiVersion: ran.openshift.io/v1
 kind: SiteConfig
 metadata:
   name: "demo-ztp-gitops"
-  namespace: "demo-ztp-gitops"
+  namespace: "demo-ztp-gitops-1"
 spec:
   baseDomain: "sandbox184.opentlc.com"
   pullSecretRef:
