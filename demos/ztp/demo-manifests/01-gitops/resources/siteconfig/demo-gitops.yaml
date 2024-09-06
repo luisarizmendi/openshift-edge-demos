@@ -121,6 +121,7 @@ spec:
               - name: eth0
                 type: ethernet
                 state: up
+                mac-address: 52:54:00:fa:5f:8f
                 ipv4:
                   enabled: false
                   address:
