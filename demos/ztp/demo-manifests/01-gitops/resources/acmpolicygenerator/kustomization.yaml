@@ -1,5 +1,5 @@
-generators:
-- 04-policygenerator.yaml
+#generators:
+#- 04-policygenerator.yaml
 
 resources:
 - 00-ns.yaml
