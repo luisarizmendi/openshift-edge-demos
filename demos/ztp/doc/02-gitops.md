@@ -64,7 +64,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: demo-ztp-gitops-bmc-secret-1
-  namespace: demo-ztp-gitops-1
+  namespace: sno-gitops
 data:
   password: Ym9iCg==
   username: Ym9iCg==
@@ -80,7 +80,7 @@ kind: Secret
 apiVersion: v1
 metadata:
   name: demo-ztp-gitops-pull-secret
-  namespace: demo-ztp-gitops-1
+  namespace: sno-gitops
 data:
   '.dockerconfigjson': '<pull_secret in one line base64 > '
 type: 'kubernetes.io/dockerconfigjson'

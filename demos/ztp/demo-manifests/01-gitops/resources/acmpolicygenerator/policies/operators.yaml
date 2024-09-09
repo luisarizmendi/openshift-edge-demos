@@ -2,7 +2,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
   name: demo-ztp-gitops-operators
-  namespace: demo-ztp-gitops-1
+  namespace: sno-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "20"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true

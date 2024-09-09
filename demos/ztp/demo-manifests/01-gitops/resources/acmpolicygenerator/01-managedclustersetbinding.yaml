@@ -6,7 +6,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "18"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: demo-ztp-gitops
-  namespace: demo-ztp-gitops-1
+  namespace: sno-gitops
 spec:
   clusterSet: demo-ztp-gitops
 ---

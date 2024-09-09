@@ -19,7 +19,7 @@ apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
   name: demo-ztp-gitops-placement-policy
-  namespace: demo-ztp-gitops-1
+  namespace: sno-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "2"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
