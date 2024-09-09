@@ -121,21 +121,12 @@ spec:
               - name: eth0
                 type: ethernet
                 state: up
-                mac-address: 52:54:00:fa:5f:8f
                 ipv4:
-                  enabled: false
+                  enabled: true
                   address:
                     - ip: 192.168.140.3
                       prefix-length: 24
                   dhcp: false
-                ipv6:
-                  enabled: false
-                  #address:
-                  ## For SNO sites with static IP addresses, the node-specific,
-                  ## API and Ingress IPs should all be the same and configured on
-                  ## the interface
-                  #- ip: 1111:2222:3333:4444::aaaa:1
-                  #  prefix-length: 64
             dns-resolver:
               config:
                 search:
