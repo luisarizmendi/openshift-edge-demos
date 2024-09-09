@@ -6,27 +6,26 @@ TBD
 
 ## Environment review
 
+In order to simplify the demo, the environment has been prepared to minimize the steps that does not add anything relevant to what the demo tries to show (zero-touch provisioning), that's why these objects have been already created in the environment for you:
 
+* ClusterSet and ClusterSetBinding: To host the cluster that you are going to create in a differenciated group
+* Placement: To select the clusters where to deploy applications and ACM policies under the new ClusterSet
+* Policy and PolicySet: That are used to deploy an example operator (`openshift-compliance` in this case)
+* GitOpsServer and ApplicationSet: In order to automatically deploy the `hello-world` test application in the new cluster when it is imported in ACM.
+
+
+## Preparation
+
+Remeber to double-check that [all the pre-requirements are met](00-preparation.md) before jumping into the demo steps.
 
 ## Demo steps
 
-### 0. Configure DNS
+
+
 
 ### 1. Configure the inventory and OpenShift cluster in ACM.
 
-### 2. Create and download the "Discovery ISO" from ACM.
-
-### 3. Boot the device from the "Discovery ISO."
-
-### 4. Approve the device in ACM.
-
-### 5. Launch the OpenShift cluster deployment from ACM.
-
-
-
-
-
-## Closing
+Although the GUI can be used to create the cluster and the related host inventory at once, in order to make the parts more clear to the audience, we will be creating first the host inventory and the we will use that inventory to create a new OpenShift Cluster.
 
 
 
@@ -34,61 +33,12 @@ TBD
 
 
 
+* Add env. name, localtion, pull secret
 
+* (optional set static IP)
 
+* Click Create
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-recordar que tarda tiempo los demo-ztp-cluster y demo-ztp policies porque se está aplicando el path
-
-
-
-
-crear namespace "demo-ztp" con los secrets
-
-cat ~/pull-secret | base64 -w0
-
-
-
-
-
-check that new argocd repo pod is generated and not in pedning because no resources
-
-
-
-sobre las VMs:
-libvirt con current and maximum memory para tener mas memoria en la VM
-
-
-
-
-DNS config -> se puede hacer en AWS
-
-
-
-
-GUI
----------------
 
 
 
@@ -99,18 +49,6 @@ si tiene 16GB de memoria justo, puede que exista un tiempo despues de incluir el
 
 
 
-
-steps:
-
-1) create dns records
-
-2) Add hosts to inventory > Create infrastructure environment
-
-* Add env. name, localtion, pull secret
-
-* (optional set static IP)
-
-* Click Create
 
 
 (NOTE: puedes encontrar un error trtansitorio en la web de que ciertos componentes no existen o no están corriendo correctamente. espera un minuto a ver si se van) algo como esto:
@@ -198,6 +136,92 @@ spec:
     - name: "eth0"
       macAddress: "84:8b:cd:4d:15:37"
 
+
+
+
+### 2. Create and download the "Discovery ISO" from ACM.
+
+
+
+### 3. Boot the device from the "Discovery ISO."
+
+
+
+### 4. Approve the device in ACM.
+
+
+
+### 5. Launch the OpenShift cluster deployment from ACM.
+
+
+
+
+
+
+
+## Closing
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+recordar que tarda tiempo los demo-ztp-cluster y demo-ztp policies porque se está aplicando el path
+
+
+
+
+crear namespace "demo-ztp" con los secrets
+
+cat ~/pull-secret | base64 -w0
+
+
+
+
+
+check that new argocd repo pod is generated and not in pedning because no resources
+
+
+
+sobre las VMs:
+libvirt con current and maximum memory para tener mas memoria en la VM
+
+
+
+
+DNS config -> se puede hacer en AWS
+
+
+
+
+GUI
+---------------
 
 
 

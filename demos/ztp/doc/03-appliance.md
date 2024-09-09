@@ -1,3 +1,26 @@
+# Section 3 - OpenShift Appliance
+
+## Recording
+TBD
+
+
+## Environment review
+
+For this section you don't need the Central Site to perform the OpenShift Zero-Touch Provisioning, since we will be generating the OpenShift Appliance Image in the local machine (ie. laptop)
+
+## Preparation
+
+Remeber to double-check that [all the pre-requirements are met](00-preparation.md) before jumping into the demo steps.
+
+
+## Demo steps
+
+
+### 1. Config
+
+
+
+
 
 appliance
 ----------------

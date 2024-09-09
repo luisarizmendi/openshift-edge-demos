@@ -59,6 +59,15 @@ If using a VPN and deploying ACM on AWS, the [`tools` section](../../../tools) i
   >
   > You can test the VPN by trying to SSH to one OpenShift Node's internal IP address from your Laptop/System.
 
+#### DNS Configuration
+
+You need to configure two entries for each cluster that you want to add:
+
+* `api.<cluster name>.<basedomain>`
+* `*.apps.<cluster name>.<basedomain>`
+
+In the example we will name the new cluster for this section as `sno-gui`.
+
 ### 2 - GitOps Provisioning with Advanced Cluster Management
 
 #### Network Connectivity between Edge and Central Site
@@ -70,6 +79,16 @@ If you don't have a physical device with BMC, you can deploy your Edge device (S
 
 In the [`tools` section](../../../tools), you can find several scripts that [enable a Virtual BMC in your KVM host](../../../tools/virtual-bmc/README.md) and others that help [create the SNO Virtual Machine](../../../tools/libvirt-sno/README.md) and the associated network and storage configuration in KVM.
 
+#### DNS Configuration
+
+You need to configure two entries for each cluster that you want to add:
+
+* `api.<cluster name>.<basedomain>`
+* `*.apps.<cluster name>.<basedomain>`
+
+In the example we will name the new cluster for this section as `sno-gitops`.
+
+
 ### 3 - OpenShift Appliance
 
 #### Base and Config Images Creation
@@ -79,3 +98,12 @@ I also recommend creating the associated USB keys with those images if you plan 
 
 #### Single Node OpenShift Virtual Machine
 You can also use the script for [creating the SNO Virtual Machine](../../../tools/libvirt-sno/README.md) and the associated resources in KVM if you need to deploy the OpenShift Appliance in a Virtual Machine.
+
+#### DNS Configuration
+
+You need to configure two entries for each cluster that you want to add:
+
+* `api.<cluster name>.<basedomain>`
+* `*.apps.<cluster name>.<basedomain>`
+
+In the example we will name the new cluster for this section as `ocp-appliance`.

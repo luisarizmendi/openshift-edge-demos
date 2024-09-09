@@ -20,7 +20,7 @@ disk_size_gb: 200
 
 ## Config generation
 appliance_name: "ocp-appliance"
-appliance_basedomain: "sandbox184.opentlc.com"
+appliance_basedomain: "sandbox2917.opentlc.com"
 appliance_target_dev: /dev/sda
 
 appliance_rendezvous: 192.168.140.3
