@@ -33,7 +33,7 @@ In the `example-customizations` directory, you'll find two subdirectories:
 #### Configuration ISO Customizations
 You'll find one example directory for Config ISO customizations, but you will need a separate directory for each OpenShift cluster.
 - **`agent-config-template.yaml`:** Template for the `agent-config.yaml` file, useful for network customizations (e.g., static IP).
-- **`install-config-template.yaml`:** Template for the `install-config.yaml` file, allowing modifications such as adjusting baseline capabilities.
+- **`install-config-template.yaml`:** Template for the `install-config.yaml` file, allowing modifications such as adjusting baseline capabilities (to reduce the required Hardware footprint).
 - **`manifests` directory:** Contains manifests to embed in a specific cluster.
 
 ### 2. Run the Script to Create the Images

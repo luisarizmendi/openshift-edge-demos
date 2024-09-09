@@ -1,4 +1,28 @@
 
+"Warning alert:Central Infrastructure Management is not running."
+
+"Metal3 operator is not configured
+The Metal3 operator is not configured correctly, which prevents it from finding bare metal hosts in this namespace. Refer to the documentation for the first time setup steps."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 DNS config

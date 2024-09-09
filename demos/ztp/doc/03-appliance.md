@@ -6,113 +6,34 @@ TBD
 
 ## Environment review
 
-For this section you don't need the Central Site to perform the OpenShift Zero-Touch Provisioning, since we will be generating the OpenShift Appliance Image in the local machine (ie. laptop)
+For this section you don't need the Central Site to perform the OpenShift Zero-Touch Provisioning, since we will be generating the OpenShift Appliance Image using a single Linux system (ie. laptop).
+
 
 ## Preparation
 
 Remeber to double-check that [all the pre-requirements are met](00-preparation.md) before jumping into the demo steps.
 
+While preparing the OpenShift Appliance Images you will be able to setup static IPs (in `agent-config.yaml`) and also select the `capabilities` (in `install-config.yaml`) that you want to enable as part of the Cluster (ie. if you want to demonstrate how to save resources).
+
 
 ## Demo steps
 
+### 1. Deploying the Base Image
 
-### 1. Config
-
-
-
-
-
-appliance
-----------------
-
-
-Configura DNS api.<name> and *.apps.<name>  and api-int
-
-
-
-
-poner el vars_secret. pull secret cuidado con las comas simples, tiene que ser asi: pullSecret: '{"auths":{<redacted>}}'
-
-revisar vars.yaml (ip, dns name...).
-
-
-
-log into registry.redhat.io en usuario y root
-
-
-
-
-necistas bastante espacio de disco (en mi prueba 170GB), también tener en cuenta que la iso es de 32 GB:
-appliance_assets/build-image/output on  main [!] 
-❯ ls -lh
-total 61G
--rw-r--r--. 1 root root 32G Aug  5 09:57 appliance.iso
--rw-r--r--. 1 root root 29G Aug  5 09:47 appliance.raw
-
-
-
-
-install openshift-install desde  https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/ pero estate seguro de que es la misma versión de openshift-install que la de la imagen (ocp_release_version)
-
-
-
-
-OPTIONAL IP STATIC (in appliance_assets/build-config-iso/config/agent-config-template.yaml)
-//
-hosts:
-  - hostname: sno-appliance
-    interfaces:
-      - name: eth0
-        macAddress: 84:8b:cd:4d:15:37
-    networkConfig:
-      interfaces:
-        - name: eth0
-          type: ethernet
-          state: up
-          mac-address: 84:8b:cd:4d:15:37
-          ipv4:
-            enabled: true
-            address:
-              - ip: 192.168.140.3
-                prefix-length: 24
-            dhcp: false
-      dns-resolver:
-        config:
-          server:
-            - 8.8.8.8
-      routes:
-        config:
-          - destination: 0.0.0.0/0
-            next-hop-address: 192.168.140.1
-            next-hop-interface: eth0
-            table-id: 254
-
-//
-
-
-*** NOTE IF YOU CONFIGURE STATIC IP YOU NEED TO HAVE nmstatectl INSTALLED IN YOUR LAPTOP to check the config while creating the image-config iso. If you use Fedora do it by installing sudo nmstate package
+> **NOTE**
+>
+> Remember that the Base and the Config image has been created during the preparation phase in order to save time. Check the [preparations doc](00-preparation.md) and the OpenShift [Appliance Ansible playbooks](../../../tools/ocp-appliance/README.md).
 
 
 
 
 
-OPTIONAL COMPOSABLE (in appliance_assets/build-config-iso/config/install-config-template.yaml)
-//
-capabilities:
-  baselineCapabilitySet: None
-  additionalEnabledCapabilities:
-  - NodeTuning
-  - OperatorLifecycleManager
-  - marketplace
-  - Ingress
-
-//
 
 
 
-crea la imagen e iso antes de comenzar la demo con el script 00-build-appliance.sh
 
-NOTE: Takes time and needs reliable network (descarga 30GB en imagenes), 
+
+
 
 Si quieres puedes ver el log en `sudo podman logs -f 8fc71e1c987d` siendo el id del container, este es un ejemplo del log final de la generación del RAW image:
 ❯ sudo podman logs -f 8fc71e1c987d
