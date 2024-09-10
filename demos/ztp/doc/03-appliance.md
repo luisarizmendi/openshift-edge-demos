@@ -13,7 +13,8 @@ For this section you don't need the Central Site to perform the OpenShift Zero-T
 
 Remeber to double-check that [all the pre-requirements are met](00-preparation.md) before jumping into the demo steps.
 
-While preparing the OpenShift Appliance Images you will be able to setup static IPs (in `agent-config.yaml`) and also select the `capabilities` (in `install-config.yaml`) that you want to enable as part of the Cluster (ie. if you want to demonstrate how to save resources).
+While preparing the OpenShift Appliance Images ("Base Image" and "Config Image") you will be able to setup static IPs (in `agent-config.yaml`) and also select the `capabilities` (in `install-config.yaml`) that you want to enable as part of the Cluster (ie. if you want to demonstrate how to save resources).
+
 
 
 ## Demo steps
@@ -21,8 +22,35 @@ While preparing the OpenShift Appliance Images you will be able to setup static 
 ### 1. Deploying the Base Image
 
 > **NOTE**
->
 > Remember that the Base and the Config image has been created during the preparation phase in order to save time. Check the [preparations doc](00-preparation.md) and the OpenShift [Appliance Ansible playbooks](../../../tools/ocp-appliance/README.md).
+
+Boot your device from the Base Image
+
+xxxx
+
+
+
+
+> **IMPORTANT**  
+> There is currently an [issue](https://issues.redhat.com/browse/MGMT-18693) with the USB partition table when created with the OpenShift Appliance ISOs. This issue may prevent your system from booting directly from it. If you encounter this problem, consider using the RAW image (for both physical and virtual systems) or deploying the OpenShift Appliance in a VM (mounting with Virtual Media is not affected).
+
+
+
+
+### 2. Mount the Config Image 
+
+
+
+
+
+
+
+
+
+
+### 3. Test your OpenShift Appliance
+
+
 
 
 

@@ -1,11 +1,51 @@
+# Section 2 - GitOps with ACM and BMC
+
+## Recording
+TBD
+
+
+## Environment review
+
+
+
+
+acordarse del virtual bmc habilitado y de la vpn antes de lanzar 
+
+
+
+## Preparation
+
+Remeber to double-check that [all the pre-requirements are met](00-preparation.md) before jumping into the demo steps.
+
+
+## Demo steps
+
+### 1. De
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 "Warning alert:Central Infrastructure Management is not running."
 
 "Metal3 operator is not configured
 The Metal3 operator is not configured correctly, which prevents it from finding bare metal hosts in this namespace. Refer to the documentation for the first time setup steps."
-
-
-
 
 
 
