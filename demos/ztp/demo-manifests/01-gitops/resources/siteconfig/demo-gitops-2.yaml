@@ -3,8 +3,8 @@
 apiVersion: ran.openshift.io/v1
 kind: SiteConfig
 metadata:
-  name: "sno-2-gitops"
-  namespace: "sno-gitops"
+  name: "sno-gitops-2"
+  namespace: "sno-gitops-2"
 spec:
   baseDomain: "sandbox382.opentlc.com"
   pullSecretRef:
