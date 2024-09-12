@@ -8,4 +8,3 @@ metadata:
 spec:
   provisioningNetwork: "Disabled"
   watchAllNamespaces: true
-  disableVirtualMediaTLS: true
