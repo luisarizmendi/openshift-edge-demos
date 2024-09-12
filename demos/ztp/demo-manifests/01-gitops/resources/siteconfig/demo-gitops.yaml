@@ -3,8 +3,8 @@
 apiVersion: ran.openshift.io/v1
 kind: SiteConfig
 metadata:
-  name: "sno-gitops"
-  namespace: "sno-gitops"
+  name: "sno-gitops-1"
+  namespace: "sno-gitops-1"
 spec:
   baseDomain: "sandbox382.opentlc.com"
   pullSecretRef:
@@ -39,7 +39,7 @@ spec:
     # extraManifestPath: sno-extra-manifest
     clusterLabels:
       common: true
-      sites : "sno-gitops"
+      sites : "sno-gitops-1"
     clusterNetwork:
       - cidr: 10.128.0.0/14
         hostPrefix: 23
