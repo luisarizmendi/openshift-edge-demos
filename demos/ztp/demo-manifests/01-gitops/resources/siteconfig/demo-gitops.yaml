@@ -5,6 +5,9 @@ kind: SiteConfig
 metadata:
   name: "sno-gitops"
   namespace: "sno-gitops"
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   baseDomain: "sandbox382.opentlc.com"
   pullSecretRef:
@@ -61,7 +64,7 @@ spec:
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://192.168.1.40:8000/redfish/v1/Systems/6e807c15-5970-4f4f-97a9-a8c3ad0f1a7d"
+        bmcAddress: "redfish-virtualmedia+http://192.168.1.40:8000/redfish/v1/Systems/a701e2dc-7f31-44ab-886f-aef49159654b"
         bmcCredentialsName: 
           name: "demo-ztp-gitops-bmc-secret-1"
         bootMACAddress: "52:54:00:fa:5f:00"

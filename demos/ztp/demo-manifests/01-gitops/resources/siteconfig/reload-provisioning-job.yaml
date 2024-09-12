@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: reload-provisioning-job
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  template:
+    spec:
+      serviceAccountName: openshift-gitops-argocd-application-controller
+      containers:
+      - name: bootstrap-environment
+        image: quay.io/openshift/origin-cli:latest  
+        command: ["/bin/sh", "-c"]
+        args:
+        - |
+          oc delete provisioning provisioning-configuration -n kube-system
+
+      restartPolicy: Never
+  backoffLimit: 1
+
