@@ -34,7 +34,6 @@
         dest: "{{ libreswan_config_file | default('../libreswan_ipsec.conf') }}"
         content: |
           config setup
-            nat_traversal=yes
             protostack=netkey
             uniqueids=no
 
