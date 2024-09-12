@@ -27,6 +27,7 @@ fi
 
 sudo firewall-cmd --add-port=8000/tcp 
 sudo firewall-cmd --add-port=8000/tcp --zone libvirt 
-
+sudo setenforce 0
+sudo systemctl restart virtlogd
 
 

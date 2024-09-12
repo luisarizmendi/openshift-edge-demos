@@ -72,6 +72,8 @@ Now, run the script:
 
 The script generates the Base image (RAW and ISO) and the Configuration ISO, all of which can be found in the `output` directory.
 
+If you want to check the detailed logs while the image is being generated, you have to check the containers running in your system (root). You will see that there are multiple containers used to create the OpenShift Appliance, get the ID of the one that you want to review and then check its output (ie. `sudo podman logs -f 8fc71e1c987d`).
+
 
 ### 3. If you need to deploy more than just one cluster...
 

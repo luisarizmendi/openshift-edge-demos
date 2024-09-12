@@ -12,16 +12,23 @@ In order to simplify the demo, the environment has been prepared to minimize the
 * Placement: To select the clusters where to deploy applications and ACM policies under the new ClusterSet
 * Policy and PolicySet: That are used to deploy an example operator (`openshift-compliance` in this case)
 * GitOpsServer and ApplicationSet: In order to automatically deploy the `hello-world` test application in the new cluster when it is imported in ACM.
+* AgentServiceConfig: The Assisted Installer service has been enabled
+
+
+
+
+FULL ISO?????????????????????
 
 
 ## Preparation
 
 Remeber to double-check that [all the pre-requirements are met](00-preparation.md) before jumping into the demo steps.
 
+Remember to check the DNS entries before moving into the demo steps.
+
+---
+
 ## Demo steps
-
-
-
 
 ### 1. Configure the inventory and OpenShift cluster in ACM.
 

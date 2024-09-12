@@ -26,6 +26,8 @@ If you are using a local `libvirt` and defaults are ok for you, just run:
 
 If you need to connect to an external `libvirt` you will first need to configure the `sushy-tools/sushy-emulator.conf` file.
 
+> **NOTE**
+> Due to multiple issues with SELinux that I've tried to fix in another way without repeteable success, I had to disable it while starting the virtual BMC and re-enabling it when stopping it.
 
 ### Testing/Usage
 
@@ -51,6 +53,9 @@ or insert a virtualcd:
 ```bash
 curl -d '{"Image": "https://download.cirros-cloud.net/0.6.2/cirros-0.6.2-aarch64-disk.img", "Inserted": true}'      -H "Content-Type: application/json"      -X POST      http://localhost:8000/redfish/v1/Systems/<VM ID>/VirtualMedia/Cd/Actions/VirtualMedia.InsertMedia
 ```
+
+
+I suggest to power on and off the VM using these commands right before running the demo, in order to be sure that there is nothing preventing Sushy to manage the VM and the VM to start.
 
 
 ### Stop Virtual BMC
