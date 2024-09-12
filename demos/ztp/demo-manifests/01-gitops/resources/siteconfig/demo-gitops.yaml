@@ -5,9 +5,6 @@ kind: SiteConfig
 metadata:
   name: "sno-gitops"
   namespace: "sno-gitops"
-  annotations:
-    argocd.argoproj.io/sync-wave: "1"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   baseDomain: "sandbox382.opentlc.com"
   pullSecretRef:
@@ -47,7 +44,7 @@ spec:
       - cidr: 10.128.0.0/14
         hostPrefix: 23
     machineNetwork:
-      - cidr: 192.168.122.0/24
+      - cidr: 192.168.140.0/24
     serviceNetwork:
       - 172.30.0.0/16
     #additionalNTPSources:
@@ -59,15 +56,15 @@ spec:
     #crTemplates:
     #  KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
     nodes:
-      - hostName: "sno-1.sandbox2917.opentlc.com"
+      - hostName: "sno-1.sandbox382.opentlc.com"
         role: "master"
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://192.168.1.40:8000/redfish/v1/Systems/a701e2dc-7f31-44ab-886f-aef49159654b"
+        bmcAddress: "redfish-virtualmedia+http://192.168.1.40:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890"
         bmcCredentialsName: 
           name: "demo-ztp-gitops-bmc-secret-1"
-        bootMACAddress: "52:54:00:fa:5f:00"
+        bootMACAddress: "52:54:00:fa:5f:8f"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
         #rootDeviceHints:
@@ -118,7 +115,7 @@ spec:
         nodeNetwork:
           interfaces:
             - name: eth0
-              macAddress: "52:54:00:fa:5f:00"
+              macAddress: "52:54:00:fa:5f:8f"
           config:
             interfaces:
               - name: eth0
@@ -127,7 +124,7 @@ spec:
                 ipv4:
                   enabled: true
                   address:
-                    - ip: 192.168.122.3
+                    - ip: 192.168.140.3
                       prefix-length: 24
                   dhcp: false
             dns-resolver:
@@ -139,6 +136,6 @@ spec:
             routes:
               config:
               - destination: 0.0.0.0/0
-                next-hop-address: 192.168.122.1
+                next-hop-address: 192.168.140.1
                 next-hop-interface: eth0
                 table-id: 254

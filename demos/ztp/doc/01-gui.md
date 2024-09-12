@@ -26,6 +26,38 @@ Remeber to double-check that [all the pre-requirements are met](00-preparation.m
 
 Remember to check the DNS entries before moving into the demo steps.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+unsupported.agent-install.openshift.io/assisted-service-configmap: full-iso-config
+
+
+
+
+
+
+
+
+
+
+
+
 ---
 
 ## Demo steps
