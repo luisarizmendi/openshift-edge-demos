@@ -6,7 +6,7 @@ metadata:
   name: "sno-gitops"
   namespace: "sno-gitops"
 spec:
-  baseDomain: "sandbox2917.opentlc.com"
+  baseDomain: "sandbox382.opentlc.com"
   pullSecretRef:
     name: "demo-ztp-gitops-pull-secret"
   clusterImageSetNameRef: "img4.16.5-multi-appsub"
@@ -44,7 +44,7 @@ spec:
       - cidr: 10.128.0.0/14
         hostPrefix: 23
     machineNetwork:
-      - cidr: 192.168.140.0/24
+      - cidr: 192.168.122.0/24
     serviceNetwork:
       - 172.30.0.0/16
     #additionalNTPSources:
@@ -61,10 +61,10 @@ spec:
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://192.168.140.231:8000/redfish/v1/Systems/b6c92bbb-1e87-4972-b17a-12def3948890"
+        bmcAddress: "redfish-virtualmedia+http://192.168.1.40:8000/redfish/v1/Systems/6e807c15-5970-4f4f-97a9-a8c3ad0f1a7d"
         bmcCredentialsName: 
           name: "demo-ztp-gitops-bmc-secret-1"
-        bootMACAddress: "52:54:00:fa:5f:8f"
+        bootMACAddress: "52:54:00:fa:5f:00"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
         #rootDeviceHints:
@@ -115,7 +115,7 @@ spec:
         nodeNetwork:
           interfaces:
             - name: eth0
-              macAddress: "52:54:00:fa:5f:8f"
+              macAddress: "52:54:00:fa:5f:00"
           config:
             interfaces:
               - name: eth0
@@ -124,7 +124,7 @@ spec:
                 ipv4:
                   enabled: true
                   address:
-                    - ip: 192.168.140.3
+                    - ip: 192.168.122.3
                       prefix-length: 24
                   dhcp: false
             dns-resolver:
@@ -136,6 +136,6 @@ spec:
             routes:
               config:
               - destination: 0.0.0.0/0
-                next-hop-address: 192.168.140.1
+                next-hop-address: 192.168.122.1
                 next-hop-interface: eth0
                 table-id: 254

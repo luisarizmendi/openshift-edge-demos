@@ -76,6 +76,30 @@ spec:
 
 
 
+in demo-gitops change:
+ - mac address
+ - url vmc (including ip, port and vm id if sushy)
+ - ip addressing (machineNetwork)
+ - be sure about dns
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
