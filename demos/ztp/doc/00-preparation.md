@@ -100,91 +100,73 @@ In the example we will name the new cluster for this section as `sno-gui`.
 
 You will need to know the SNO IP to setup the DNS entries. You can setup the IP statically during the node deployment (explained during the demo steps) or you can configure your local DHCP service to provide the IP to know it in advance.
 
-
 ### 2 - GitOps Provisioning with Advanced Cluster Management
 
-You will need to prepare:
-* DNS 
-* Network connectivity (VPN)
-* Edge Device
-* Manifests
+#### Prerequisites
+
+To begin, ensure the following are ready:
+
+- **DNS configuration**
+- **Network connectivity** (via VPN, if needed)
+- **Edge Device setup**
+- **Manifests** for deployment
 
 #### DNS Configuration
 
-You need to configure two entries for each cluster. In the example we will name the new cluster for this section as `sno-gitops`, `sno-1` as hostname and `bmc` as BMC name so if using those values you will need to configure:
+You must configure two DNS entries for each cluster. For this example, the new cluster is named `sno-gitops`, with `sno-1` as the hostname and `bmc` as the BMC name. Using these values, configure the following DNS records:
 
-* `api.sno-gitops.<basedomain>` -> SNO IP
-* `*.apps.sno-gitops.<basedomain>` -> SNO IP
-* sno-1.sno-gitops.<basedomain> -> SNO IP
-* bmc.sno-gitops.<basedomain> -> BMC IP (or laptop IP if using Sushy tools)
+- `api.sno-gitops.<basedomain>` -> SNO IP
+- `*.apps.sno-gitops.<basedomain>` -> SNO IP
+- `sno-1.sno-gitops.<basedomain>` -> SNO IP
+- `bmc.sno-gitops.<basedomain>` -> BMC IP (or laptop IP if using Sushy tools)
 
+#### Network Connectivity
 
-#### Network Connectivity between Edge and Central Site
-ACM needs access to both the OpenShift API and the Redfish BMC (default port TCP/8000). Port NAT can be configured for the API, and potentially for the BMC, but this section also requires direct connectivity. The device must download the "Discovery ISO" from one of the OpenShift Hub Cluster nodes' private IPs, which needs a VPN if the edge device is not on the same network as ACM. Remember that if ACM is in AWS, you can use the [provided playbooks to set up the VPN](../../../tools/aws_vpn/README.md).
+For Advanced Cluster Management (ACM), ensure access to both the OpenShift API and the Redfish BMC (default port TCP/8000). Port NAT can be configured for API and BMC access, but direct connectivity is often required. The edge device needs to download the "Discovery ISO" from one of the OpenShift Hub Cluster nodes' private IPs. If the edge device is on a different network than ACM, a VPN is necessary. 
 
-#### Virtual BMC and OpenShift Single Node VM
+If ACM is hosted on AWS, you can utilize the [AWS VPN setup playbooks](../../../tools/aws_vpn/README.md) to configure connectivity.
 
-If you don't have a physical device with BMC, you can deploy your Edge device (Single Node OpenShift) using a Virtual Machine and manage it with a Virtual BMC service. In the [`tools` section](../../../tools), you can find several scripts that [enable a Virtual BMC in your KVM host](../../../tools/virtual-bmc/README.md)  
+#### Virtual BMC and Single Node OpenShift VM
 
-If you create the VM using Virtual Machine Manager, select the "Manual Install" method to create a BIOS or UEFI VM with at least the required minimum resources (8vCPU, 16GB memory, 120GB disk, 1 Network). It also need to have a VirtualMedia drive (CDROM).
+For users without a physical BMC-enabled device, a Single Node OpenShift (SNO) edge device can be deployed via a Virtual Machine (VM) and managed using a Virtual BMC service. Reference the scripts in the [`tools` section](../../../tools/virtual-bmc/README.md) to set up a Virtual BMC on your KVM host.
 
-RRegarding the network, remember that you need to access the VM from outside your Laptop, so it's better to configure a bridge and provide to the VM direct access to the physical network. In the  [`tools` section](../../../tools) you will also find scripts that help [create a network bridge](../../../tools/libvirt-bridge/README.md) in your Linux system that you can attach to the SNO VM. The script will create a bridged network named `ocp-br` that you can select while creating the VM.
+To create a VM in Virtual Machine Manager, follow the "Manual Install" process, ensuring the VM has:
 
-Turn off the VM after creating it and take note of the VM UUID (in Virtual Machine Manager you will find it in "Overview").
+- **8 vCPU**, **16GB RAM**, **120GB storage**, and at least one network interface.
+- A **VirtualMedia drive** (CD-ROM).
 
-  > **Note**
-  >
-  > You can run the [virtual BMC test ](../../../tools/virtual-bmc/test-redfish.sh) to show all the VM ID and check if the new VM UUID appears there
+For network access outside of your laptop, set up a **network bridge** to provide the VM with physical network access. Find helpful scripts in the [`tools` section](../../../tools/libvirt-bridge/README.md) to create a network bridge (`ocp-br`) on your Linux system, which can be selected while creating the VM.
 
-#### Manifest preparation
+After setting up the VM, power it off and note the VM UUID, which can be found under the "Overview" section of Virtual Machine Manager.
 
-As part of the [base environment preparation](../../../bootstrap-environment/doc/bootstrap-environment-steps.md) you will have your own Git repository (where you have full access) so you should be able to make changes in the GitOps manifests. 
+> **Tip**  
+> Run the [Virtual BMC test](../../../tools/virtual-bmc/test-redfish.sh) to confirm the VM UUID appears in the test output.
 
-As part of this demo section you will need to prepare 
+#### Manifest Preparation
 
+With the base environment set up, access your Git repository, where you'll modify the GitOps manifests for deployment. Specifically, you need to prepare the following manifests:
 
+1. **SiteConfig Manifest**:  
+   Update the [demo-gitops.yaml](../demo-manifests/01-gitops/resources/siteconfig/demo-gitops.yaml) file with the following changes:
+   - `baseDomain`: Your DNS domain.
+   - `sshPublicKey`: Add your public SSH key.
+   - `machineNetwork`: Set the network CIDR for SNO.
+   - `hostName`: Adjust the domain name as necessary.
+   - `bmcAddress`: Ensure this points to the correct virtual or physical BMC IP. Verify that the DNS entry is correct and that the VM UUID is referenced.
+   - `bootMACAddress`: MAC address of the VM's network interface.
+   - `bootMode`: Match with the device's boot mode.
 
-* [SiteConfig manifest](../demo-manifests/01-gitops/resources/siteconfig/demo-gitops.yaml) 
-  
-  In this file you need to modify:
+   Optionally, you may:
+   - **Reduce Hardware Footprint**: To minimize the resource requirements of SNO, include the `installConfigOverrides` section (although you’ll still need at least 8 vCPU and 16GB RAM).
+   - **Configure Static IP**: Add static IP settings under the `nodeNetwork` section.
 
-  - `baseDomain`: Including your DNS domain
-  - `sshPublicKey`: With your public SSH key
-  - `machineNetwork`: This is the network CIDR that will be attached to the SNO
-  - `hostName`: You can just change the domain.
-  - `bmcAddress`: This address is prepared to interact with the virtual BMC (Sushy tools), if you are using a physical BMC you might need to change the URI. Be sure that they dns name is correct (including the domain) and that the ID points to your VM's UUID.
-  - `bootMACAddress` and `macAddress`: 
-  - `bootMode`
-  - `ip`
-  - `next-hop-address`
+2. **Pull Secret**:  
+   Use the example [pull-secret.yaml file](../demo-manifests/01-gitops/01-gitops-pull-secret.yaml.example), add your Red Hat [pull secret](https://access.redhat.com/solutions/4844461), and rename the file by removing the `.example` extension.
 
+3. **BMC Credentials**:  
+   Even if using a virtual BMC where you didn't configure any real credentials, you have to configure the [BMC secret](../demo-manifests/01-gitops/02-gitops-bmc-secret.yaml.example) by renaming the file and removing the `.example` extension.
 
-`installConfigOverrides`
-
-
-
-in demo-gitops change:
- - mac address
- - url vmc (including ip, port and vm id if sushy)
- - ip addressing (machineNetwork)
- - be sure about dns
-
-
-
-
-
-
-* [Pull Secret](../demo-manifests/01-gitops/01-gitops-pull-secret.yaml.example) 
-
-  Take this example file, include [your pull-secret](https://access.redhat.com/solutions/4844461) and remove the `.example` extension 
-
-
-* [BMC user and password](../demo-manifests/01-gitops/02-gitops-bmc-secret.yaml.example) 
-
-  Even if you are using the virtual BMC where there is no user or password, you will need to configure this secret, so if you are not using a physical BMC with an actual real user/password, just remove the `.example` extension of this example file.
-
-Remember to push your changes to your repo after making changes but double check that you are not exposing publically your pull-secret.
-
+After editing the manifests, push the changes to your Git repository. Before pushing, verify that you do not accidentally expose sensitive information, such as your pull-secret.
 
 ### 3 - OpenShift Appliance
 
