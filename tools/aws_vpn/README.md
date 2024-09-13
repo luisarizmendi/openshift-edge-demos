@@ -25,7 +25,7 @@ This playbook enables you to create and configure the necessary AWS components t
 
 ### 3. Download the AWS VPN Configuration File
 
-Once the script completes, the VPN will be created. Navigate to **VPC > Site-to-Site VPN** in the AWS console to download the configuration file for your VPN. Depending on your local VPN endpoint, choose the appropriate configuration file.
+Once the script completes, the VPN will be created. Navigate to **VPC > Virtual private network (VPN) > Site-to-Site VPN** in the AWS console. Select the VPN ID and download the configuration file for your VPN (top right corner). Depending on your local VPN endpoint, choose the appropriate configuration file.
 
 If using Linux, OpenWRT, or another non-listed system, download the "Generic" (IKEv2) configuration file.
 
@@ -46,7 +46,7 @@ To assist with configuring your local VPN endpoint, additional Ansible playbooks
 3. Restart the IPsec service with:
 
    ```bash
-   systemctl restart ipsec
+   sudo systemctl restart ipsec
    ```
 
 4. The VPN should now be established.

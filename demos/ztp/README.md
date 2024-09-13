@@ -27,6 +27,8 @@ This Zero-Touch Provisioning demo highlights the power of Red Hat OpenShift in e
 
 ## Preparation and Requirements
 
+This demo will require more preparation time than actual delivery. Additionally, there are key considerations that may impact both how and what you use to present the demo, so please review the preparation document carefully.
+
 Refer to the [Preparation and Requirements Guide](doc/00-preparation.md) for detailed setup instructions.
 
 ## Demo Overview

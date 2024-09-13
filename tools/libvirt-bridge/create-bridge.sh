@@ -1,16 +1,17 @@
 #!/bin/bash
 
-BRIDGE_IF="enp58s0u1u2"
+# var default
+DEFAULT_BRIDGE_IF="enp58s0u1u2"
 
-POOL_NAME="default"
-POOL_PATH="/var/lib/libvirt/images"
+#POOL_NAME="default"
+#POOL_PATH="/var/lib/libvirt/images"
 NETWORK_XML_PATH_BASE="net" 
-VM_XML_PATH_BASE="vm"       
-DISK_PATH="/var/lib/libvirt/images/sno.qcow2"
-DISK_SIZE="200G"
-VM_NAME="sno"
-NETWORK_NAME="sno"
-BRIDGE_NAME="sno-br"
+#VM_XML_PATH_BASE="vm"       
+#DISK_PATH="/var/lib/libvirt/images/sno.qcow2"
+#DISK_SIZE="200G"
+#VM_NAME="sno"
+NETWORK_NAME="ocp-net"
+BRIDGE_NAME="ocp-br"
 
 check_command() {
     if [ $? -ne 0 ]; then
@@ -19,11 +20,14 @@ check_command() {
     fi
 }
 
+BRIDGE_IF="${1:-$DEFAULT_BRIDGE_IF}"
+
+
 # Step 0: Prepare OS
 #Enable libvirt services in Fedora
-echo "Enabling daemon libvirt services..."
-sudo systemctl start libvirtd
-sudo systemctl enable libvirtd
+#echo "Enabling daemon libvirt services..."
+#sudo systemctl start libvirtd
+#sudo systemctl enable libvirtd
 
 #sudo ausearch -c 'dnsmasq' --raw | audit2allow -M my-dnsmasq
 #sudo semodule -X 300 -i my-dnsmasq.pp
@@ -45,26 +49,26 @@ sudo nmcli connection modify $BRIDGE_NAME bridge.stp no
 sudo nmcli con up $BRIDGE_NAME
 
 # Step 1: Create and configure the storage pool
-echo "Checking for an existing storage pool..."
-EXISTING_POOL_PATH=$(virsh pool-dumpxml $POOL_NAME 2>/dev/null | grep -oP '(?<=<path>)[^<]+')
+#echo "Checking for an existing storage pool..."
+#EXISTING_POOL_PATH=$(virsh pool-dumpxml $POOL_NAME 2>/dev/null | grep -oP '(?<=<path>)[^<]+')
 
-if [ -n "$EXISTING_POOL_PATH" ]; then
-    echo "Existing storage pool found at: $EXISTING_POOL_PATH"
-    POOL_PATH=$EXISTING_POOL_PATH
-else
-    echo "No existing storage pool found. Creating a new one at $POOL_PATH..."
-    sudo mkdir -p $POOL_PATH
-    check_command "mkdir"
+#if [ -n "$EXISTING_POOL_PATH" ]; then
+#    echo "Existing storage pool found at: $EXISTING_POOL_PATH"
+#    POOL_PATH=$EXISTING_POOL_PATH
+#else
+#    echo "No existing storage pool found. Creating a new one at $POOL_PATH..."
+#    sudo mkdir -p $POOL_PATH
+#    check_command "mkdir"
     
-    sudo virsh pool-define-as $POOL_NAME --type dir --target $POOL_PATH
-    check_command "virsh pool-define-as"
+#    sudo virsh pool-define-as $POOL_NAME --type dir --target $POOL_PATH
+#    check_command "virsh pool-define-as"
     
-    sudo virsh pool-start $POOL_NAME
-    check_command "virsh pool-start"
+#    sudo virsh pool-start $POOL_NAME
+#    check_command "virsh pool-start"
     
-    sudo virsh pool-autostart $POOL_NAME
-    check_command "virsh pool-autostart"
-fi 
+#    sudo virsh pool-autostart $POOL_NAME
+#    check_command "virsh pool-autostart"
+#fi 
 
 # Step 2: Define and start the network
 if $(sudo virsh net-list --all | grep -q "$NETWORK_NAME"); then
@@ -96,18 +100,18 @@ fi
 
 
 # Step 3: Create the disk if it doesn't exist
-if [ -f "$DISK_PATH" ]; then
-    echo "Disk $DISK_PATH already exists. Skipping creation."
-else
-    echo "Creating the disk at $DISK_PATH..."
-    sudo qemu-img create -f qcow2 $DISK_PATH $DISK_SIZE
-    check_command "qemu-img create"
-fi
+#if [ -f "$DISK_PATH" ]; then
+#    echo "Disk $DISK_PATH already exists. Skipping creation."
+#else
+#    echo "Creating the disk at $DISK_PATH..."
+#    sudo qemu-img create -f qcow2 $DISK_PATH $DISK_SIZE
+#    check_command "qemu-img create"
+#fi
 
 # Step 4: Define the VM
-echo "Defining the VM..."
-sudo virsh define ${VM_XML_PATH_BASE}-${VM_NAME}.xml
-check_command "virsh define"
+#echo "Defining the VM..."
+#sudo virsh define ${VM_XML_PATH_BASE}-${VM_NAME}.xml
+#check_command "virsh define"
 
 #sudo virsh autostart $VM_NAME
 #check_command "virsh autostart"

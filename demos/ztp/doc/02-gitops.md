@@ -17,7 +17,7 @@ It's important to remember that this section expect direct access from ACM into 
 
 Alsom if you are using Virtual Machines instead of physical devices with real BMC, you need to be sure that the [virtual BMC](../../../tools/virtual-bmc/README.md) is up and running.
 
-Also remember to check the DNS entries before moving into the demo steps.
+Also remember to check the DNS entries are working before moving into the demo steps.
 
 ---
 
@@ -73,14 +73,6 @@ spec:
 
 
 
-
-
-
-in demo-gitops change:
- - mac address
- - url vmc (including ip, port and vm id if sushy)
- - ip addressing (machineNetwork)
- - be sure about dns
 
 
 

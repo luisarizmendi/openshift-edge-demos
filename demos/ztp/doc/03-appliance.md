@@ -49,6 +49,18 @@ VM......... crear con scripts.....
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 To deploy the Base Image, you can either:
 
 - Copy the RAW image directly to the disk (e.g., using the `dd` command), or

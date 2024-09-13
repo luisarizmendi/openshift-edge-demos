@@ -39,7 +39,7 @@ spec:
     # extraManifestPath: sno-extra-manifest
     clusterLabels:
       common: true
-      sites : "sno-gitops"
+      sites : "sno-gitops-2"
     clusterNetwork:
       - cidr: 10.128.0.0/14
         hostPrefix: 23
