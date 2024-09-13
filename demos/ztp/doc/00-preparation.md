@@ -135,6 +135,9 @@ To create a VM in Virtual Machine Manager, follow the "Manual Install" process, 
 - **8 vCPU**, **16GB RAM**, **120GB storage**, and at least one network interface.
 - A **VirtualMedia drive** (CD-ROM).
 
+> **NOTE**  
+> Remember that in order to configure your machine to use UEFI boot (recommended) with Virtual Machine Manager, you need to select "Customize before lauch" while creating the VM
+
 For network access outside of your laptop, set up a **network bridge** to provide the VM with physical network access. Find helpful scripts in the [`tools` section](../../../tools/libvirt-bridge/README.md) to create a network bridge (`ocp-br`) on your Linux system, which can be selected while creating the VM.
 
 After setting up the VM, power it off and note the VM UUID, which can be found under the "Overview" section of Virtual Machine Manager.

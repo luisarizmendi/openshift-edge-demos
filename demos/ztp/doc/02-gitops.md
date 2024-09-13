@@ -95,3 +95,22 @@ Now create the BMC
 
 si falla ver el url el en InfraEnv and connect to one of the nodes and try to run the sushy command to mount.
 check that you can run VMs
+
+
+
+
+
+
+
+
+
+
+troubleshooting
+-------------------------
+
+remove applications
+
+uefi???
+
+
+timeouts
