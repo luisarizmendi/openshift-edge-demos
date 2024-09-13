@@ -31,9 +31,36 @@ ArgoCD will create all the required objets, you only need to create the ArgoCD A
    - Click the `+` button to add resources.
    - Paste the content from the [00-argocd-app.yaml](../demo-manifests/01-gitops/00-argocd-app.yaml) file:
 
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-ztp-gitops-global
+  namespace: openshift-gitops
+  labels:
+    app.kubernetes.io/managed-by: demo-ztp-gitops
+spec:
+  project: default
 
+  source:
+    repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
+    targetRevision: main
+    path: demos/ztp/demo-manifests/01-gitops/resources/argocd/
 
+  destination:
+    server: 'https://kubernetes.default.svc'
 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+```
+
+After creating the object you can show:
+
+* ArgoCD: Show how the applications go green while sync
+* ACM: Infrstructure>Host Inventory
+* Baremetal nodes: Home> API Explorer
 
 
 
@@ -65,24 +92,28 @@ First create a secret containing your pull-secret token in the OpenShift cluster
 
    - Access your OpenShift console in the Hub cluster.
    - Click the `+` button to add resources.
-   - Paste the content from the [01-gitops-pull-secret.yaml](../demo-manifests/01-gitops/01-gitops-pull-secret.yaml) file:
+   - Paste the content from the [01-gitops-pull-secret.yaml](../demo-manifests/01-gitops/01-gitops-pull-secret.yaml) 
 
 > **NOTE**
 > Remember that you create the [01-gitops-pull-secret.yaml](../demo-manifests/01-gitops/01-gitops-pull-secret.yaml) file during the demo preparation phase
 
+Now create the BMC:
 
-Now create the BMC
+   - Access your OpenShift console in the Hub cluster.
+   - Click the `+` button to add resources.
+   - Paste the content from the [02-gitops-bmc-secret.yaml](../demo-manifests/01-gitops/02-gitops-bmc-secret.yaml) 
 
-
-
-
-
-
-
+As soon as you create the BMC password the baremetal inspection will start.
 
 
 
 
+show ....
+
+
+
+
+### 3. Wait until the device is onboarded
 
 
 
@@ -92,9 +123,6 @@ Now create the BMC
 
 
 
-
-si falla ver el url el en InfraEnv and connect to one of the nodes and try to run the sushy command to mount.
-check that you can run VMs
 
 
 
@@ -114,3 +142,27 @@ uefi???
 
 
 timeouts
+
+
+
+
+
+si falla ver el url el en InfraEnv and connect to one of the nodes and try to run the sushy command to mount.
+check that you can run VMs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Warning alert:Metal3 operator is not configured
+The Metal3 operator is not configured correctly, which prevents it from finding bare metal hosts in this namespace. Refer to the documentation for the first time setup steps.

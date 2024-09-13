@@ -7,5 +7,4 @@ resources:
 
 generators:
 - demo-gitops.yaml
-- demo-gitops-2.yaml
 
