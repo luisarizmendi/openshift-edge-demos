@@ -1,0 +1,33 @@
+apiVersion: agent-install.openshift.io/v1beta1
+kind: NMStateConfig
+metadata:
+  name: sno-gui
+  namespace: sno-gui
+  labels:
+    infraenvs.agent-install.openshift.io: sno-gui
+spec:
+  config:
+    interfaces:
+      - name: eth0
+        type: ethernet
+        state: up
+        mac-address: 52:54:00:05:44:63
+        ipv4:
+          enabled: true
+          address:
+            - ip: 192.168.190.3
+              prefix-length: 24
+          dhcp: false
+    dns-resolver:
+      config:
+        server:
+          - 8.8.8.8
+    routes:
+      config:
+        - destination: 0.0.0.0/0
+          next-hop-address: 192.168.190.1
+          next-hop-interface: eth0
+          table-id: 254
+  interfaces:
+    - name: "eth0"
+      macAddress: "52:54:00:05:44:63"

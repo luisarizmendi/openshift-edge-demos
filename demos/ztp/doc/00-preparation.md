@@ -1,6 +1,6 @@
 # OpenShift ZTP demo preparation
 
-## Environment & Hardware Requirements
+## 0. Environment & Hardware Requirements
 
 * **OpenShift "Hub" Cluster**: Typically configured with 3 worker nodes, each having 8 cores and 16GB of memory.
 * **OpenShift "Edge" Clusters**: At least one additional OpenShift cluster (minimal resources are acceptable).
@@ -28,10 +28,13 @@ The usage of VMs is prefered due to several factors that will be explained below
 > **IMPORTANT**  
 > There is currently an [issue](https://issues.redhat.com/browse/MGMT-18693) with the USB partition table when created with the OpenShift Appliance ISOs (covered in Section 3 of this demo). This issue may prevent your system from booting directly from the USB. If you encounter this problem, consider using the RAW image (for both physical and virtual systems) or deploying the OpenShift Appliance in a VM (mounting with Virtual Media is not affected).
 
+---
 
 ## 1. Base Environment Setup
 
 The base deployment is common to all demos, so refer to the [base environment setup document](../../../bootstrap-environment/doc/bootstrap-environment-steps.md).
+
+---
 
 ## 2. Demo-Specific Environment Setup
 
@@ -108,7 +111,9 @@ sudo firewall-cmd --reload
 ```
 
 > **Tip**  
-> Create a VM in that new network and test that you can connect to services in Internet while your source IP is not changed when connecting to the Cloud using the VPN.
+> Create an additional test VM in that new network and check that you can connect to services in Internet while your source IP is not changed when connecting to the Cloud using the VPN.
+
+---
 
 ## 3. Section-Specific Preparation
 
@@ -117,7 +122,30 @@ This demo has three different sections. Since you might want to only show some o
 You will find that some of the preparation steps are hard requirements while others are suggested to save time during the demo delivery.
 
 ### 1 - Assisted Installer with Advanced Cluster Management
-No specific preparation needed.
+
+If you plan to use physical Hardware you need to bear in mind that currently, in order to create a bootable USB with the generated Discovery ISO, you will need to change the default from "minimal ISO" to "full ISO" otherwise the server won't start (minimal works with virtual media only at this moment).
+
+If you need to do it, you must change the [`04-demo-gitops-agentserviceconfig.yaml`](../bootstrap-demo/resources/base/04-demo-gitops-agentserviceconfig.yaml) file, adding the `unsupported.agent-install` annotation:
+
+
+```yaml
+apiVersion: agent-install.openshift.io/v1beta1
+kind: AgentServiceConfig
+metadata:
+ name: agent
+ annotations:
+   argocd.argoproj.io/sync-wave: "4"
+   argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+   unsupported.agent-install.openshift.io/assisted-service-configmap: full-iso-config
+spec:
+  databaseStorage:
+...
+```
+
+It's also a good idea to prepare the following manifests with your data, so during the demo you just need to copy/paste:
+
+* [sno-1-network.yaml](../demo-manifests/00-gui/sno-1-network.yaml)
+
 
 ### 2 - GitOps Provisioning with Advanced Cluster Management
 

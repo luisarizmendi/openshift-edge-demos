@@ -63,7 +63,7 @@ After creating the object you can show:
   You can check in the ArgoCD portal three new Applications created. The "Global" Application is the one that triggers the deployment of the other two, the "Cluster" Application will create the objects to create the OpenShift clusters, while the "Policy" Application will create the related Policies and Placement onjects in ACM that will be applied to the new cluster.
 
 
-* ACM: Infrstructure>Host Inventory
+* ACM: Infrastructure>Host Inventory
 
   You will see that a new Host inventory `sno-gitops` has been created. If you open it you also will see that there are still an object that is not yet created: The `pull-secret`, and if you check  the status of the Baremetal node, you will see a Registering error: `BMC CredentialsName secret doesn't exist`. You need to create both the `pull-secret` and the BMC user/password objects in order to start the cluster deployment.
 
@@ -87,28 +87,22 @@ Now create the BMC:
    - Click the `+` button to add resources.
    - Paste the content from the [02-gitops-bmc-secret.yaml](../demo-manifests/01-gitops/02-gitops-bmc-secret.yaml) 
 
-As soon as you create the BMC password the baremetal inspection will start.
-
-
-
-
-show ....
-
-
+As soon as you create the BMC password the baremetal you will see in ACM "Infrastructure > Host Inventory" how the Inspection will start.
 
 
 ### 3. Wait until the device is onboarded
 
-
-
-registering > inspecting > provisioning
-
+You will see that the baremetal host will progress accross different states (Registering -> Inspecting -> Provisioning).
 
 
 
 
+> **NOTE**
+> If this process fails you can check if the OpenShift Hub nodes can connect to the edge device BMC
 
-timeouts
+
+
+
 
 
 
@@ -123,7 +117,7 @@ check that you can run VMs
 
 
 
-
+insufficient transitorio
 
 
 
