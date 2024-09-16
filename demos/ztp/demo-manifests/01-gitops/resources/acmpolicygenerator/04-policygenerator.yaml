@@ -2,13 +2,11 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PolicyGenerator
 metadata:
   name: "common"
-  placementBindingDefaults:
-      name: demo-ztp-gitops-placement-policy
   annotations:
     argocd.argoproj.io/sync-wave: "4"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 policyDefaults:
-    namespace: sno-gui
+    namespace: sno-gitops
     remediationAction: enforce
     severity: high
     namespaceSelector:
