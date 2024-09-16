@@ -143,6 +143,14 @@ If you find issues and you want to start over, remove the ArgoCD Applications, b
 
 
 
+
+
+
+el secret se queda pillado cuando borras la application
+
+
+
+
 ### 4. Check your OpenShift deployment
 
 

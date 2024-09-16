@@ -56,7 +56,7 @@ spec:
     #crTemplates:
     #  KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
     nodes:
-      - hostName: "sno-1.sandbox406.opentlc.com"
+      - hostName: "sno-2.sandbox406.opentlc.com"
         role: "master"
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
