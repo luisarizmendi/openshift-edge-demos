@@ -23,5 +23,5 @@ policySets:
     description: "PolicySet for demo-ztp-gitops"
     policies:
       - demo-ztp-gitops
-  placement:
-    placementPath: input/placement.yaml
+    placement:
+      placementPath: input/placement.yaml
