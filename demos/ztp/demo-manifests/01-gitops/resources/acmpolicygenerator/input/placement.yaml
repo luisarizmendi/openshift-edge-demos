@@ -2,7 +2,7 @@ apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
   name: placement-demo-ztp-gitops
-  namespace: sno-gitops
+  namespace: sno-gitops-policy
 spec:
   tolerations:
     - key: cluster.open-cluster-management.io/unreachable
