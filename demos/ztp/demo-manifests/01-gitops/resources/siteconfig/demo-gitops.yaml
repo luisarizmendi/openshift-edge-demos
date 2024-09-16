@@ -39,6 +39,7 @@ spec:
     # extraManifestPath: sno-extra-manifest
     clusterLabels:
       demo: gitops
+      cluster.open-cluster-management.io/clusterset: demo-ztp-gitops
       sites : "sno-gitops"
     clusterNetwork:
       - cidr: 10.128.0.0/14
