@@ -18,5 +18,3 @@ policies:
       disabled: false
       manifests:
         - path: input/policy-manifests/
-      policySets:
-        - demo-ztp-gitops-policies
