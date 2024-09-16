@@ -11,8 +11,6 @@ policyDefaults:
         noncompliant: 10s
     placement:
       placementPath: input/placement.yaml
-    placementBindingDefaults:
-      name: demo-ztp-gitops
     policySets: 
       - demo-ztp-gitops
     generatePlacementWhenInSet: true
