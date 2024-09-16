@@ -3,7 +3,7 @@ apiVersion: policy.open-cluster-management.io/v1beta1
 kind: PolicySet
 metadata:
   name: demo-ztp-gui-policies
-  namespace: sno-gui
+  namespace: sno-gui-policy
   annotations:
     argocd.argoproj.io/sync-wave: "21"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true

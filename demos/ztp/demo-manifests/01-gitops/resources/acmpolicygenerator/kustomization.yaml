@@ -2,6 +2,7 @@ generators:
 - 05-policygenerator.yaml
 
 resources:
+- 00-ns-policy.yaml
 - 00-managedclusterset.yaml
 - 01-managedclustersetbinding.yaml
 - 02-placement.yaml
