@@ -15,6 +15,7 @@ policyDefaults:
       name: demo-ztp-gitops
     policySets: 
       - demo-ztp-gitops
+    generatePlacementWhenInSet: true
 policies:
     - name: demo-ztp-gitops
       policyAnnotations:
