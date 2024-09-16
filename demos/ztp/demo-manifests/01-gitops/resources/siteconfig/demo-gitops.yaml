@@ -6,7 +6,7 @@ metadata:
   name: "sno-gitops"
   namespace: "sno-gitops"
 spec:
-  baseDomain: "sandbox1455.opentlc.com"
+  baseDomain: "sandbox406.opentlc.com"
   pullSecretRef:
     name: "demo-ztp-gitops-pull-secret"
   clusterImageSetNameRef: "img4.16.5-multi-appsub"
@@ -44,7 +44,7 @@ spec:
       - cidr: 10.128.0.0/14
         hostPrefix: 23
     machineNetwork:
-      - cidr: 192.168.140.0/24
+      - cidr: 192.168.100.0/24
     serviceNetwork:
       - 172.30.0.0/16
     #additionalNTPSources:
@@ -56,15 +56,15 @@ spec:
     #crTemplates:
     #  KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
     nodes:
-      - hostName: "sno-1.sandbox1455.opentlc.com"
+      - hostName: "sno-1.sandbox406.opentlc.com"
         role: "master"
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://bmc.sno-gitops.sandbox1455.opentlc.com:8000/redfish/v1/Systems/dbd91433-39c4-48d1-8aae-7ba280936a71"
+        bmcAddress: "redfish-virtualmedia+http://bmc.sno-gitops.sandbox406.opentlc.com:8000/redfish/v1/Systems/86bfb79d-30d7-4a74-8220-bac3b0de25b8        "
         bmcCredentialsName: 
           name: "demo-ztp-gitops-bmc-secret-1"
-        bootMACAddress: "52:54:00:d5:10:49"
+        bootMACAddress: "52:54:00:c2:2e:ae"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
         #rootDeviceHints:
@@ -115,7 +115,7 @@ spec:
         nodeNetwork:
           interfaces:
             - name: eth0
-              macAddress: "52:54:00:d5:10:49"
+              macAddress: "52:54:00:c2:2e:ae"
           config:
             interfaces:
               - name: eth0
@@ -124,7 +124,7 @@ spec:
                 ipv4:
                   enabled: true
                   address:
-                    - ip: 192.168.140.3
+                    - ip: 192.168.100.3
                       prefix-length: 24
                   dhcp: false
             dns-resolver:
@@ -136,6 +136,6 @@ spec:
             routes:
               config:
               - destination: 0.0.0.0/0
-                next-hop-address: 192.168.140.1
+                next-hop-address: 192.168.100.1
                 next-hop-interface: eth0
                 table-id: 254

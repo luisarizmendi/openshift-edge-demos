@@ -2,6 +2,8 @@
 
 ## Overview
 
+This Zero-Touch Provisioning demo highlights the power of Red Hat OpenShift in edge computing scenarios. If you're interested in exploring what's possible with Red Hat Device Edge and Ansible Automation Platform, be sure to check out the [Red Hat Device Edge and Ansible Automation Platform demos](https://github.com/luisarizmendi/rhde-aap-gitops-demo).
+
 ### The Challenge
 
 Edge computing use cases often involve a large number of devices and locations, combined with a lack of on-site specialized personnel. This makes it impractical to use the same deployment approaches that are common in data centers or cloud environments. At the edge, we cannot rely on individuals to follow complex installation procedures, nor is it cost-effective or timely to send experts to each location.
@@ -23,7 +25,7 @@ The architecture for this demo comprises a central site, where Advanced Cluster 
 
 ![Architecture Diagram](doc/images/architecture.png)
 
-This Zero-Touch Provisioning demo highlights the power of Red Hat OpenShift in edge computing scenarios. If you're interested in exploring what's possible with Red Hat Device Edge and Ansible Automation Platform, be sure to check out the [Red Hat Device Edge and Ansible Automation Platform demos](https://github.com/luisarizmendi/rhde-aap-gitops-demo).
+
 
 ## Preparation and Requirements
 

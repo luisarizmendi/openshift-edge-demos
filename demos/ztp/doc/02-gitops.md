@@ -70,8 +70,8 @@ After creating the object you can show:
 
 show ....
 
-
-
+> **NOTE**
+> You might find a `Metal3 operator is not configured` warning message in the Host Inventory. Wait one minute to be sure that you gave enough time for the auto-configuration, if the message is still there you can try to remove the `provisioning-configuration` `Provisioning` object (it will be recreated by ArgoCD)
 
 
 
@@ -121,26 +121,6 @@ show ....
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-troubleshooting
--------------------------
-
-remove applications
-
-uefi???
-
-
 timeouts
 
 
@@ -156,6 +136,7 @@ check that you can run VMs
 
 
 
+remove applications
 
 
 
@@ -163,6 +144,7 @@ check that you can run VMs
 
 
 
+### 4. Check your OpenShift deployment
 
-Warning alert:Metal3 operator is not configured
-The Metal3 operator is not configured correctly, which prevents it from finding bare metal hosts in this namespace. Refer to the documentation for the first time setup steps.
+
+
