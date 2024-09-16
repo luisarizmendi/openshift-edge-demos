@@ -13,5 +13,5 @@ spec:
   placementRef:
     kind: Placement
     apiVersion: cluster.open-cluster-management.io/v1beta1
-    name: placement-demo-ztp-gui
+    name: placement-argocd-demo-ztp-gui
     namespace: openshift-gitops
