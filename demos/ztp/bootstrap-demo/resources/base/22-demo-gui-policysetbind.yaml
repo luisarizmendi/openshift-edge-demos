@@ -11,6 +11,6 @@ placementRef:
   apiGroup: cluster.open-cluster-management.io
   kind: Placement
 subjects:
-  - name: demo-ztp-gui-policies
+  - name: demo-ztp-gui
     apiGroup: policy.open-cluster-management.io
     kind: PolicySet
