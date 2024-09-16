@@ -136,7 +136,18 @@ check that you can run VMs
 
 
 
-remove applications
+
+
+
+
+
+
+
+
+
+
+If you find issues and you want to start over, remove the ArgoCD Applications, be sure that the Baremetal and InfraEnv Objects are deleted, and create again the `00-argocd-app.yaml` (probably you will need to create the BMC secret again)
+
 
 
 

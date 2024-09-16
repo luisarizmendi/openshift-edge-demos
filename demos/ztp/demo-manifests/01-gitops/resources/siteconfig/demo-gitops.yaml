@@ -44,7 +44,7 @@ spec:
       - cidr: 10.128.0.0/14
         hostPrefix: 23
     machineNetwork:
-      - cidr: 192.168.100.0/24
+      - cidr: 192.168.122.0/24
     serviceNetwork:
       - 172.30.0.0/16
     #additionalNTPSources:
@@ -61,7 +61,7 @@ spec:
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://bmc.sno-gitops.sandbox406.opentlc.com:8000/redfish/v1/Systems/86bfb79d-30d7-4a74-8220-bac3b0de25b8"
+        bmcAddress: "redfish-virtualmedia+http://bmc.sno-gitops.sandbox406.opentlc.com:8000/redfish/v1/Systems/4a442dea-adfb-43d1-94ab-43a430ae85c8"
         bmcCredentialsName: 
           name: "demo-ztp-gitops-bmc-secret-1"
         bootMACAddress: "52:54:00:c2:2e:ae"
@@ -124,7 +124,7 @@ spec:
                 ipv4:
                   enabled: true
                   address:
-                    - ip: 192.168.100.3
+                    - ip: 192.168.122.3
                       prefix-length: 24
                   dhcp: false
             dns-resolver:
@@ -136,6 +136,6 @@ spec:
             routes:
               config:
               - destination: 0.0.0.0/0
-                next-hop-address: 192.168.100.1
+                next-hop-address: 192.168.122.1
                 next-hop-interface: eth0
                 table-id: 254

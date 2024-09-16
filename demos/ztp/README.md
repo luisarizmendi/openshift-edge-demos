@@ -23,8 +23,22 @@ To address these challenges, we can prepare all deployment assets in advance to 
 
 The architecture for this demo comprises a central site, where Advanced Cluster Management (ACM) and OpenShift GitOps (ArgoCD) are deployed on top of Red Hat OpenShift, and the Edge locations (one is sufficient for this demo) where the devices will be installed with Single Node OpenShift (SNO). Additionally, a GitHub or any other Git repository will be used to host the GitOps manifests.
 
-![Architecture Diagram](doc/images/architecture.png)
+The most common way to deploy this demo is creating the OpenShift Hub cluster (including OpenShift Advanced Cluster Management and OpenShift GitOps operator) in a remote location (ie. Public Cloud) and run either a physical device or a Virtual Machine locally. As you will read during the demo preparation, a VPN connection will be needed so the local OpenShift cluster can reach out to the OpenShift Hub nodes while using BMC deployment. 
 
+> **NOTE:**
+> Only demo section 2 needs direct connectivity (VPN), you can deploy section 1 and section 3 without a VPN.
+
+Find below two diagrams showing two different possible demo setups:
+
+* Using a virtual machine for the local Single Node OpenShift:
+
+![Architecture Diagram](doc/images/architecture-vm.png)
+
+* Using a physical device (including BMC):
+
+![Architecture Diagram](doc/images/architecture-physical.png)
+
+More information about the architecture can be found in the [Preparation and Requirements Guide](doc/00-preparation.md).
 
 
 ## Preparation and Requirements
