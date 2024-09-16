@@ -9,6 +9,8 @@ policyDefaults:
     evaluationInterval:
         compliant: 10m
         noncompliant: 10s
+    placement:
+      placementPath: input/placement.yaml
 policies:
     - name: demo-ztp-gitops
       policyAnnotations:
