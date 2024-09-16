@@ -27,7 +27,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "18"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: demo-ztp-gui
+  name: global
   namespace: openshift-gitops
 spec:
   clusterSet: global
