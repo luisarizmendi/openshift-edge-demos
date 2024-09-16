@@ -6,4 +6,3 @@ resources:
 - 01-managedclustersetbinding.yaml
 - 02-placement.yaml
 - 03-gitops-clusters.yaml
-- 04-policy-set.yaml
