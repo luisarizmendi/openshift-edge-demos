@@ -1,49 +1,30 @@
-apiVersion: policy.open-cluster-management.io/v1
-kind: Policy
+
+apiVersion: v1
+kind: Namespace
 metadata:
-  name: demo-ztp-gitops-operators
-  namespace: sno-gitops
-  annotations:
-    argocd.argoproj.io/sync-wave: "20"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-    policy.open-cluster-management.io/categories: CA Security Assessment and Authorization
-    policy.open-cluster-management.io/standards: NIST SP 800-53
-    policy.open-cluster-management.io/controls: CA-2 Security Assessments, CA-7 Continuous Monitoring
+  name: openshift-compliance
+
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: compliance-operator
+  namespace: openshift-compliance
 spec:
-  disabled: false
-  policy-templates:
-    - objectDefinition:
-        apiVersion: policy.open-cluster-management.io/v1
-        kind: ConfigurationPolicy
-        metadata:
-          name: compliance-operator-ns
-        spec:
-          remediationAction: enforce
-          severity: high
-          object-templates:
-            - complianceType: musthave
-              objectDefinition:
-                apiVersion: v1
-                kind: Namespace
-                metadata:
-                  name: openshift-compliance
-    - objectDefinition:
-        apiVersion: policy.open-cluster-management.io/v1beta1
-        kind: OperatorPolicy
-        metadata:
-          name: operatorpolicy-compliance-operator
-        spec:
-          remediationAction: enforce
-          severity: high
-          complianceType: musthave
-          operatorGroup:
-            name: compliance-operator
-            namespace: openshift-compliance
-            targetNamespaces:
-              - openshift-compliance
-          subscription:
-            name: compliance-operator
-            namespace: openshift-compliance
-            source: redhat-operators
-            sourceNamespace: openshift-marketplace
-          upgradeApproval: Automatic
+  targetNamespaces:
+    - openshift-compliance
+
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: compliance-operator
+  namespace: openshift-compliance
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: compliance-operator
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+
+
