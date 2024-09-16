@@ -9,8 +9,6 @@ policyDefaults:
     evaluationInterval:
         compliant: 10m
         noncompliant: 10s
-    policySets:
-      - demo-ztp-gitops-policies
 policies:
     - name: demo-ztp-gitops
       policyAnnotations:
