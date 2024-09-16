@@ -1,4 +1,4 @@
-#generators:
+generators:
 - 04-policygenerator.yaml
 
 resources:
