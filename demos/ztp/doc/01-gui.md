@@ -10,7 +10,7 @@ In order to simplify the demo, the environment has been prepared to minimize the
 
 * ClusterSet and ClusterSetBinding: To host the cluster that you are going to create in a differenciated group
 * Placement: To select the clusters where to deploy applications and ACM policies under the new ClusterSet
-* Policy and PolicySet: That are used to deploy an example operator (`openshift-compliance` in this case)
+* Policy: That is used to deploy an example operator (`openshift-compliance` in this case)
 * GitOpsServer and ApplicationSet: In order to automatically deploy the `hello-world` test application in the new cluster when it is imported in ACM.
 * AgentServiceConfig: The Assisted Installer service has been enabled
 

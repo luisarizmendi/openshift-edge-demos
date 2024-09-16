@@ -4,7 +4,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "4"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: demo-ztp-gui-gitops-clusters
+  name: demo-ztp-gui-argocd-clusters
   namespace: openshift-gitops
 spec:
   argoServer:
