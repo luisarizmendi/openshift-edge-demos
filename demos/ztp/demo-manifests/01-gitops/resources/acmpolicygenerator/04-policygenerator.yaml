@@ -20,4 +20,10 @@ policies:
         ran.openshift.io/ztp-deploy-wave: "4"
       disabled: false
       manifests:
-        - path: policies
+        - path: policies/
+          patches:
+            - apiVersion: policy.open-cluster-management.io/v1
+              kind: Policy
+              metadata:
+                name: demo-ztp-gitops-operators
+                namespace: sno-gitops
