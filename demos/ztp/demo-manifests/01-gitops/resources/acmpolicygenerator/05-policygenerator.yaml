@@ -11,8 +11,6 @@ policyDefaults:
         noncompliant: 10s
     placement:
       placementPath: input/placement.yaml
-    policySets: 
-      - demo-ztp-gitops-policies
 policies:
     - name: demo-ztp-gitops
       policyAnnotations:
@@ -20,3 +18,5 @@ policies:
       disabled: false
       manifests:
         - path: input/policy-manifests/
+      policySets: 
+        - demo-ztp-gitops-policies
