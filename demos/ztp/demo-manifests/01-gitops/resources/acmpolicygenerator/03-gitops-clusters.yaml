@@ -4,7 +4,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "3"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: demo-ztp-gitops-placement-gitops-clusters
+  name: placement-argocd-demo-ztp-gitops-gitops-clusters
   namespace: openshift-gitops
 spec:
   argoServer:
@@ -13,5 +13,5 @@ spec:
   placementRef:
     kind: Placement
     apiVersion: cluster.open-cluster-management.io/v1beta1
-    name: demo-ztp-gitops-placement
+    name: placement-argocd-demo-ztp-gitops
     namespace: openshift-gitops

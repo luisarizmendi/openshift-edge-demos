@@ -22,7 +22,7 @@ spec:
               configMapRef: acm-placement
               labelSelector:
                 matchLabels:
-                  cluster.open-cluster-management.io/placement: demo-ztp-gitops-placement
+                  cluster.open-cluster-management.io/placement: placement-argocd-demo-ztp-gitops
               requeueAfterSeconds: 180
   goTemplate: true
   goTemplateOptions:
