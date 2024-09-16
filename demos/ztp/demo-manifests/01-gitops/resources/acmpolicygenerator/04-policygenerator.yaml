@@ -24,10 +24,3 @@ policies:
       disabled: false
       manifests:
         - path: policies
-policySets:
-  - name: "demo-ztp-gui-policies"
-    policies: 
-    - demo-ztp-gui-operators
-    placement: 
-    - demo-ztp-gui-placement-policy
-    generatePolicySetPlacement: true
