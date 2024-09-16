@@ -1,7 +1,7 @@
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
-  name: demo-ztp-gui-placement
+  name: placement-demo-ztp-gui
   namespace: openshift-gitops
   annotations:
     argocd.argoproj.io/sync-wave: "19"
@@ -18,7 +18,7 @@ spec:
 apiVersion: cluster.open-cluster-management.io/v1beta1
 kind: Placement
 metadata:
-  name: demo-ztp-gui-placement-policy
+  name: placement-demo-ztp-gui
   namespace: sno-gui
   annotations:
     argocd.argoproj.io/sync-wave: "19"
