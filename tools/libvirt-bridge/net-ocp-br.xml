@@ -1,5 +1,0 @@
-<network>
-  <name>ocp-br</name>
-  <forward mode="bridge"/>
-  <bridge name="ocp-br"/>
-</network>

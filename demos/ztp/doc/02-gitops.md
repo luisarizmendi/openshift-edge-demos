@@ -59,32 +59,16 @@ spec:
 After creating the object you can show:
 
 * ArgoCD: Show how the applications go green while sync
+
+  You can check in the ArgoCD portal three new Applications created. The "Global" Application is the one that triggers the deployment of the other two, the "Cluster" Application will create the objects to create the OpenShift clusters, while the "Policy" Application will create the related Policies and Placement onjects in ACM that will be applied to the new cluster.
+
+
 * ACM: Infrstructure>Host Inventory
-* Baremetal nodes: Home> API Explorer
 
-
-
-
-
-
-
-show ....
+  You will see that a new Host inventory `sno-gitops` has been created. If you open it you also will see that there are still an object that is not yet created: The `pull-secret`, and if you check  the status of the Baremetal node, you will see a Registering error: `BMC CredentialsName secret doesn't exist`. You need to create both the `pull-secret` and the BMC user/password objects in order to start the cluster deployment.
 
 > **NOTE**
 > You might find a `Metal3 operator is not configured` warning message in the Host Inventory. Wait one minute to be sure that you gave enough time for the auto-configuration, if the message is still there you can try to remove the `provisioning-configuration` `Provisioning` object (it will be recreated by ArgoCD)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ### 2. Create the pull-secret and BMC secrets
 
@@ -115,6 +99,9 @@ show ....
 
 ### 3. Wait until the device is onboarded
 
+
+
+registering > inspecting > provisioning
 
 
 
@@ -149,7 +136,8 @@ check that you can run VMs
 If you find issues and you want to start over, remove the ArgoCD Applications, be sure that the Baremetal and InfraEnv Objects are deleted, and create again the `00-argocd-app.yaml` (probably you will need to create the BMC secret again)
 
 
-
+> **NOTE**
+> Always that you find any issue, check the status of your VPN to be sure that it is still up.
 
 
 

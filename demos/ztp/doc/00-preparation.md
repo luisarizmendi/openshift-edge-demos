@@ -54,6 +54,9 @@ The base deployment is common to all demos, so refer to the [base environment se
 
 ## 2. Demo-Specific Environment Setup
 
+
+### 
+
 There are some configuration steps that, although required, are not the focus of what we want to show during the demo steps, so I decided to provide them pre-configured as part of the demo environment.
 
 To include them in your environment, you have to:
@@ -62,6 +65,44 @@ To include them in your environment, you have to:
    - Click the `+` button to add resources.
    - Paste the content from the [bootstrap-demo.yaml](../bootstrap-demo/bootstrap-demo.yaml) file.
    - Wait Until All Applications Are in "Sync" Status in the Argo CD Console.
+
+
+
+
+### DNS
+
+
+### VM
+
+
+
+
+
+
+
+
+sudo firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -s 192.168.100.0/24 -d 10.0.0.0/8 -j ACCEPT
+sudo firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 1 -s 192.168.100.0/24 -j MASQUERADE
+sudo firewall-cmd --reload
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## 3. Section-Specific Preparation
 
@@ -128,17 +169,16 @@ If ACM is hosted on AWS, you can utilize the [AWS VPN setup playbooks](../../../
 
 #### Virtual BMC and Single Node OpenShift VM
 
-For users without a physical BMC-enabled device, a Single Node OpenShift (SNO) edge device can be deployed via a Virtual Machine (VM) and managed using a Virtual BMC service. Reference the scripts in the [`tools` section](../../../tools/virtual-bmc/README.md) to set up a Virtual BMC on your KVM host.
+For users without a physical BMC-enabled device, a Single Node OpenShift (SNO) edge device can be deployed via a Virtual Machine (VM) and managed using a Virtual BMC service. 
 
 To create a VM in Virtual Machine Manager, follow the "Manual Install" process, ensuring the VM has:
 
 - **8 vCPU**, **16GB RAM**, **120GB storage**, and at least one network interface.
 - A **VirtualMedia drive** (CD-ROM).
+- Network allowed to access external networks (ie. DNS server)
 
 > **NOTE**  
 > Remember that in order to configure your machine to use UEFI boot (recommended) with Virtual Machine Manager, you need to select "Customize before lauch" while creating the VM
-
-For network access outside of your laptop, set up a **network bridge** to provide the VM with physical network access. Find helpful scripts in the [`tools` section](../../../tools/libvirt-bridge/README.md) to create a network bridge (`ocp-br`) on your Linux system, which can be selected while creating the VM.
 
 After setting up the VM, power it off and note the VM UUID, which can be found under the "Overview" section of Virtual Machine Manager.
 
@@ -180,6 +220,31 @@ I also recommend creating the associated USB keys with those images if you plan 
 
 #### Single Node OpenShift Virtual Machine
 You can also use the script for [creating the SNO Virtual Machine](../../../tools/libvirt-sno/README.md) and the associated resources in KVM if you need to deploy the OpenShift Appliance in a Virtual Machine.
+
+
+
+
+
+
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### DNS Configuration
 

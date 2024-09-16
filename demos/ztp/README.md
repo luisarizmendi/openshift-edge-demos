@@ -34,11 +34,11 @@ Find below two diagrams showing two different possible demo setups:
 
 ![Architecture Diagram](doc/images/architecture-vm.png)
 
-* Using a physical device (including BMC):
+* Using a physical device:
 
 ![Architecture Diagram](doc/images/architecture-physical.png)
 
-More information about the architecture can be found in the [Preparation and Requirements Guide](doc/00-preparation.md).
+Using Physical devices has some implications, for more information about the architecture can be found in the [Preparation and Requirements Guide](doc/00-preparation.md).
 
 
 ## Preparation and Requirements
