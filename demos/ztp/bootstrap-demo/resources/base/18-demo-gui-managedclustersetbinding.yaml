@@ -20,15 +20,4 @@ metadata:
   namespace: openshift-gitops
 spec:
   clusterSet: demo-ztp-gui
----
-apiVersion: cluster.open-cluster-management.io/v1beta2
-kind: ManagedClusterSetBinding
-metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "18"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: global
-  namespace: openshift-gitops
-spec:
-  clusterSet: global
 
