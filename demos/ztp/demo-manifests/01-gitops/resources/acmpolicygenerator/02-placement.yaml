@@ -14,21 +14,4 @@ spec:
       operator: Exists
   clusterSets:
     - demo-ztp-gitops
----
-apiVersion: cluster.open-cluster-management.io/v1beta1
-kind: Placement
-metadata:
-  name: demo-ztp-gitops-placement-policy
-  namespace: sno-gitops
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-spec:
-  tolerations:
-    - key: cluster.open-cluster-management.io/unreachable
-      operator: Exists
-    - key: cluster.open-cluster-management.io/unavailable
-      operator: Exists
-  clusterSets:
-    - demo-ztp-gitops
 
