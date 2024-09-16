@@ -13,6 +13,8 @@ policyDefaults:
       placementPath: input/placement.yaml
     placementBindingDefaults:
       name: demo-ztp-gitops
+    policySets: 
+      - demo-ztp-gitops
 policies:
     - name: demo-ztp-gitops
       policyAnnotations:
