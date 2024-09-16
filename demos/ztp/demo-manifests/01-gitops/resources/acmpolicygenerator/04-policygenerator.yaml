@@ -15,7 +15,7 @@ policyDefaults:
         compliant: 10m
         noncompliant: 10s
 policies:
-    - name: demo-ztp-gitops-operators
+    - name: demo-ztp-gitops-placement-policy
       policyAnnotations:
         ran.openshift.io/ztp-deploy-wave: "4"
       disabled: false
