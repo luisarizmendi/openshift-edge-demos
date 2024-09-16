@@ -6,7 +6,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "18"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: demo-ztp-gui
-  namespace: sno-gui
+  namespace: sno-gui-policy
 spec:
   clusterSet: demo-ztp-gui
 ---
