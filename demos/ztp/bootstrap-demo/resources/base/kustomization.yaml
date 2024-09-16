@@ -1,6 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+- 00-gitops-clusters.yaml
 - 03-full-iso-agentserviceconfig.yaml
 - 04-demo-gitops-agentserviceconfig.yaml
 - 08-demo-gitops-argocd-patch-cm.yaml
@@ -14,7 +15,6 @@ resources:
 - 17-demo-gui-ns.yaml
 - 18-demo-gui-managedclustersetbinding.yaml
 - 19-demo-gui-placement.yaml
-- 20-demo-gui-gitops-clusters.yaml
 - 20-demo-gui-policies-kubevirt.yaml
 - 20-demo-gui-policies.yaml
 - 22-demo-gui-policybind.yaml
