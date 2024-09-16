@@ -23,13 +23,3 @@ policySets:
     description: "PolicySet for demo-ztp-gitops"
     policies:
       - demo-ztp-gitops
-bindings:
-  - name: demo-ztp-gitops-binding
-    placementRef:
-      kind: Placement
-      name: placement-policy
-      apiGroup: cluster.open-cluster-management.io
-    subjects:
-      - kind: PolicySet
-        name: demo-ztp-gitops
-        apiGroup: policy.open-cluster-management.io
