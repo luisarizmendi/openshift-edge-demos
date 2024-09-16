@@ -6,4 +6,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "0"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: demo-ztp-gitops
-spec: {}
+spec: 
+  clusterSelector:
+    labelSelector:
+      matchLabels:
+        demo: gitops
