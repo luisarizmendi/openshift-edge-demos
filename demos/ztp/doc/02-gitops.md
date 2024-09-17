@@ -1,13 +1,14 @@
 # Section 2 - GitOps with ACM and BMC
 
-## Recording
+## Demo section video recording
+
 TBD
 
 ---
 
 ## Time required
 
-TBD
+60 minutes (40 minutues waiting for OpenShift deployment)
 
 
 ---

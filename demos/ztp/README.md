@@ -19,6 +19,11 @@ To address these challenges, we can prepare all deployment assets in advance to 
 * OpenShift Appliance
 * OpenShift Assisted Installer
 
+## Demo video recording
+
+TBD
+
+
 ## Architecture
 
 The architecture for this demo comprises a central site, where Advanced Cluster Management (ACM) and OpenShift GitOps (ArgoCD) are deployed on top of Red Hat OpenShift, and the Edge locations (one is sufficient for this demo) where the devices will be installed with Single Node OpenShift (SNO). Additionally, a GitHub or any other Git repository will be used to host the GitOps manifests.
@@ -43,7 +48,7 @@ Using Physical devices has some implications, for more information about the arc
 
 ## Preparation and Requirements
 
-This demo will require the same preparation time than actual delivery. Additionally, there are key considerations that may impact both how and what you use to present the demo, so please review the preparation document carefully.
+This demo will require almost the same preparation time than actual delivery. Additionally, there are key considerations that may impact both how and what you use to present the demo, so please review the preparation document carefully.
 
 Refer to the [Preparation and Requirements Guide](doc/00-preparation.md) for detailed setup instructions.
 
@@ -51,7 +56,7 @@ Refer to the [Preparation and Requirements Guide](doc/00-preparation.md) for det
 
 **Time required for preparing the demo:** Less than 120 minutes
 
-**Time required for delivering the demo:** Less than 120 minutes
+**Time required for delivering the demo:** Less than 150 minutes (90 minutes waiting for deployments)
 
 ### TL;DR
 

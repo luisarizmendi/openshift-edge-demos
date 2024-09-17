@@ -1,6 +1,6 @@
 # Section 1 - Assisted Installer with Advanced Cluster Management
 
-## Recording
+## Demo section video recording
 TBD
 
 

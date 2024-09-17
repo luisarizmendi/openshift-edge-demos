@@ -1,6 +1,6 @@
 # Section 3 - OpenShift Appliance
 
-## Recording
+## Demo section video recording
 TBD
 
 ---
@@ -14,7 +14,7 @@ TBD
 
 ## Environment Review
 
-For this section, you **do not** need the Central Site to perform the OpenShift Zero-Touch Provisioning. The OpenShift Appliance Image will be generated using a single Linux system, such as a laptop.
+For this section, you do not need the Central Site to perform the OpenShift Zero-Touch Provisioning. The OpenShift Appliance Image will be generated using a single Linux system, such as a laptop.
 
 ---
 
@@ -27,47 +27,11 @@ Make sure to double-check that [all pre-requirements are met](00-preparation.md)
 
 While preparing the OpenShift Appliance Images ("Base Image" and "Config Image"), you can set up static IPs in `agent-config.yaml` and select the desired `capabilities` in `install-config.yaml` to enable specific cluster features (e.g., demonstrating how to conserve resources).
 
-
-
-
-
-VM......... crear con scripts.....
-
 ---
 
 ## Demo Steps
 
 ### 1. Deploying the Base Image
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 To deploy the Base Image, you can either:
 
 - Copy the RAW image directly to the disk (e.g., using the `dd` command), or
@@ -82,11 +46,7 @@ The ISO offers an advantage over the RAW image, as it automatically resizes disk
 
 After booting the RAW image for the first time or booting from the ISO, you will see the following message in the console, displayed in red:
 
-
-```bash
-
- "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx"
-```
+![Waiting for config](images/applaince-waiting-config.png)
 
 
 ### 2. Mount the Config Image
@@ -103,7 +63,6 @@ The device will automatically detect and mount the Config Image once you connect
 watch "oc --kubeconfig image-config/auth/kubeconfig get co"
 ``` 
 
-
 The deployment is complete when all operators have been successfully deployed. After a few minutes, the system will reboot, and your OpenShift Appliance will be fully installed.
 
 ---
@@ -112,26 +71,24 @@ The deployment is complete when all operators have been successfully deployed. A
 
 Once the system reboots, OpenShift will take some time to start all necessary services. After everything is up and running, verify that the customizations you applied during the Base and Config Image creation are in effect.
 
-For example, if you followed the [Appliance Ansible playbooks](../../../tools/ocp-appliance/README.md), you can check for the following:
-
-- Subscription to the `openshift-compliance` operator (Base Image customization).
-  
-
+First log in the new OpenShift Appliance node:
 
 ```bash
 
  "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx"
 ```
+
+Then check the auto-deployed resources. For example, if you followed the [Appliance Ansible playbooks](../../../tools/ocp-appliance/README.md), you can check that the following were created:
+
+- Subscription to the `openshift-compliance` operator (Base Image customization).
+
+
 
 
 - The `hello-world` application is running (Config Image customization).
 
 
 
-```bash
-
- "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx"
-```
 
 
 
