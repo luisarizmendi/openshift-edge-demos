@@ -5,6 +5,13 @@ TBD
 
 ---
 
+
+## Time required
+
+TBD
+
+---
+
 ## Environment Review
 
 For this section, you **do not** need the Central Site to perform the OpenShift Zero-Touch Provisioning. The OpenShift Appliance Image will be generated using a single Linux system, such as a laptop.

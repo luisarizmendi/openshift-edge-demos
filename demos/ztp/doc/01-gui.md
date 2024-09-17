@@ -4,11 +4,13 @@
 TBD
 
 
+---
+
 ## Time required
 
-TBD
+45 minutes (30 minutues waiting for OpenShift deployment)
 
-# Demo: Zero-Touch Provisioning with ACM and OpenShift
+---
 
 ## Environment Review
 
@@ -70,7 +72,7 @@ Once your device is in the inventory, use it to deploy the OpenShift cluster:
     * ClusterSet: `demo-ztp-gui`
     * Base domain, check **Install single node OpenShift**, and include your pull secret.
     
-4. *(Optional)* To reduce hardware usage, remove unnecessary operators:
+4. *(Optional)*  You can reduce hardware usage by removing unnecessary operators ([Composable OpenShift feature](https://access.redhat.com/solutions/7025867)):
     * Click **YAML view**.
     * Add the following annotation to the `AgentClusterInstall` resource to remove the Web Console and other components:
 
@@ -94,10 +96,10 @@ Once your device is in the inventory, use it to deploy the OpenShift cluster:
       ```
 
     > **NOTE:**  
-    > By following this step, you remove the Web Console, so you'll need to manage the cluster via ACM or `oc` CLI.
+    > By following this step using the provided example, you remove the Web Console, so you'll need to manage the cluster via ACM or `oc` CLI.
 
 
-![Architecture Diagram](images/gui-composable.png)
+![Adding Composable capabilities](images/gui-composable.png)
 
 
 * Click **Next**, then **Next again** (no further automation setup needed), and finally **Save**.
@@ -110,6 +112,10 @@ Once your device is in the inventory, use it to deploy the OpenShift cluster:
     > This will confirm that the overrides were applied correctly.
 
 * Wait until the "Cluster is not ready yet" message disappears, then click **Install Cluster**.
+
+
+    > **NOTE:**  
+    > The deployment takes, depending on the resources in your node, and the network connectivity, around 30 minutes.
 
 ---
 
@@ -133,6 +139,9 @@ To verify that the policy has been applied:
 1. Go to **Governance** and click on the **Policies** tab.
 2. Select the **demo-ztp-gui** Policy.
 3. Click the **Results** tab to check the policy enforcement status.
+
+> **NOTE:**  
+> It could take several minutes to complete the policy enforcement and mark the Cluster as "compliant"
 
 The policy prepares the new cluster for the Compliance Operator. You can verify that the subscription is present on the cluster using either the `oc` CLI or, if you didn't remove the Web Console, by navigating the Web UI.
 
@@ -158,17 +167,7 @@ To verify this:
     * Click **Settings** on the left menu, then select **Clusters**.
     * You should see the `sno-gui` cluster listed, automatically created thanks to the ACM and ArgoCD integration.
 
-3. Next, click on **Applications** to see the `hello-world` application. This confirms that the demo test application was deployed successfully.
-
-
-
-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxx
-XXXXXXXXXXXXXXXXXXXXXXx
-XXXXXXXXXXXXXXXx
-XXXXXXXXXX
-
-
-
+3. Next, click on **Applications** to see the `hello-sno-gui` application. This confirms that the demo test application was deployed successfully. If you want to double check it you can check the route in the cluster (ie. with `oc get route -n hello`) and visit the URL.
 
 ---
 

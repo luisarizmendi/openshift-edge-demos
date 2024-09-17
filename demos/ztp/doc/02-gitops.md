@@ -3,12 +3,20 @@
 ## Recording
 TBD
 
+---
 
+## Time required
+
+TBD
+
+
+---
 ## Environment review
 
 The environment has been prepared to perform Zero-Touch Provisioning with Assisted Installer using Redfish BMC. In contrast with the previous section, no further configuration was made in the cluster (ie. objects such as `Policies`, `ClusterSet`, `Placement`,...) since in this section everything will be created from a single ArgoCD Application object.
 
 
+---
 ## Preparation
 
 Remeber to double-check that [all the pre-requirements are met](00-preparation.md) before jumping into the demo steps.
@@ -29,32 +37,7 @@ ArgoCD will create all the required objets, you only need to create the ArgoCD A
 
    - Access your OpenShift console in the Hub cluster.
    - Click the `+` button to add resources.
-   - Paste the content from the [00-argocd-app.yaml](../demo-manifests/01-gitops/00-argocd-app.yaml) file:
-
-```yaml
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: demo-ztp-gitops-global
-  namespace: openshift-gitops
-  labels:
-    app.kubernetes.io/managed-by: demo-ztp-gitops
-spec:
-  project: default
-
-  source:
-    repoURL: 'https://github.com/luisarizmendi/openshift-edge-demos.git'
-    targetRevision: main
-    path: demos/ztp/demo-manifests/01-gitops/resources/argocd/
-
-  destination:
-    server: 'https://kubernetes.default.svc'
-
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
-```
+   - Paste the content from the [00-argocd-app.yaml](../demo-manifests/01-gitops/00-argocd-app.yaml) file
 
 After creating the object you can show:
 
@@ -92,61 +75,37 @@ As soon as you create the BMC password the baremetal you will see in ACM "Infras
 
 ### 3. Wait until the device is onboarded
 
-You will see that the baremetal host will progress accross different states (Registering -> Inspecting -> Provisioning).
-
-
-
+You will see in "Infrastructure > Host Inventory" that the baremetal host of the `sno-gitops` environment will progress accross different states: Registering -> Inspecting -> Provisioning.
 
 > **NOTE**
-> If this process fails you can check if the OpenShift Hub nodes can connect to the edge device BMC
+> If this process fails you can check if the OpenShift Hub nodes can connect to the edge device BMC, also if you find issues and you want to start over, remove the ArgoCD Applications, be sure that the Baremetal, Secret and InfraEnv Objects are deleted, and create again the `00-argocd-app.yaml` (probably you will need to create the BMC secret again).
 
+After the node is ready, the OpenShift Cluster installation will take place. You can monitor it in "Infrastructure > Clusters" selecting the `sno-gitops` cluster.
 
-
-
-
-
-
-
-
-si falla ver el url el en InfraEnv and connect to one of the nodes and try to run the sushy command to mount.
-check that you can run VMs
-
-
-
-
-
-
-
-insufficient transitorio
-
-
-
-
-
-
-
-
-
-If you find issues and you want to start over, remove the ArgoCD Applications, be sure that the Baremetal and InfraEnv Objects are deleted, and create again the `00-argocd-app.yaml` (probably you will need to create the BMC secret again)
-
-
-> **NOTE:**
-> Always that you find any issue, check the status of your VPN to be sure that it is still up.
-
-
-
-
-
-
-
-
-el secret se queda pillado cuando borras la application
-
-
-
+Once the cluster is installed and shows a **"Ready"** status under **Infrastructure > Clusters** it will start to "Import" the cluster, when that's done you just need to wait until all **Add-ons** are marked green, then you can continue to the next step.
 
 ### 4. Check your OpenShift deployment
 
 
 
+
+
+>>>>>>>>>>>>>>>>>>>><
+
+
+>
+
+
 ## Review
+
+In this section we demonstrated how you can even remove the need of attaching the Discovery ISO and configuring the edge device to boot from USB, by using a device with BMC and the automations provided by ACM.
+
+In this case we configured everything as objects in a Git source code repository, following the GitOps approach. We also have seen how, in order to describe our infrastructure and cluster, instead of creating the multiple objects that we generated using the GUI (`InfraEnv`, `AgentClusterInstall`, `NMStateConfig`, etc), we used a different approach by defining everything in a single `SiteConfig` file, that will be used to obtain the mentioned objects that are needed to install the OpenShift Cluster.
+
+
+policy generator
+
+
+
+
+
