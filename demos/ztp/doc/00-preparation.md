@@ -90,7 +90,7 @@ There is no special requirements. OpenShift Appliance can be used even in comple
 If using Virtual Machines, you will need to create at least three, one per Section. If you are using  Virtual Machine Manager, you will need to select  the "Manual Install" process, ensuring the VM has:
 
 
-- **8 vCPU**, **16GB RAM**, **120GB storage**, and at least one network interface.
+- **8 vCPU**, **16GB RAM**, **120GB storage** (VirtIO disk if using Sushy tools for virtual BMC, more below), and at least one network interface.
 - A **VirtualMedia drive** (CD-ROM).
 - Network allowed to access external networks (ie. DNS server)
 

@@ -141,7 +141,7 @@ To verify that the policy has been applied:
 3. Click the **Results** tab to check the policy enforcement status.
 
 > **NOTE:**  
-> It could take several minutes to complete the policy enforcement and mark the Cluster as "compliant"
+> It could take several minutes to complete the policy enforcement and mark the Cluster as "Without violations"
 
 The policy prepares the new cluster for the Compliance Operator. You can verify that the subscription is present on the cluster using either the `oc` CLI or, if you didn't remove the Web Console, by navigating the Web UI.
 
@@ -158,7 +158,7 @@ oc get subs --all-namespaces
 
 The bootstrap process also applied the [`23-demo-gui-welcome-app.yaml`](../bootstrap-demo/resources/base/23-demo-gui-welcome-app.yaml) file, which creates an `ApplicationSet` associated with clusters in the `demo-ztp-gui` ClusterSet. This `ApplicationSet` deploys the "Hello-World" test application.
 
-To verify this:
+To verify this in ArgoCD:
 
 1. Navigate to the **ArgoCD** portal:
     * Click the **six squares** icon (top-right corner) in the Hub OpenShift Web Console to access ArgoCD.
@@ -168,6 +168,10 @@ To verify this:
     * You should see the `sno-gui` cluster listed, automatically created thanks to the ACM and ArgoCD integration.
 
 3. Next, click on **Applications** to see the `hello-sno-gui` application. This confirms that the demo test application was deployed successfully. If you want to double check it you can check the route in the cluster (ie. with `oc get route -n hello`) and visit the URL.
+
+You can also use the "Applications" menu from ACM. Search `demo-ztp-gui-apps` application and check the Overview and Topology tabs.
+
+![ACM app topology](images/gui-acm-app-topology.png)
 
 ---
 

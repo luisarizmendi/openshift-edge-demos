@@ -38,7 +38,6 @@ spec:
             syncPolicy:
               syncOptions:
                 - CreateNamespace=true
-                - PruneLast=true
                 - Replace=true
                 - ApplyOutOfSyncOnly=true
                 - Validate=false
@@ -69,7 +68,6 @@ spec:
             syncPolicy:
               syncOptions:
                 - CreateNamespace=true
-                - PruneLast=true
                 - Replace=true
                 - ApplyOutOfSyncOnly=true
                 - Validate=false

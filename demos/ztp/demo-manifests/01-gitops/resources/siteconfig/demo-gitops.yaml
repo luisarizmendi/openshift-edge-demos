@@ -62,10 +62,10 @@ spec:
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://bmc.sno-gitops.sandbox715.opentlc.com:8000/redfish/v1/Systems/0d4bcdaa-b659-41b2-9f4f-98cb6712aa2d"
+        bmcAddress: "redfish-virtualmedia+http://bmc.sno-gitops.sandbox715.opentlc.com:8000/redfish/v1/Systems/c9413a8c-cfa2-45af-a779-81529ed850dc"
         bmcCredentialsName: 
           name: "demo-ztp-gitops-bmc-secret-1"
-        bootMACAddress: "52:54:00:c2:2e:ae"
+        bootMACAddress: "52:54:00:9b:e9:52"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
         #rootDeviceHints:
@@ -116,7 +116,7 @@ spec:
         nodeNetwork:
           interfaces:
             - name: eth0
-              macAddress: "52:54:00:c2:2e:ae"
+              macAddress: "52:54:00:9b:e9:52"
           config:
             interfaces:
               - name: eth0
