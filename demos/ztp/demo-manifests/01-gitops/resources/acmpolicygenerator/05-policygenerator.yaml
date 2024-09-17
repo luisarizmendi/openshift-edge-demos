@@ -3,7 +3,7 @@ kind: PolicyGenerator
 metadata:
   name: "common"
 policyDefaults:
-    namespace: sno-gitops-policy
+    namespace: sno-gitops-policies
     remediationAction: enforce
     severity: high
     evaluationInterval:
