@@ -7,7 +7,7 @@
 
   > **Note**
   >
-  > The "Hub" Cluster is where ACM is deployed. For this demo, it will serve as the "Cloud" cluster.
+  > The "Hub" Cluster is where ACM is deployed. For this demo, it will serve as the "Cloud" cluster. If you want, you can deploy it as a Compact 3-node Cluster (8vcpu, 32 GB memory per node).
 
 For the central Hub site, deploying the OpenShift Hub cluster on AWS is recommended due to its ease of setup and scalability. However, OpenShift can also be deployed on other supported environments, including bare-metal servers—though this is not recommended for a demo due to the significant CPU and memory requirements.
 
