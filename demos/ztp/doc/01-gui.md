@@ -184,4 +184,6 @@ Key points from the demo:
 - **Policy Enforcement**: Pre-configured policies (like the one enforcing the OpenShift Compliance Operator) are applied automatically.
 - **Automated Application Deployment**: By using ArgoCD, pre-defined applications like the "Hello-World" test app can be deployed to newly created clusters.
 
+An example hello-word application and a simple policy that installs the Complaince Operator in the new cluster were used but the same principle can be applied to much more complicated policies and any Application that you could need to be running in the cluster automatically right after the deployment.
+
 This automation simplifies the process for edge personnel, ensuring that OpenShift clusters can be set up with minimal manual intervention, as the deployment and post-configuration tasks are fully automated.
