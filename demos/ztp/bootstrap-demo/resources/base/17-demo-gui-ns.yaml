@@ -13,4 +13,4 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "5"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
-  name: sno-gui-policy
+  name: sno-gui

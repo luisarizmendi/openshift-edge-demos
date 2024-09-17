@@ -2,7 +2,7 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
   name: placement-demo-ztp-gui
-  namespace: sno-gui-policy
+  namespace: sno-gui
   annotations:
     argocd.argoproj.io/sync-wave: "22"
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true

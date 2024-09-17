@@ -29,6 +29,9 @@ Once the script completes, the VPN will be created. Navigate to **VPC > Virtual 
 
 If using Linux, OpenWRT, or another non-listed system, download the "Generic" (IKEv2) configuration file.
 
+![Architecture Diagram](images/vpn-download-config.png)
+
+
 ### 4. Configure Your Local VPN Endpoint
 
 To assist with configuring your local VPN endpoint, additional Ansible playbooks are provided:
@@ -49,7 +52,7 @@ To assist with configuring your local VPN endpoint, additional Ansible playbooks
    sudo systemctl restart ipsec
    ```
 
-4. The VPN should now be established.
+4. The VPN should now be established. Find one AWS Instance private IP (any OpenShift node) and ping to be sure that you have connectivity.
 
 
 #### b. Strongswan on OpenWRT
@@ -82,7 +85,7 @@ To assist with configuring your local VPN endpoint, additional Ansible playbooks
    /etc/init.d/network restart
    ```
 
-7. The VPN should be up within a few seconds. Verify the status by checking the system logs with logread or reviewing the tunnel status with ipsec statusall.
+7. The VPN should be up within a few seconds. Verify the status by checking the system logs with logread or reviewing the tunnel status with ipsec statusall, and find one AWS Instance private IP (any OpenShift node) and ping to be sure that you have connectivity.
 
 ## Deleting the VPN
 

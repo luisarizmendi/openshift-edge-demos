@@ -2,7 +2,7 @@
 
 ## 0. Environment & Hardware Requirements
 
-* **OpenShift "Hub" Cluster**: Typically configured with 3 worker nodes, each having 8 cores and 16GB of memory.
+* **OpenShift "Hub" Cluster**: Typically configured with 3 worker nodes, each having 8 cores and 16GB of memory. This demo was tested with OpenShift 4.16
 * **OpenShift "Edge" Clusters**: At least one additional OpenShift cluster (minimal resources are acceptable).
 
   > **Note**
@@ -109,9 +109,15 @@ sudo firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 0 -s <CID
 sudo firewall-cmd --permanent --direct --add-rule ipv4 nat POSTROUTING 1 -s <CIDR routed network> -j MASQUERADE
 sudo firewall-cmd --reload
 ```
+If you want to review the rules that you created:
+
+```bash
+sudo firewall-cmd --permanent --direct --get-all-rules
+```
 
 > **Tip**  
 > Create an additional test VM in that new network and check that you can connect to services in Internet while your source IP is not changed when connecting to the Cloud using the VPN.
+
 
 ---
 

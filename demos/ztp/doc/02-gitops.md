@@ -130,7 +130,7 @@ insufficient transitorio
 If you find issues and you want to start over, remove the ArgoCD Applications, be sure that the Baremetal and InfraEnv Objects are deleted, and create again the `00-argocd-app.yaml` (probably you will need to create the BMC secret again)
 
 
-> **NOTE**
+> **NOTE:**
 > Always that you find any issue, check the status of your VPN to be sure that it is still up.
 
 
@@ -149,3 +149,4 @@ el secret se queda pillado cuando borras la application
 
 
 
+## Review
