@@ -4,161 +4,181 @@
 TBD
 
 
-## Environment review
+## Time required
 
-In order to simplify the demo, the environment has been prepared to minimize the steps that does not add anything relevant to what the demo tries to show (zero-touch provisioning), that's why these objects have been already created in the environment for you:
+TBD
 
-* ClusterSet and ClusterSetBinding: To host the cluster that you are going to create in a differenciated group
-* Placement: To select the clusters where to deploy applications and ACM policies under the new ClusterSet
-* Policy: That is used to deploy an example operator (`openshift-compliance` in this case)
-* GitOpsServer and ApplicationSet: In order to automatically deploy the `hello-world` test application in the new cluster when it is imported in ACM.
-* AgentServiceConfig: The Assisted Installer service has been enabled
+# Demo: Zero-Touch Provisioning with ACM and OpenShift
 
+## Environment Review
+
+The environment has been pre-configured to streamline the demo, focusing on showcasing zero-touch provisioning. Several key components have already been set up for you:
+
+* **ClusterSet and ClusterSetBinding**: A group to host the cluster you'll create, keeping it isolated from others.
+* **Placement**: To select clusters for deploying applications and ACM policies within the new ClusterSet.
+* **Policy**: A pre-created policy deploys an example operator (`openshift-compliance` in this case).
+* **GitOpsServer and ApplicationSet**: Automatically deploys the `hello-world` test application to the new cluster when it is imported into ACM.
+* **AgentServiceConfig**: The Assisted Installer service has been enabled to facilitate cluster creation.
 
 ## Preparation
 
-Remeber to double-check that [all the pre-requirements are met](00-preparation.md) before jumping into the demo steps.
+Ensure that [all prerequisites are met](00-preparation.md) before proceeding with the demo.
 
-Remember to check the DNS entries before moving into the demo steps.
+Also, **double-check DNS entries** to ensure correct cluster deployment.
 
 ---
 
-## Demo steps
+## Demo Steps
 
-### 1. Configure the inventory and OpenShift cluster in ACM.
+### 1. Configure the Inventory and OpenShift Cluster in ACM
 
-Although the GUI can be used to create the cluster and the related host inventory at once, in order to make the parts more clear to the audience, we will be creating first the host inventory and the we will use that inventory to create a new OpenShift Cluster.
+While the GUI allows you to create the cluster and host inventory at once, we will break down the steps for clarity.
 
-* In ACM ("All Clusters" in the dropdown menu on top left) go to "Infrastructure > Host Inventory" and click "Create infrastructure environment"
+1. In ACM, navigate to **"All Clusters"** in the dropdown (top-left corner).
+2. Go to **Infrastructure > Host Inventory** and click **Create infrastructure environment**.
 
-* Provide a name (ie. `sno-gui`), a location name and your pull-secret. Optionally mark the "Static IP" Network type if you plan to setup static IPs and include your public SSH key to being able to access the OpenShift nodes using SSH. Click "Create"
+    > **NOTE:**  
+    > If you encounter an "Info alert: Configuration is hanging for a long time" message, wait a minute for the cluster to complete the bootstrap process.
 
-> **NOTE:**
-> You might find the "Warning alert:Central Infrastructure Management is not running." message. If so, wait one or two minutes so the cluster completes the configuration done with the ArgoCD Application created with the `bootstrap-demo.yaml` file during the preparation.
+3. Provide a name (e.g., `sno-gui`), location, and your pull secret. If needed, mark the **"Static IP" Network type** and add your public SSH key to access OpenShift nodes via SSH. Click **Create**.
 
+    > **NOTE:**  
+    > If you see "Warning alert: Central Infrastructure Management is not running," wait for the cluster to finish the ArgoCD configuration (`bootstrap-demo.yaml`).
 
-* (optional) If you selected "Static IP" you will need to create the associated NMState object, you can click the `+` OpenShift button and add paste [sno-1-network.yaml](../demo-manifests/00-gui/sno-1-network.yaml) after addapting it to your values
+4. *(Optional)* If using **Static IP**, create the associated NMState object for Node network settings. Click the `+` OpenShift button, paste the contents of [sno-1-network.yaml](../demo-manifests/00-gui/sno-1-network.yaml), and adjust it as needed.
 
+5. Click the **Host** tab, then click **Add host** (top-right corner) and select **With Discovery ISO**. Download the Discovery ISO.
 
-* Click "Host" tab and then "Add host" on the top right corner, selecting "With Discovery ISO" and download the Discovery ISO.
+6. Boot your edge device using the Discovery ISO.
 
-* Boot your edge device using the Discovery ISO.
+    > **NOTE:**  
+    > For physical hardware, create a bootable USB from the ISO using `dd` or any other tool.
 
-  > **NOTE:**
-  > If you are using physical Hardware you will need to create a bootable USB from that ISO image (using `dd` or any other Software).
+7. After booting, the device will appear in the **Hostname** list. Click **Approve host** to make it available. Optionally, change the hostname from the MAC address to something like `sno-1.sno-gui.<domain>`.
 
-* After some time you will see the device in the Hostname list. Click "Approve host". Optional you can also change the name from the MAC Address to `sno-1.sno-gui.<domain>`.
+    > **NOTE:**  
+    > It may take around 2.5 minutes for the host to appear in the list.
 
+### 2. Launch the OpenShift Cluster Deployment from ACM
 
+Once your device is in the inventory, use it to deploy the OpenShift cluster:
 
-### 2. Launch the OpenShift cluster deployment from ACM.
+1. In ACM, go to **Infrastructure > Clusters** and click **Create cluster**.
+2. Select **Host inventory**, **Standalone**, and **Use existing hosts**.
+3. Add the cluster details:
+    * Cluster Name: e.g., `sno-gui`
+    * ClusterSet: `demo-ztp-gui`
+    * Base domain, check **Install single node OpenShift**, and include your pull secret.
+    
+4. *(Optional)* To reduce hardware usage, remove unnecessary operators:
+    * Click **YAML view**.
+    * Add the following annotation to the `AgentClusterInstall` resource to remove the Web Console and other components:
 
-Once you have your device in the Inventory List, you can use it to create the OpenShift cluster.
+      ```yaml
+      kind: AgentClusterInstall
+      metadata:
+        annotations:
+          agent-install.openshift.io/install-config-overrides: |
+            {"networking":{"networkType":"OVNKubernetes"},
+              "capabilities": {
+                "baselineCapabilitySet": "None",
+                "additionalEnabledCapabilities": [
+                  "NodeTuning",
+                  "OperatorLifecycleManager",
+                  "marketplace",
+                  "Ingress"
+                ]
+              }
+            }
+      ...
+      ```
 
-* Go to "Infrastructure > Clusters" in ACM and click "Create cluster"
-
-* Select "Host inventory", "Standalone", "Use existing hosts"
-
-* Add the cluster details, including the cluster name (ie. `sno-gui`), the Cluster set (`demo-ztp-gui`), basedomain, check "Install single node OpenShift" and include your Pull secret. 
-
-* (optional) If you want to reduce the cluster Hardware footprint, you can remove some unnecessary default operators out of the cluster. In order to do that Click in "YAML view" and add the following `agent-install.openshift.io/install-config-overrides` in the `AgentClusterInstall` as an `annotation`. Remember that if you follow this exact example, you are removing the Web Console from your cluster, so you won't have access using the Web Browser, you will need to manage your cluster either through the Advanced Cluster Management or via the `oc` CLI.
-
-```yaml
-kind: AgentClusterInstall
-metadata:
-  annotations:
-    agent-install.openshift.io/install-config-overrides: |
-      {"networking":{"networkType":"OVNKubernetes"},
-        "capabilities": {
-          "baselineCapabilitySet": "None",
-          "additionalEnabledCapabilities": [
-            "NodeTuning",
-            "OperatorLifecycleManager",
-            "marketplace",
-            "Ingress"
-          ]
-        }
-      }
-...
-```
+    > **NOTE:**  
+    > By following this step, you remove the Web Console, so you'll need to manage the cluster via ACM or `oc` CLI.
 
 
 ![Architecture Diagram](images/gui-composable.png)
 
 
-* Click "Next", "Next again" (no further automation needed) and lastly "Save".
+* Click **Next**, then **Next again** (no further automation setup needed), and finally **Save**.
 
-* Keep selected "Auto-select hosts" and click Next. Then include your public SSH key and click Next again.
+* Keep **Auto-select hosts** checked and click **Next**. Add your public SSH key, then click **Next** again.
 
-  > **NOTE:**
-  > If you configured the `install-config-overrides` bear in mind that such configuration does not appear in the right YAML screen, but if you check the `AgentClusterInstall` directly with `oc get AgentClusterInstall -n sno-gui -o yaml` you can double-check that you configuration is there.
+    > **NOTE:**  
+    > If you configured the `install-config-overrides`, be aware that these settings will not appear on the right-hand YAML screen. However, you can verify the configuration by running:  
+    > `oc get AgentClusterInstall -n sno-gui -o yaml`.  
+    > This will confirm that the overrides were applied correctly.
 
-* Wait until the "Cluster is not ready yet" message dissapears and then click "Install Cluster"
+* Wait until the "Cluster is not ready yet" message disappears, then click **Install Cluster**.
 
+---
 
-### 3. Check your OpenShift deployment
+### 3. Check your OpenShift Deployment
 
-Once the cluster is installed and you can see in "Infrastructure > Clusters" that is in "Ready" status with all "Add-ons" on green, you can check the following:
+Once the cluster is installed and shows a **"Ready"** status under **Infrastructure > Clusters**, with all **Add-ons** marked green, verify the following:
 
-#### New Cluster is in the ClusterSet
+#### New Cluster is Part of the ClusterSet
 
-The bootstrap environment Application created a `demo-ztp-gui` ClusterSet. The ClusterSets are useful to group OpenShift Clusters. Check that the new cluster is part of the pre-defined `demo-ztp-gui` ClusterSet by:
+The bootstrap process created a `demo-ztp-gui` ClusterSet to group OpenShift clusters. Confirm that your new cluster is part of this ClusterSet:
 
-* Going to "Infrastructure > Clusters" and click in the "Cluster sets" tab. 
+1. Navigate to **Infrastructure > Clusters** and select the **Cluster sets** tab.
+2. Select the **demo-ztp-gui** ClusterSet and switch to the **Cluster list** tab to verify the cluster inclusion.
 
-* Then select the `demo-ztp-gui` ClusterSet and click again in the "Cluster list" tab.
+#### Cluster Policy Has Been Applied
 
+As mentioned in the "Environment Review," a pre-configured policy ensures that the "OpenShift Compliance Operator" is available on the new cluster. The policy creates the required `subscription` and `operator group` objects.
 
-#### Cluster Policy has been applied
+To verify that the policy has been applied:
 
-A Cluster Policy was pre-configured as mentioned in the "Environment review" section. Policies are used to enforce (or inform about the non-compliance) certain configuration. In our case, we created a simple rule that assures that the Cluster where the Policy is applied has available the "OpenShift Compliance Operator" (a `subscription` and the related `operator group` objects are created).
+1. Go to **Governance** and click on the **Policies** tab.
+2. Select the **demo-ztp-gui** Policy.
+3. Click the **Results** tab to check the policy enforcement status.
 
-You can check that it has been applied by:
+The policy prepares the new cluster for the Compliance Operator. You can verify that the subscription is present on the cluster using either the `oc` CLI or, if you didn't remove the Web Console, by navigating the Web UI.
 
-* Going to "Governance" and click in "Policies" tab. 
-
-* Select on the `demo-ztp-gui` Policy.
-
-* Click on the "Results" tab
-
-The policy prepares the new cluster to use the Compliance Operator, you can double-check that the subscription is in the new cluster using `oc` or the Web UI if you didn't removed the Web Console
 
 ```bash
 oc login -u kubeadmin https://api.sno-gui.<domain>:6443
 oc get subs --all-namespaces
 ```
 
-  > **NOTE:**
-  > Remember that you can see the `kubeadmin` password by selecting the cluster in  "Infrastructure > Clusters".
+> **NOTE:**  
+> Remember that you can retrieve the `kubeadmin` password by selecting the cluster in **Infrastructure > Clusters** and clicking on the credentials tab.
+
+#### Test Application Was Deployed
+
+The bootstrap process also applied the [`23-demo-gui-welcome-app.yaml`](../bootstrap-demo/resources/base/23-demo-gui-welcome-app.yaml) file, which creates an `ApplicationSet` associated with clusters in the `demo-ztp-gui` ClusterSet. This `ApplicationSet` deploys the "Hello-World" test application.
+
+To verify this:
+
+1. Navigate to the **ArgoCD** portal:
+    * Click the **six squares** icon (top-right corner) in the Hub OpenShift Web Console to access ArgoCD.
+
+2. In ArgoCD:
+    * Click **Settings** on the left menu, then select **Clusters**.
+    * You should see the `sno-gui` cluster listed, automatically created thanks to the ACM and ArgoCD integration.
+
+3. Next, click on **Applications** to see the `hello-world` application. This confirms that the demo test application was deployed successfully.
 
 
-#### Test Application was deployed
 
-The bootstrap also applied the [`23-demo-gui-welcome-app.yaml`](../bootstrap-demo/resources/base/23-demo-gui-welcome-app.yaml) file, creating an `ApplicationSet` associated to the clusters on the `demo-ztp-gui` ClusterSet that installs the "Hello-World" test application.
-
-Go to ArgoCD portal (click on the six squares on the top right corner in the Hub OpenShift Web Console) and:
-
-* Click on "Settings" in the left menu. Then go to "Clusters". You will see that the `sno-gui` cluster is in the list. This was automatically created thanks to the integration between ACM and the ArgoCD Server.
-
-* Now click on "Applications"
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXxx
+XXXXXXXXXXXXXXXXXXXXXXx
+XXXXXXXXXXXXXXXx
+XXXXXXXXXX
 
 
 
 
-
-
-
+---
 
 ## Review
 
-In this first of this demo we have seen how is it possible to deploy an OpenShift Cluster with a minimal intervention at the edge site. In this case it is only needed to attach a Discovery ISO and boot from it.
+In this demo, we demonstrated how to deploy an OpenShift Cluster at an edge site with minimal intervention. The only required manual step is to attach a Discovery ISO and boot from it.
 
-We also have seen how, thanks to the configuration centrally managed, when the cluster is created, automatically a set of policies can be applied to configure the cluster.
+Key points from the demo:
+- **Cluster Automation**: Through central configuration, the cluster is automatically bootstrapped with relevant policies once created.
+- **Policy Enforcement**: Pre-configured policies (like the one enforcing the OpenShift Compliance Operator) are applied automatically.
+- **Automated Application Deployment**: By using ArgoCD, pre-defined applications like the "Hello-World" test app can be deployed to newly created clusters.
 
-Finally, also we can assign
-
-
-
-fdsfdsfsd
-
-
+This automation simplifies the process for edge personnel, ensuring that OpenShift clusters can be set up with minimal manual intervention, as the deployment and post-configuration tasks are fully automated.
