@@ -6,7 +6,7 @@ metadata:
   name: "sno-gitops"
   namespace: "sno-gitops"
 spec:
-  baseDomain: "sandbox715.opentlc.com"
+  baseDomain: "sandbox360.opentlc.com"
   pullSecretRef:
     name: "demo-ztp-gitops-pull-secret"
   clusterImageSetNameRef: "img4.16.5-multi-appsub"
@@ -57,12 +57,12 @@ spec:
     #crTemplates:
     #  KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
     nodes:
-      - hostName: "sno-2.sandbox715.opentlc.com"
+      - hostName: "sno-2.sandbox360.opentlc.com"
         role: "master"
         # Optionally; This can be used to configure desired BIOS setting on a host:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
-        bmcAddress: "redfish-virtualmedia+http://bmc.sno-gitops.sandbox715.opentlc.com:8000/redfish/v1/Systems/c9413a8c-cfa2-45af-a779-81529ed850dc"
+        bmcAddress: "redfish-virtualmedia+http://bmc.sno-gitops.sandbox360.opentlc.com:8000/redfish/v1/Systems/c9413a8c-cfa2-45af-a779-81529ed850dc"
         bmcCredentialsName: 
           name: "demo-ztp-gitops-bmc-secret-1"
         bootMACAddress: "52:54:00:9b:e9:52"
