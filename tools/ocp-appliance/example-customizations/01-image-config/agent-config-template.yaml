@@ -8,17 +8,17 @@ hosts:
   - hostname: sno-appliance
     interfaces:
       - name: eth0
-        macAddress: 52:54:00:fa:5f:8f
+        macAddress: 52:54:00:e3:d7:2a
     networkConfig:
       interfaces:
         - name: eth0
           type: ethernet
           state: up
-          mac-address: 52:54:00:fa:5f:8f
+          mac-address: 52:54:00:e3:d7:2a
           ipv4:
             enabled: true
             address:
-              - ip: 192.168.140.3
+              - ip: 192.168.122.30
                 prefix-length: 24
             dhcp: false
       dns-resolver:
@@ -28,7 +28,7 @@ hosts:
       routes:
         config:
           - destination: 0.0.0.0/0
-            next-hop-address: 192.168.140.1
+            next-hop-address: 192.168.122.1
             next-hop-interface: eth0
             table-id: 254
 

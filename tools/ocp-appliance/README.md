@@ -10,6 +10,8 @@ There are two primary playbooks: one for creating the Base image (RAW and ISO fo
 - **Openshift-install Binary:** The `openshift-install` binary must be installed on your system. Make sure to use the [same version](https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/) as the appliance, which is determined by setting the `ocp_release_version` variable in the `ansible/vars.yaml` file.
 - **Disk Space:** Ensure sufficient disk space for the generated images. Approximately 170GB is needed during the appliance creation process (including container image downloads, with each appliance image consuming around 30GB). More space may be required depending on the operators and embedded images you include in the appliance.
 - **USB Drives:** If installing on physical devices, you'll need two USB drives to store the Base and Configuration images. Note that the Base image could exceed 32GB.
+- If you use static IPs, you will need to have `nmstate` package in your system
+
 
 ## Creating the Base and Configuration Images
 
@@ -35,6 +37,9 @@ You'll find one example directory for Config ISO customizations, but you will ne
 - **`agent-config-template.yaml`:** Template for the `agent-config.yaml` file, useful for network customizations (e.g., static IP).
 - **`install-config-template.yaml`:** Template for the `install-config.yaml` file, allowing modifications such as adjusting baseline capabilities (to reduce the required Hardware footprint).
 - **`manifests` directory:** Contains manifests to embed in a specific cluster.
+
+> **NOTE:**
+> At this moment `Route` objects cannot be part of the customization. This is going to be solved sortly.
 
 ### 2. Run the Script to Create the Images
 
@@ -68,11 +73,29 @@ Now, run the script:
 ```
 
 > **Note**  
-> The image creation process duration depends on your internet connection speed, as it involves downloading over 30GB of container images. The Configuration ISO generation is significantly faster than the Base Image creation.
+> The image creation process duration depends on your internet connection speed but for the provided example expect around a **60 minutes** wait, as it involves downloading over 30GB of container images. The Configuration ISO generation is significantly faster than the Base Image creation.
 
 The script generates the Base image (RAW and ISO) and the Configuration ISO, all of which can be found in the `output` directory.
 
 If you want to check the detailed logs while the image is being generated, you have to check the containers running in your system (root). You will see that there are multiple containers used to create the OpenShift Appliance, get the ID of the one that you want to review and then check its output (ie. `sudo podman logs -f 8fc71e1c987d`).
+
+The process generates content inside the `output` directory, including the base image (ISO and RAW) under the `output/image-base` directory, and the `agentconfig.noarch.iso` configuration image and authentication files under `output/image-config`:
+
+```bash
+❯ tree output/
+output/
+├── image-base
+│   ├── appliance.iso
+│   └── appliance.raw
+└── image-config
+    ├── agentconfig.noarch.iso
+    ├── agent-config.yaml
+    ├── auth
+    │   ├── kubeadmin-password
+    │   └── kubeconfig
+    └── install-config.yaml
+
+```
 
 
 ### 3. If you need to deploy more than just one cluster...
