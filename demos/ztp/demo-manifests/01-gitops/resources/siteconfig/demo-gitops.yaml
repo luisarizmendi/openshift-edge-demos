@@ -65,8 +65,8 @@ spec:
         #biosConfigRef:
         #  filePath: "example-hw.profile"
         bmcAddress: "redfish-virtualmedia+http://bmc.sno-gitops.sandbox3039.opentlc.com:8000/redfish/v1/Systems/c9413a8c-cfa2-45af-a779-81529ed850dc"
-        bmcCredentialsName: 
-          name: "demo-ztp-gitops-bmc-secret-1"
+        #bmcCredentialsName: 
+        #  name: "demo-ztp-gitops-bmc-secret-1"
         bootMACAddress: "52:54:00:9b:e9:52"
         # Use UEFISecureBoot to enable secure boot
         bootMode: "UEFI"
