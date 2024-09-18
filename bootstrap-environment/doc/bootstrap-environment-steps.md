@@ -56,7 +56,7 @@ Complete the following steps before deploying your demo:
 
    > **Note**
    >
-   > If you try to access ACM immediately after seeing the web plugin update message, you might encounter a warning stating "Red Hat Advanced Management for Kubernetes is not ready." Please wait a bit longer for ACM to fully initialize.
+   > If you try to access ACM immediately after seeing the web plugin update message, you might encounter a warning stating "Red Hat Advanced Management for Kubernetes is not ready." Please wait a bit longer for ACM to fully initialize and the message disappears .
 
 3. **Wait Until the Advanced Cluster Manager Console is Accessible**
 
