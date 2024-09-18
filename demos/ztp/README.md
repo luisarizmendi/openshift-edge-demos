@@ -146,9 +146,6 @@ For multiple OpenShift clusters, create a different Configuration ISO for each o
 
 ![Appliance ISO Workflow](doc/images/appliance-iso.png)
 
-### Demo Recording
-
-(TBD).
 
 ## Conclusion
 
