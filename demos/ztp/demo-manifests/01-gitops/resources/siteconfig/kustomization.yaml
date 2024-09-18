@@ -4,7 +4,6 @@ kind: Kustomization
 
 resources:
 - reload-provisioning-job.yaml
-- KlusterletAddonConfigOverride.yaml
 
 generators:
 - demo-gitops.yaml
