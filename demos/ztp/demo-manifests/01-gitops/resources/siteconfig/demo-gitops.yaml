@@ -54,8 +54,8 @@ spec:
     # please see Workload Partitioning Feature for a complete guide.
     #cpuPartitioningMode: AllNodes
     # Optionally; This can be used to override the KlusterletAddonConfig that is created for this cluster:
-    crTemplates:
-      KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
+    #crTemplates:
+    #  KlusterletAddonConfig: "KlusterletAddonConfigOverride.yaml"
     nodes:
       - hostName: "sno-2.sandbox3039.opentlc.com"
         role: "master"
