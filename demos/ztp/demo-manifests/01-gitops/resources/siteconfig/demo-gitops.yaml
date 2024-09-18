@@ -3,6 +3,8 @@
 apiVersion: ran.openshift.io/v1
 kind: SiteConfig
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
   name: "sno-gitops"
   namespace: "sno-gitops"
 spec:

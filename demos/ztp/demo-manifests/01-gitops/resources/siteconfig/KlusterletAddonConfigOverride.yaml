@@ -1,8 +1,10 @@
 apiVersion: agent.open-cluster-management.io/v1
 kind: KlusterletAddonConfig
 metadata:
-  name: sno-gitops
-  namespace: sno-gitops
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+  name: "{{ .Cluster.ClusterName }}"
+  namespace: "{{ .Cluster.ClusterName }}"
 spec:
   applicationManager:
     enabled: true
