@@ -78,7 +78,7 @@ Once your device is in the inventory, use it to deploy the OpenShift cluster:
     
 4. *(Optional)*  You can reduce hardware usage by removing unnecessary operators ([Composable OpenShift feature](https://access.redhat.com/solutions/7025867)):
     * Click **YAML view**.
-    * Add the following annotation to the `AgentClusterInstall` resource to remove the Web Console and other components:
+    * Add the following [annotation](../demo-manifests/00-gui/install-config-overrides.yaml) to the `AgentClusterInstall` resource to remove the Web Console and other components:
 
       ```yaml
       kind: AgentClusterInstall

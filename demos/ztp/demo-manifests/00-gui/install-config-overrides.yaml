@@ -1,0 +1,22 @@
+
+
+<...>
+
+kind: AgentClusterInstall
+metadata:
+  annotations:
+    agent-install.openshift.io/install-config-overrides: |
+      {"networking":{"networkType":"OVNKubernetes"},
+        "capabilities": {
+          "baselineCapabilitySet": "None",
+            "additionalEnabledCapabilities": [
+            "NodeTuning",
+            "OperatorLifecycleManager",
+            "marketplace",
+            "Ingress"
+          ]
+        }
+      }
+
+
+<...>

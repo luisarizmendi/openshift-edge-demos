@@ -71,6 +71,8 @@ This demo explores three different methods to deploy an OpenShift cluster (speci
 
 ### [1 - Assisted Installer with Advanced Cluster Management](doc/01-gui.md)
 
+[Demo steps](doc/01-gui.md)
+
 In this section, we pre-configure the cluster in Red Hat Advanced Cluster Management (ACM) and create a Discovery ISO, which is used at the edge location to boot and auto-configure the device. These steps can be performed centrally by a specialized person, while the actual deployment can be done by anyone who knows how to boot the device from an ISO (e.g., via USB).
 
 **Deployment Workflow:**
@@ -92,6 +94,8 @@ For multiple OpenShift clusters, repeat the above steps for each cluster.
 
 ### [2 - GitOps Provisioning with Advanced Cluster Management](doc/02-gitops.md)
 
+[Demo steps](doc/02-gitops.md)
+
 The previous workflow offers a zero-touch provisioning experience, but it can be further automated using a GitOps approach. Instead of performing steps in the ACM GUI, we'll create the necessary objects for cluster deployment and store them in a Git repository. 
 
 Additionally, we can eliminate the need for on-site personnel to boot the device from the "Discovery ISO" by utilizing a [Baseboard Management Controller (BMC)](https://en.wikipedia.org/wiki/Intelligent_Platform_Management_Interface#Baseboard_management_controller) from the central site. This approach saves time and simplifies the process for edge personnel, although it requires appropriate connectivity and may increase device costs.
@@ -112,6 +116,8 @@ For multiple OpenShift clusters, create separate manifests for each cluster and 
 ![GitOps Workflow](doc/images/acm-gitops.png)
 
 ### [3 - OpenShift Appliance](doc/03-appliance.md)
+
+[Demo steps](doc/03-appliance.md)
 
 The previous approach offers the most automation but requires a device with BMC and the associated connectivity. If such connectivity cannot be provided, or if it is slow or unstable, a different zero-touch provisioning method is required, in this case you can use the "OpenShift Appliance".
 

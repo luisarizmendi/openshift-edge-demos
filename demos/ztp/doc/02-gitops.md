@@ -2,7 +2,8 @@
 
 ## Demo section video recording
 
-TBD
+[![Section 2 - Video](https://img.youtube.com/vi/dYshnsJ-cmc/0.jpg)](https://youtu.be/dYshnsJ-cmc?si=sH6ghpEKENrY1WHd)
+
 
 ---
 

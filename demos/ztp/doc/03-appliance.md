@@ -1,7 +1,9 @@
 # Section 3 - OpenShift Appliance
 
 ## Demo section video recording
-TBD
+
+[![Section 3 - Video](https://img.youtube.com/vi/YEo0FWXEQQQ/0.jpg)](https://youtu.be/YEo0FWXEQQQ?si=xQ9-npyBQkGXO99B)
+
 
 ---
 
@@ -32,7 +34,7 @@ While preparing the OpenShift Appliance Images ("Base Image" and "Config Image")
 
 ## Demo Steps
 
-### 1. Deploying the Base Image
+### 1. Deploy the Base Image
 
 To deploy the Base Image, you can either:
 
