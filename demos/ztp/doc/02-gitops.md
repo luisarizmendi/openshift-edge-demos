@@ -78,6 +78,9 @@ Next, create the BMC secret:
 
 After creating the BMC password, the baremetal node will begin inspection in **ACM > Infrastructure > Host Inventory**.
 
+> **Tip:**  
+> If you see the Error because the baremetal host still does not find the BMC secret, you can accelerate the process if you just remove the host from the "Infrastructure > Host inventory > sno-gitops". It will be recreated, then create again the BMC secret and in this way it will get the secret as soon as you create it.
+
 ---
 
 ### 3. Wait Until the Device Is Onboarded

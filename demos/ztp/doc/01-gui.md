@@ -1,7 +1,8 @@
 # Section 1 - Assisted Installer with Advanced Cluster Management
 
 ## Demo section video recording
-TBD
+
+[![Section 1 - Video](https://img.youtube.com/vi/ok4EYxCId5Y/0.jpg)](https://youtu.be/ok4EYxCId5Y?si=z_2Q1WSaAv2D7efQ)
 
 
 ---
@@ -41,6 +42,9 @@ While the GUI allows you to create the cluster and host inventory at once, we wi
 
     > **NOTE:**  
     > If you encounter an "Info alert: Configuration is hanging for a long time" message, wait a minute for the cluster to complete the bootstrap process.
+
+![add infra](images/gui-addinfra.png)
+
 
 3. Provide a name (e.g., `sno-gui`), location, and your pull secret. If needed, mark the **"Static IP" Network type** and add your public SSH key to access OpenShift nodes via SSH. Click **Create**.
 

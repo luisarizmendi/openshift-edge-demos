@@ -21,7 +21,10 @@ To address these challenges, we can prepare all deployment assets in advance to 
 
 ## Demo video recording
 
-TBD
+You can [take a look at this video playlist](https://www.youtube.com/playlist?list=PL8w3r6_M2eTqj-7cOLLnslcMIS0pFMH4O) where you can see all the demo steps (you will also find these videos in each demo step section).
+
+
+[![Demo video playlist](https://img.youtube.com/vi/FF1zv2M8H2I/0.jpg)](https://www.youtube.com/watch?v=FF1zv2M8H2I&list=PL8w3r6_M2eTqj-7cOLLnslcMIS0pFMH4O&index=1)
 
 
 ## Architecture
