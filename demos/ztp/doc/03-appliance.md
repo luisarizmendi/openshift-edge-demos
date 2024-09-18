@@ -95,7 +95,7 @@ The deployment is complete when all operators have been successfully deployed (e
 
 ---
 
-### 3. Testing Your OpenShift Appliance
+### 3. Test Your OpenShift Appliance
 
 Once the system reboots, OpenShift will take some time to start all necessary services. After everything is up and running, verify that the customizations you applied during the Base and Config Image creation are in effect.
 
