@@ -50,15 +50,15 @@ The ISO offers an advantage over the RAW image, as it automatically resizes disk
 
 After booting the RAW image for the first time or booting from the ISO, you will see the "Preparing to start appliance disk image cloning" message in the console:, 
 
-![Appliance initial message](images/applaince-init.png)
+![Appliance initial message](images/appliance-init.png)
 
 After some time, it will automatically create the partition table and start copying the data into the partitions. 
 
-![Appliance partitioning](images/applaince-partitioning.png)
+![Appliance partitioning](images/appliance-partitioning.png)
 
 Finally the device will be rebooted and you find a message displayed in red waiting you to introduce the USB/ISO with the configuration image:
 
-![Waiting for config](images/applaince-waiting-config.png)
+![Waiting for config](images/appliance-waiting-config.png)
 
 All the process could take around **10 minutes** (depending on your hardware).
 

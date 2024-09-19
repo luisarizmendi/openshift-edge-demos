@@ -175,7 +175,7 @@ With the base environment set up, access your Git repository, where you'll modif
    Use the example [pull-secret.yaml file](../demo-manifests/01-gitops/01-gitops-pull-secret.yaml.example), add your Red Hat [pull secret](https://access.redhat.com/solutions/4844461), and rename the file by removing the `.example` extension.
 
 3. **BMC Credentials**:  
-   Even if using a virtual BMC where you didn't configure any real credentials, you have to configure the [BMC secret](../demo-manifests/01-gitops/02-gitops-bmc-secret.yaml.example) by renaming the file and removing the `.example` extension.
+   Even if using a virtual BMC where you didn't configure any real credentials, you have to configure the [BMC secret](../demo-manifests/01-gitops/00-gitops-bmc-secret.yaml.example) by renaming the file and removing the `.example` extension.
 
 After editing the manifests, push the changes to your Git repository. Before pushing, verify that you do not accidentally expose sensitive information, such as your pull-secret.
 

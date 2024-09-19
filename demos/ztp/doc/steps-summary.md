@@ -19,8 +19,8 @@ This is the summary of the demo steps:
         - Test Application Was Deployed: `oc get route -n hello`
 
 2. [Section 2 - GitOps Provisioning with Advanced Cluster Management](02-gitops.md)
-    1. Create the Bootstrap ArgoCD Application Object: [00-argocd-app.yaml](../demo-manifests/01-gitops/00-argocd-app.yaml)
-    2. Create the Pull-Secret and BMC Secrets: [01-gitops-pull-secret.yaml](../demo-manifests/01-gitops/01-gitops-pull-secret.yaml) and [02-gitops-bmc-secret.yaml](../demo-manifests/01-gitops/02-gitops-bmc-secret.yaml)
+    1. Create the [00-gitops-bmc-secret.yaml](../demo-manifests/01-gitops/00-gitops-bmc-secret.yaml) and next the Pull-Secret [01-gitops-pull-secret.yaml](../demo-manifests/01-gitops/01-gitops-pull-secret.yaml)
+    2. Create the Bootstrap ArgoCD Application Object: [02-argocd-app.yaml](../demo-manifests/01-gitops/02-argocd-app.yaml)
     3. Wait Until the Device Is Onboarded (**Infrastructure > Clusters**)
     4. Check Your OpenShift Deployment
         - New Cluster Is Part of the ClusterSet

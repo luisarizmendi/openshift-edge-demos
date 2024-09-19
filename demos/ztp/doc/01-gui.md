@@ -55,12 +55,18 @@ While the GUI allows you to create the cluster and host inventory at once, we wi
 
 5. Click the **Host** tab, then click **Add host** (top-right corner) and select **With Discovery ISO**. Download the Discovery ISO.
 
+![iso](images/gui-iso.png)
+
+
 6. Boot your edge device using the Discovery ISO.
 
     > **NOTE:**  
     > For physical hardware, create a bootable USB from the ISO using `dd` or any other tool.
 
 7. After booting, the device will appear in the **Hostname** list. Click **Approve host** to make it available. Optionally, change the hostname from the MAC address to something like `sno-1.sno-gui.<domain>`.
+
+![approve](images/gui-approve.png)
+
 
     > **NOTE:**  
     > It may take around 2.5 minutes for the host to appear in the list.
@@ -75,7 +81,7 @@ Once your device is in the inventory, use it to deploy the OpenShift cluster:
     * Cluster Name: e.g., `sno-gui`
     * ClusterSet: `demo-ztp-gui`
     * Base domain, check **Install single node OpenShift**, and include your pull secret.
-    
+
 4. *(Optional)*  You can reduce hardware usage by removing unnecessary operators ([Composable OpenShift feature](https://access.redhat.com/solutions/7025867)):
     * Click **YAML view**.
     * Add the following [annotation](../demo-manifests/00-gui/install-config-overrides.yaml) to the `AgentClusterInstall` resource to remove the Web Console and other components:
@@ -103,7 +109,7 @@ Once your device is in the inventory, use it to deploy the OpenShift cluster:
     > By following this step using the provided example, you remove the Web Console, so you'll need to manage the cluster via ACM or `oc` CLI.
 
 
-![Adding Composable capabilities](images/gui-composable.png)
+![cluster](images/gui-cluster.png)
 
 
 * Click **Next**, then **Next again** (no further automation setup needed), and finally **Save**.
@@ -121,11 +127,14 @@ Once your device is in the inventory, use it to deploy the OpenShift cluster:
     > **NOTE:**  
     > The deployment takes, depending on the resources in your node, and the network connectivity, around 30 minutes.
 
----
+Once the cluster is installed and shows a **"Ready"** status under **Infrastructure > Clusters**, with all **Add-ons** marked green, you can continue with the next step.
+
+![done](images/gui-done.png)
+
 
 ### 3. Check your OpenShift Deployment
 
-Once the cluster is installed and shows a **"Ready"** status under **Infrastructure > Clusters**, with all **Add-ons** marked green, verify the following:
+Verify the following:
 
 #### New Cluster is Part of the ClusterSet
 
@@ -146,6 +155,9 @@ To verify that the policy has been applied:
 
 > **NOTE:**  
 > It could take several minutes to complete the policy enforcement and mark the Cluster as "Without violations"
+
+![policy](images/gui-policy.png)
+
 
 The policy prepares the new cluster for the Compliance Operator. You can verify that the subscription is present on the cluster using either the `oc` CLI or, if you didn't remove the Web Console, by navigating the Web UI.
 

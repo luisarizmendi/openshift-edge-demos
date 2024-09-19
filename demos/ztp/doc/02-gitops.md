@@ -2,7 +2,7 @@
 
 ## Demo section video recording
 
-[![Section 2 - Video](https://img.youtube.com/vi/dYshnsJ-cmc/0.jpg)](https://youtu.be/dYshnsJ-cmc?si=sH6ghpEKENrY1WHd)
+[![Section 2 - Video](https://img.youtube.com/vi/oWKJ8JqJUhw/0.jpg)](https://youtu.be/oWKJ8JqJUhw?si=17v-m6Ot3Cd_0c78)
 
 
 ---
@@ -32,13 +32,32 @@ Additionally, if you are using virtual machines instead of physical devices with
 
 ## Demo Steps
 
-### 1. Create the Bootstrap ArgoCD Application Object
+### 1. Create the Pull-Secret and BMC Secrets
 
-ArgoCD will handle the creation of all required objects. To create the ArgoCD Application, follow these steps:
+First, create the BMC secret:
 
 1. Access your OpenShift console in the Hub cluster.
 2. Click the `+` button to add resources.
-3. Paste the content from the [00-argocd-app.yaml](../demo-manifests/01-gitops/00-argocd-app.yaml) file.
+3. Paste the content from the [00-gitops-bmc-secret.yaml](../demo-manifests/01-gitops/00-gitops-bmc-secret.yaml) file.
+
+
+Next, create a secret for your pull-secret token in the OpenShift cluster namespace:
+
+1. Access your OpenShift console in the Hub cluster.
+2. Click the `+` button to add resources.
+3. Paste the content from the [01-gitops-pull-secret.yaml](../demo-manifests/01-gitops/01-gitops-pull-secret.yaml) file.
+
+> **NOTE:**  
+> This pull-secret file was created during the demo preparation phase.
+
+
+### 2. Create the Bootstrap ArgoCD Application Object
+
+ArgoCD will handle the creation of all required remaining objects. To create the ArgoCD Application, follow these steps:
+
+1. Access your OpenShift console in the Hub cluster.
+2. Click the `+` button to add resources.
+3. Paste the content from the [02-argocd-app.yaml](../demo-manifests/01-gitops/02-argocd-app.yaml) file.
 
 Once the object is created, you can demonstrate the following:
 
@@ -51,38 +70,14 @@ Once the object is created, you can demonstrate the following:
 
 - **ACM**: Go to **Infrastructure > Host Inventory**.
   
-  A new Host inventory named `sno-gitops` should appear. You will notice two objects are missing:
-  - The `pull-secret`.
-  - A `Registering error` for the Baremetal node: "BMC CredentialsName secret doesn't exist". To resolve this, create both the `pull-secret` and BMC user/password secrets.
+  A new Host inventory named `sno-gitops` should appear. 
+
+![inspecting](images/gitops-inspecting.png)
+
 
 > **NOTE:**  
 > If you encounter a "Metal3 operator is not configured" warning in the Host Inventory, wait for a minute for auto-configuration. If the message persists, try deleting the `Provisioning` object under `provisioning-configuration` (it will be recreated by ArgoCD).
 
----
-
-### 2. Create the Pull-Secret and BMC Secrets
-
-First, create a secret for your pull-secret token in the OpenShift cluster namespace:
-
-1. Access your OpenShift console in the Hub cluster.
-2. Click the `+` button to add resources.
-3. Paste the content from the [01-gitops-pull-secret.yaml](../demo-manifests/01-gitops/01-gitops-pull-secret.yaml) file.
-
-> **NOTE:**  
-> This pull-secret file was created during the demo preparation phase.
-
-Next, create the BMC secret:
-
-1. Access your OpenShift console in the Hub cluster.
-2. Click the `+` button to add resources.
-3. Paste the content from the [02-gitops-bmc-secret.yaml](../demo-manifests/01-gitops/02-gitops-bmc-secret.yaml) file.
-
-After creating the BMC password, the baremetal node will begin inspection in **ACM > Infrastructure > Host Inventory**.
-
-> **Tip:**  
-> If you see the Error because the baremetal host still does not find the BMC secret, you can accelerate the process if you just remove the host from the "Infrastructure > Host inventory > sno-gitops". It will be recreated, then create again the BMC secret and in this way it will get the secret as soon as you create it.
-
----
 
 ### 3. Wait Until the Device Is Onboarded
 
@@ -95,7 +90,8 @@ After the node is ready (you may briefly see an "Insufficient" status), the Open
 
 Once the cluster is installed and shows a **"Ready"** status under **Infrastructure > Clusters**, the cluster will begin the import process. Wait until all **Add-ons** are green, then proceed to the next step.
 
----
+![done](images/gitops-done.png)
+
 
 ### 4. Check Your OpenShift Deployment
 
@@ -121,6 +117,9 @@ To verify the policy:
 > **NOTE:**  
 > Policy enforcement may take a few minutes, so wait until the cluster is marked as "Without violations".
 
+![policy](images/gitops-policy.png)
+
+
 This policy prepares the new cluster for the Compliance Operator. You can verify that the subscription is present using either the `oc` CLI or, if the Web Console was not removed, via the Web UI.
 
 
@@ -132,7 +131,7 @@ oc get subs --all-namespaces
 > **NOTE:**  
 > You can retrieve the `kubeadmin` password by selecting the cluster in **Infrastructure > Clusters** and clicking on the credentials tab.
 
----
+
 
 #### Test Application Was Deployed
 
