@@ -72,7 +72,7 @@ Once the object is created, you can demonstrate the following:
   
   A new Host inventory named `sno-gitops` should appear. 
 
-![inspecting](images/gitops-inspecting.png)
+![inspecting](images/ztp-gitops-inspecting.png)
 
 
 > **NOTE:**  
@@ -90,7 +90,7 @@ After the node is ready (you may briefly see an "Insufficient" status), the Open
 
 Once the cluster is installed and shows a **"Ready"** status under **Infrastructure > Clusters**, the cluster will begin the import process. Wait until all **Add-ons** are green, then proceed to the next step.
 
-![done](images/gitops-done.png)
+![done](images/ztp-gitops-done.png)
 
 
 ### 4. Check Your OpenShift Deployment
@@ -117,7 +117,7 @@ To verify the policy:
 > **NOTE:**  
 > Policy enforcement may take a few minutes, so wait until the cluster is marked as "Without violations".
 
-![policy](images/gitops-policy.png)
+![policy](images/ztp-gitops-policy.png)
 
 
 This policy prepares the new cluster for the Compliance Operator. You can verify that the subscription is present using either the `oc` CLI or, if the Web Console was not removed, via the Web UI.
@@ -152,8 +152,6 @@ To verify this in ArgoCD:
 Alternatively, you can check the deployment using the "Applications" menu in ACM:
 - Search for the `demo-ztp-gitops-apps` application.
 - Explore the **Overview** and **Topology** tabs for a graphical view of the deployment.
-
-![ACM app topology](images/gitops-acm-app-topology.png)
 
 
 ---

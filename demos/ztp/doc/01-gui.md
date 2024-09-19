@@ -43,7 +43,7 @@ While the GUI allows you to create the cluster and host inventory at once, we wi
     > **NOTE:**  
     > If you encounter an "Info alert: Configuration is hanging for a long time" message, wait a minute for the cluster to complete the bootstrap process.
 
-![add infra](images/gui-addinfra.png)
+![add infra](images/ztp-gui-addinfra.png)
 
 
 3. Provide a name (e.g., `sno-gui`), location, and your pull secret. If needed, mark the **"Static IP" Network type** and add your public SSH key to access OpenShift nodes via SSH. Click **Create**.
@@ -55,7 +55,7 @@ While the GUI allows you to create the cluster and host inventory at once, we wi
 
 5. Click the **Host** tab, then click **Add host** (top-right corner) and select **With Discovery ISO**. Download the Discovery ISO.
 
-![iso](images/gui-iso.png)
+![iso](images/ztp-gui-iso.png)
 
 
 6. Boot your edge device using the Discovery ISO.
@@ -65,7 +65,7 @@ While the GUI allows you to create the cluster and host inventory at once, we wi
 
 7. After booting, the device will appear in the **Hostname** list. Click **Approve host** to make it available. Optionally, change the hostname from the MAC address to something like `sno-1.sno-gui.<domain>`.
 
-![approve](images/gui-approve.png)
+![approve](images/ztp-gui-approve.png)
 
 
     > **NOTE:**  
@@ -109,7 +109,7 @@ Once your device is in the inventory, use it to deploy the OpenShift cluster:
     > By following this step using the provided example, you remove the Web Console, so you'll need to manage the cluster via ACM or `oc` CLI.
 
 
-![cluster](images/gui-cluster.png)
+![cluster](images/ztp-gui-cluster.png)
 
 
 * Click **Next**, then **Next again** (no further automation setup needed), and finally **Save**.
@@ -129,7 +129,7 @@ Once your device is in the inventory, use it to deploy the OpenShift cluster:
 
 Once the cluster is installed and shows a **"Ready"** status under **Infrastructure > Clusters**, with all **Add-ons** marked green, you can continue with the next step.
 
-![done](images/gui-done.png)
+![done](images/ztp-gui-done.png)
 
 
 
@@ -157,7 +157,7 @@ To verify that the policy has been applied:
 > **NOTE:**  
 > It could take several minutes to complete the policy enforcement and mark the Cluster as "Without violations"
 
-![policy](images/gui-policy.png)
+![policy](images/ztp-gui-policy.png)
 
 
 The policy prepares the new cluster for the Compliance Operator. You can verify that the subscription is present on the cluster using either the `oc` CLI or, if you didn't remove the Web Console, by navigating the Web UI.
@@ -188,7 +188,7 @@ To verify this in ArgoCD:
 
 You can also use the "Applications" menu from ACM. Search `demo-ztp-gui-apps` application and check the Overview and Topology tabs.
 
-![ACM app topology](images/gui-acm-app-topology.png)
+![ACM app topology](images/ztp-gui-acm-topology.png)
 
 ---
 

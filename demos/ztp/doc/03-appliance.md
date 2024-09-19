@@ -50,15 +50,15 @@ The ISO offers an advantage over the RAW image, as it automatically resizes disk
 
 After booting the RAW image for the first time or booting from the ISO, you will see the "Preparing to start appliance disk image cloning" message in the console:, 
 
-![Appliance initial message](images/appliance-init.png)
+![Appliance initial message](images/ztp-appliance-init.png)
 
 After some time, it will automatically create the partition table and start copying the data into the partitions. 
 
-![Appliance partitioning](images/appliance-partitioning.png)
+![Appliance partitioning](images/ztp-appliance-partitioning.png)
 
 Finally the device will be rebooted and you find a message displayed in red waiting you to introduce the USB/ISO with the configuration image:
 
-![Waiting for config](images/appliance-waiting-config.png)
+![Waiting for config](images/ztp-appliance-waiting-config.png)
 
 All the process could take around **10 minutes** (depending on your hardware).
 
@@ -69,12 +69,12 @@ Next, mount the Config Image. As with the Base Image, the Config Image can be us
 
 The device will automatically detect and mount the Config Image once you connect the USB or ISO. You should see a new "Preparing to start installation" message in the console, in yellow, followed by another one "Waiting for all host to be ready"
 
-![Appliance cluster config](images/applaince-waiting-config.png)
+![Waiting for config](images/ztp-appliance-waitingready.png)
 
 
 Some time after that, you will find a new green message indicating the "cluster installation is in progress".
 
-![Appliance cluster config](images/applaince-cluster-config.png)
+![Appliance cluster config](images/ztp-appliance-progress.png)
 
 It's time to wait until the cluster is installed. After a few minutes, the system will reboot a couple of times, and the OpenShift components will start being deployed.
 
