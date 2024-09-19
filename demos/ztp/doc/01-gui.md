@@ -132,6 +132,7 @@ Once the cluster is installed and shows a **"Ready"** status under **Infrastruct
 ![done](images/gui-done.png)
 
 
+
 ### 3. Check your OpenShift Deployment
 
 Verify the following:

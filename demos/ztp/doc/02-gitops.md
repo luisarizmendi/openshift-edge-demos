@@ -155,6 +155,7 @@ Alternatively, you can check the deployment using the "Applications" menu in ACM
 
 ![ACM app topology](images/gitops-acm-app-topology.png)
 
+
 ---
 
 ## Review

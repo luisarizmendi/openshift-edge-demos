@@ -63,8 +63,6 @@ Finally the device will be rebooted and you find a message displayed in red wait
 All the process could take around **10 minutes** (depending on your hardware).
 
 
----
-
 ### 2. Mount the Config Image
 
 Next, mount the Config Image. As with the Base Image, the Config Image can be used directly in a VM or flashed onto a USB for use with physical hardware.
@@ -93,7 +91,7 @@ watch "oc --kubeconfig output/image-config/auth/kubeconfig get co"
 
 The deployment is complete when all operators have been successfully deployed (expect **45 minutes**, although it depends on your hardware). 
 
----
+
 
 ### 3. Test Your OpenShift Appliance
 
@@ -116,6 +114,7 @@ oc --kubeconfig output/image-config/auth/kubeconfig get subs --all-namespaces
 oc --kubeconfig output/image-config/auth/kubeconfig get pod -n hello-world
 ```
 
+---
 
 ## Review
 
