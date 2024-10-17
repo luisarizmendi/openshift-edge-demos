@@ -1,0 +1,14 @@
+PORTAL:
+http://<url>:<port>/delete/<filename>
+
+
+
+UPLOAD:
+curl -F "file=@/path/file.txt" http://<url>:<port>/upload
+
+DOWNLOAD:
+curl -O http://<url>:<port>/download/<filename>
+
+
+DELETE
+curl http://<url>:<port>/delete/<filename>

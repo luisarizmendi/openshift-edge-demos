@@ -1,0 +1,23 @@
+# Use the official Python image as a base
+FROM python:3.9-slim
+
+# Create a directory for the server and set it as the working directory
+WORKDIR /app
+
+# Install Flask for handling file uploads
+RUN pip install Flask
+
+# Create the upload directory
+RUN mkdir uploads
+
+# Copy the Python script into the container
+COPY server.py .
+
+# Expose port 5000 for the HTTP server
+EXPOSE 5000
+
+# Set the volume for file uploads
+VOLUME ["/app/uploads"]
+
+# Command to run the Flask server
+CMD ["python", "server.py"]
